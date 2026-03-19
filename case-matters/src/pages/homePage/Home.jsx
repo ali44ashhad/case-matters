@@ -49,6 +49,21 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [contents.length]);
 
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const offset = 80; // Navbar ki height (h-20)
+      const elementPosition = contactSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
     <>
       <section className="relative w-full h-screen bg-zinc-950 overflow-hidden">
@@ -104,7 +119,7 @@ const Home = () => {
               
               {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-10 sm:px-0">
-                <button className="px-8 md:px-10 py-4 bg-[#1871C9] text-white font-bold rounded-sm hover:bg-blue-600 transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/20 active:scale-95 cursor-pointer">
+                <button onClick={scrollToContact} className="px-8 md:px-10 py-4 bg-[#1871C9] text-white font-bold rounded-sm hover:bg-blue-600 transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/20 active:scale-95 cursor-pointer">
                   Consultation Now
                 </button>
               </div>
@@ -127,7 +142,7 @@ const Home = () => {
       <Services />
       <AboutFirst />
       <SectorsSection />
-      <ContactForm />
+      <ContactForm id="contact" />
       <LawExpandingLayout />
       <Testimonials />
       <Blogs />

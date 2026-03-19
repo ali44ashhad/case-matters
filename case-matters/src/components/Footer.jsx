@@ -22,7 +22,6 @@ const Footer = () => {
   const legalLinks = [
     { name: "Privacy Policy", href: "/policies/privacy-policy" },
     { name: "Terms & Conditions", href: "/policies/terms-and-conditions" },
-    { name: "Disclaimer", href: "/policies/disclaimer" }
   ];
 
   return (

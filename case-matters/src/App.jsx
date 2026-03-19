@@ -18,6 +18,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AdminForm from './components/AdminForm';
 import AdminDashboard from './components/AdminDashboard';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
+import ServicePage from './pages/ServicePage';
 
 const App = () => {
   // FIX: This function runs ONLY once when the app starts.
@@ -113,6 +114,7 @@ const App = () => {
         <Route path="/policies/terms-and-conditions" element={<TermsAndConditions/>} />
         <Route path="/admin-login" element={<AdminForm/>} />
         <Route path="/admin-dashboard" element={<AdminProtectedRoute><AdminDashboard/></AdminProtectedRoute>} />
+        <Route path="/all-services" element={<ServicePage/>} />
       </Routes>
 
       <Footer/>

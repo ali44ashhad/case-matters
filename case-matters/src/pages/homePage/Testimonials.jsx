@@ -1,21 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-
-const testimonials = [
-  { id: 1, name: "Ajit P. Singh", position: "Director, Singh Logistics", text: "The expertise in corporate litigation provided by this firm was instrumental. They don't just provide legal advice; they provide strategic business solutions." },
-  { id: 2, name: "Deepak Sharma", position: "Founder, Sharma Associates", text: "Navigating complex arbitration matters seemed daunting until we engaged their services. Their approach to legal compliance is proactive and thorough." },
-  { id: 3, name: "Shalini Ahuja", position: "COO, Ahuja Textiles", text: "Their attention to detail in contract management has saved us from numerous legal headaches. Truly a partner in our business growth." },
-  { id: 4, name: "Rashmi Jain", position: "MD, Jain Group", text: "Exceptional representation in employment advisory. Their team handled our compliance audit with incredible professionalism and speed." },
-  { id: 5, name: "Manoj Garg", position: "Real Estate Developer", text: "In the construction industry, timing is everything. Their efficiency in handling high-value land disputes is second to none." },
-  { id: 6, name: "Harjinder Singh", position: "Chairman, HS Exports", text: "Strategic, consistent, and loyal. Case Matters has been our primary legal counsel for years, delivering results that truly make a difference." },
-];
+import axios from "axios";
 
 const Testimonials = () => {
   const scrollRef = useRef(null);
+  const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  // Determine how many cards are visible based on screen size
+  // 1. Fetch Data from Backend
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/all-testimonials`);
+        // Accessing the 'data' array from your response structure
+        setTestimonials(response.data.data);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
   const getVisibleCards = () => {
     if (typeof window === 'undefined') return 1;
     if (window.innerWidth >= 1024) return 3;
@@ -25,6 +34,8 @@ const Testimonials = () => {
 
   const slide = (direction) => {
     const container = scrollRef.current;
+    if (!container) return;
+    
     const visibleCards = getVisibleCards();
     const cardWidth = container.offsetWidth / visibleCards;
     
@@ -38,7 +49,7 @@ const Testimonials = () => {
     setCurrentIndex(newIndex);
 
     gsap.to(container, {
-      scrollLeft: newIndex * (cardWidth + 24), // 24 is the gap (gap-6)
+      scrollLeft: newIndex * (cardWidth + 24), // 24 is gap-6
       duration: 0.8,
       ease: "power3.inOut"
     });
@@ -48,10 +59,14 @@ const Testimonials = () => {
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex >= testimonials.length - visibleCards;
 
+  // Render nothing or a skeleton while loading to prevent GSAP calculation errors
+  if (loading) return <div className="py-24 bg-[#09090B] text-center text-white">Loading Testimonials...</div>;
+
   return (
     <section className="w-full py-24 bg-[#09090B] overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
+        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="text-left">
             <p className="text-[#1871C9] font-bold tracking-[0.3em] uppercase mb-4 text-xs">
@@ -68,8 +83,8 @@ const Testimonials = () => {
               disabled={isAtStart}
               className={`p-4 rounded-full border transition-all duration-300 ${
                 isAtStart 
-                ? "text-white border-[#1871C9] cursor-not-allowed" 
-                : "border-white/10 bg-[#1871C9] text-black hover:cursor-pointer hover:border-[#1871C9]"
+                ? "opacity-50 text-white border-white/10 cursor-not-allowed" 
+                : "border-white/10 bg-[#1871C9] text-black hover:cursor-pointer"
               }`}
             >
               <ChevronLeft size={24} />
@@ -79,8 +94,8 @@ const Testimonials = () => {
               disabled={isAtEnd}
               className={`p-4 rounded-full border transition-all duration-300 ${
                 isAtEnd 
-                ? "text-white border-[#1871C9]  cursor-not-allowed" 
-                : "border-white/10  bg-[#1871C9] text-black hover:cursor-pointer hover:border-[#1871C9]"
+                ? "opacity-50 text-white border-white/10 cursor-not-allowed" 
+                : "border-white/10 bg-[#1871C9] text-black hover:cursor-pointer"
               }`}
             >
               <ChevronRight size={24} />
@@ -88,6 +103,7 @@ const Testimonials = () => {
           </div>
         </div>
 
+        {/* Testimonials Slider */}
         <div 
           ref={scrollRef}
           className="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 pb-4"
@@ -95,31 +111,34 @@ const Testimonials = () => {
         >
           {testimonials.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.33%-16px)] snap-center"
             >
-              <div className="h-full p-10 rounded-sm bg-[#161617] border border-white/10 flex flex-col justify-between hover:border-[#E2B13C]/30 transition-all duration-500 group relative">
+              <div className="h-full p-10 rounded-sm bg-[#161617] border border-white/10 flex flex-col justify-between hover:border-[#1871C9]/50 transition-all duration-500 group relative">
                 
                 <Quote className="absolute top-8 right-8 text-[#1871C9] opacity-10 group-hover:opacity-40 transition-opacity" size={40} />
 
                 <div className="space-y-6">
+                  {/* Dynamic Rating Stars */}
                   <div className="flex gap-1">
-                    {[...Array(5)].map((_, i) => (
+                    {[...Array(item.rating || 5)].map((_, i) => (
                       <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#1871C9">
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                       </svg>
                     ))}
                   </div>
 
+                  {/* Backend Description */}
                   <p className="text-gray-100 text-lg font-light leading-relaxed italic">
-                    "{item.text}"
+                    "{item.description}"
                   </p>
                 </div>
 
                 <div className="mt-10 pt-6 border-t border-white/10">
+                  {/* Backend Name & Company */}
                   <h4 className="text-[#1871C9] font-bold text-xl">{item.name}</h4>
                   <p className="text-[#1871C9] text-xs uppercase tracking-widest mt-1 font-semibold">
-                    {item.position}
+                    {item.companyName}
                   </p>
                 </div>
               </div>
@@ -127,11 +146,12 @@ const Testimonials = () => {
           ))}
         </div>
 
+        {/* Mobile Pagination Dots */}
         <div className="flex justify-center gap-2 mt-12 md:hidden">
           {testimonials.map((_, i) => (
             <div 
               key={i} 
-              className={`h-1 transition-all duration-300 rounded-full ${currentIndex === i ? 'w-8 bg-[#E2B13C]' : 'w-2 bg-white/20'}`} 
+              className={`h-1 transition-all duration-300 rounded-full ${currentIndex === i ? 'w-8 bg-[#1871C9]' : 'w-2 bg-white/20'}`} 
             />
           ))}
         </div>
