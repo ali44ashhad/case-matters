@@ -42,7 +42,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" onClick={(e) => scrollToSection(e, 'home')}>
           <div className="text-2xl font-black tracking-tighter cursor-pointer uppercase">
-            Logo<span className="text-[#E2B13C]">.</span>
+            Logo<span className="text-[#1871C9]">.</span>
           </div>
         </Link>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
         <div className="min-[992px]:hidden">
           <button 
             onClick={() => setIsOpen(true)} 
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors text-[#E2B13C]"
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors text-[#1871C9]"
           >
             <Menu size={28} />
           </button>
@@ -89,7 +89,7 @@ const Navbar = () => {
         <div className="flex justify-end mb-16">
           <button 
             onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors text-[#E2B13C]"
+            className="p-2 hover:bg-white/10 rounded-full transition-colors text-[#1871C9]"
           >
             <X size={32} />
           </button>
@@ -101,7 +101,7 @@ const Navbar = () => {
               <a 
                 href={`#${link.href}`} 
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-2xl font-bold text-white hover:text-[#E2B13C] block transition-all tracking-tight"
+                className="text-2xl font-bold text-white hover:text-[#1871C9] block transition-all tracking-tight"
               >
                 {link.name}
               </a>
@@ -110,7 +110,7 @@ const Navbar = () => {
         </ul>
 
         <div className="mt-auto border-t border-white/5 pt-10">
-          <p className="text-[#E2B13C] text-xs font-bold uppercase tracking-widest mb-2">Legal Excellence</p>
+          <p className="text-[#1871C9] text-xs font-bold uppercase tracking-widest mb-2">Legal Excellence</p>
           <p className="text-zinc-500 text-sm italic">Trusted Advisors for Complex Disputes.</p>
         </div>
       </div>
@@ -118,4 +118,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;  
+export default Navbar;

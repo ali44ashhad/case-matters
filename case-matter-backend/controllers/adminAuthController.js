@@ -36,7 +36,7 @@ export const loginAdmin = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none", // 👉 "none" only with HTTPS
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -58,8 +58,8 @@ export const logoutAdmin = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV,
-        sameSite: "none",
+      secure: true,
+      sameSite: "none",
       expires: new Date(0),
     });
 
