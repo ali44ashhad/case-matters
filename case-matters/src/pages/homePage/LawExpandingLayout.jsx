@@ -65,16 +65,16 @@ const LawExpandingLayout = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-zinc-950 overflow-hidden flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden flex items-center justify-center">
       
       {/* 1. TEXT LAYER (Behind Blocks) */}
       <div className="center-text absolute z-10 text-center pointer-events-none px-4">
-        <h1 className="text-white text-6xl md:text-[12rem] font-black uppercase leading-[0.8] tracking-tighter">
+        <h1 className="text-gray-900 text-6xl md:text-[12rem] font-black uppercase leading-[0.8] tracking-tighter">
           Justice <br />
           <span className="text-[#1871C9]">Defined.</span>
         </h1>
-        <p className="mt-8 text-zinc-400 text-xs md:text-xl uppercase tracking-[0.5em] font-light">
-          Premium Legal Solutions for a Complex World
+        <p className="mt-8 text-gray-600 text-xs md:text-xl uppercase tracking-[0.5em] font-light">
+        Every Client, Every Case Matters
         </p>
       </div>
 
@@ -84,10 +84,10 @@ const LawExpandingLayout = () => {
           <div
             key={i}
             ref={(el) => (blocksRef.current[i] = el)}
-            className="absolute w-64 h-80 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5 pointer-events-auto"
+            className="absolute w-64 h-80 rounded-2xl overflow-hidden border border-gray-200/60 pointer-events-auto"
           >
             <img src={block.img} alt={block.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6">
+            <div className="absolute inset-0 flex flex-col justify-end p-6">
               <h3 className="text-white font-bold uppercase text-lg italic">
                 {block.title}
               </h3>
@@ -97,7 +97,7 @@ const LawExpandingLayout = () => {
       </div>
 
       {/* Background Overlay */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-800 via-transparent to-transparent" />
+      {/* <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-200 via-transparent to-transparent" /> */}
     </div>
   );
 };

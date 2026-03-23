@@ -61,11 +61,11 @@ const ServicePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white font-sans">
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
       
       {/* --- HERO SECTION --- */}
       <section className="relative w-full py-24 md:py-32 flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1871c9]/40 to-blue-950 opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1871c9]/25 to-gray-100 opacity-60" />
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -78,21 +78,21 @@ const ServicePage = () => {
           <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-6">
             Services
           </h1>
-          <p className="text-zinc-400 text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light">
+          <p className="text-gray-600 text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light">
             Specialized legal solutions tailored to navigate complex disputes and protect your interests.
           </p>
         </motion.div>
       </section>
 
       {/* --- SECOND SECTION: HEADING & PARA --- */}
-      <section className="py-20 px-6 md:px-12 lg:px-24 text-center bg-zinc-900/20">
+      <section className="py-20 px-6 md:px-12 lg:px-24 text-center bg-gray-200/50">
         <motion.div 
            initial={{ opacity: 0 }}
            whileInView={{ opacity: 1 }}
            className="max-w-3xl mx-auto"
         >
           <h2 className="text-3xl md:text-5xl font-serif font-bold mb-8">Our Expertise & Commitment</h2>
-          <p className="text-zinc-400 text-lg leading-relaxed">
+          <p className="text-gray-600 text-lg leading-relaxed">
             We provide a comprehensive range of legal services designed to meet the unique needs of our clients. 
             From structured arbitration to complex construction disputes, our team combines deep industry 
             knowledge with strategic legal thinking to deliver results that matter. We believe in proactive 
@@ -112,7 +112,7 @@ const ServicePage = () => {
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
               onClick={() => navigate(service.path)}
-              className="group relative bg-zinc-900/50 border border-white/5 rounded-2xl overflow-hidden hover:border-[#1871c9]/50 transition-all duration-500 cursor-pointer flex flex-col"
+              className="group relative bg-gray-200/70 border border-gray-200/70 rounded-2xl overflow-hidden hover:border-[#1871c9]/50 transition-all duration-500 cursor-pointer flex flex-col"
             >
               {/* Image Header */}
               <div className="h-48 w-full overflow-hidden">
@@ -131,7 +131,7 @@ const ServicePage = () => {
                 <h3 className="text-xl font-bold mb-3 group-hover:text-[#1871c9] transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                <p className="text-gray-600 text-sm leading-relaxed mb-6">
                   {service.desc}
                 </p>
                 

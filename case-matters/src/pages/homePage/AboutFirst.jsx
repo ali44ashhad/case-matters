@@ -126,7 +126,7 @@ const AboutFirst = () => {
       </div>
     </section> */}
         
-        <div id="about" ref={container} className="relative w-full h-screen overflow-hidden bg-black font-sans">
+        <div id="about" ref={container} className="relative w-full h-screen overflow-hidden bg-white font-sans">
 
              <div className="panel-wrapper absolute inset-0 z-10 w-full h-full overflow-hidden">
    <div className="absolute inset-0 w-full h-full">
@@ -135,16 +135,16 @@ const AboutFirst = () => {
       alt="Legal Background"
       className="w-full h-full object-cover"
     />
-     <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px]"></div>
+     <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
   </div>
 
-   <section className="relative h-screen w-full flex flex-col items-center justify-center text-white text-center px-6">
+  <section className="relative h-screen w-full flex flex-col items-center justify-center text-gray-900 text-center px-6">
     <div className="max-w-4xl z-20">
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
+      <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
         Why Choose <span className="text-[#1871C9]">Case Matters?</span>
       </h1>
       
-      <p className="mt-8 text-zinc-300 text-base md:text-lg lg:text-xl uppercase tracking-[0.2em] font-medium max-w-3xl mx-auto leading-relaxed">
+      <p className="mt-8 text-gray-200 text-base md:text-lg lg:text-xl uppercase tracking-[0.2em] font-medium max-w-3xl mx-auto leading-relaxed">
         Decades of expertise in arbitration, contract management, and litigation. 
         We transform complex legal challenges into practical, effective commercial solutions.
       </p>
@@ -161,14 +161,14 @@ const AboutFirst = () => {
             className="w-full h-full object-cover" 
             alt="Strategic Planning"
         />
-        <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
     </div>
-    <section className="relative h-screen w-full flex flex-col items-center justify-center text-white text-center px-6 border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.8)]">
+    <section className="relative h-screen w-full flex flex-col items-center justify-center text-gray-900 text-center px-6 border-t border-gray-200/60 shadow-[0_-50px_100px_rgba(0,0,0,0.08)]">
         <div className="max-w-4xl z-10">
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-tight">
+            <h2 className="text-white text-5xl md:text-8xl font-black uppercase tracking-tighter leading-tight">
                 Strategic <span className="text-[#1871C9]">Prevention</span>
             </h2>
-            <p className="mt-6 text-zinc-300 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-6 text-gray-200 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
                 Legal support goes beyond resolving disputes—it’s about preventing them. Through robust contract advisory and risk assessment, we minimize your exposure before conflicts arise.
             </p>
         </div>
@@ -190,13 +190,13 @@ const AboutFirst = () => {
             <h2 className="text-white text-5xl md:text-8xl font-black uppercase tracking-tighter leading-tight">
                 Expert <span className="text-[#1871C9]">Arbitration</span>
             </h2>
-            <p className="text-white mt-6 text-lg md:text-xl font-semibold max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-200 mt-6 text-lg md:text-xl font-semibold max-w-2xl mx-auto leading-relaxed">
                 We guide clients through private dispute resolution with strategic clarity. From claim preparation to final enforcement, we manage the entire process with diligence and confidentiality.
             </p>
             <div className="mt-12">
-                <button className="px-12 py-5 bg-[#1871C9] text-white rounded-full font-black text-xl hover:scale-105 transition-all active:scale-95 shadow-2xl uppercase tracking-widest">
-                    Consult an Expert
-                </button>
+            <button className="w-fit md:w-auto px-6 py-3 md:px-12 md:py-5 bg-[#1871C9] text-white rounded-full font-black text-sm md:text-xl hover:scale-105 transition-all active:scale-95 shadow-xl md:shadow-2xl uppercase tracking-wider md:tracking-widest">
+  Consult an Expert
+</button>
             </div>
         </div>
     </section>

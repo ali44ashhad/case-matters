@@ -54,13 +54,13 @@ const App = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center px-4 bg-zinc-950/98 backdrop-blur-xl"
+            className="fixed inset-0 z-[9999] flex items-center justify-center px-4 bg-white/90 backdrop-blur-xl"
           >
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 10 }}
-              className="relative max-w-2xl w-full bg-zinc-900 border border-[#E2B13C]/20 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden"
+              className="relative max-w-2xl w-full bg-gray-200 border border-[#E2B13C]/20 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden"
             >
               {/* Top Accent Line */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E2B13C] to-transparent" />
@@ -73,10 +73,10 @@ const App = () => {
                   <div className="h-px w-16 bg-[#E2B13C]/40 mx-auto mt-2" />
                 </div>
                 
-                <div className="text-zinc-400 text-sm md:text-base leading-relaxed text-center space-y-4 max-h-[50vh] overflow-y-auto px-4 custom-scrollbar font-light">
+                <div className="text-gray-600 text-sm md:text-base leading-relaxed text-center space-y-4 max-h-[50vh] overflow-y-auto px-4 custom-scrollbar font-light">
                   <p>
                     The Bar Council of India does not permit advertisement or solicitation by advocates in any form or manner. 
-                    By accessing this website, <span className="text-white font-medium">www.casematters.in</span>, you acknowledge and confirm that you are seeking information relating to Case Matters of your own accord and that there has been no form of solicitation, advertisement or inducement by Case Matters or its members.
+                    By accessing this website, <span className="text-gray-900 font-medium">www.casematters.in</span>, you acknowledge and confirm that you are seeking information relating to Case Matters of your own accord and that there has been no form of solicitation, advertisement or inducement by Case Matters or its members.
                   </p>
                   <p>
                     The content of this website is for informational purposes only and should not be interpreted as soliciting or advertisement. 

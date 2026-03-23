@@ -79,7 +79,7 @@ const SectorsCarousel = () => {
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + sectors.length) % sectors.length);
 
   return (
-    <section className="relative min-h-screen bg-zinc-950 flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans">
+    <section className="relative min-h-screen bg-white flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans">
       {/* Background Ornaments */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1871C9]/5 blur-[120px] rounded-full pointer-events-none" />
       
@@ -94,14 +94,14 @@ const SectorsCarousel = () => {
           >
             Industry Verticals
           </motion.p>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-white">
+          <h2 className="text-4xl md:text-6xl font-serif font-bold text-gray-900">
             Every Client, Every <span className="text-[#1871C9] italic font-light">Case Matters.</span>
           </h2>
         </div>
 
         {/* Carousel Container */}
         <div className="relative">
-          <div className="overflow-hidden rounded-[2.5rem] border border-zinc-800 bg-zinc-900/10 backdrop-blur-md shadow-2xl">
+          <div className="overflow-hidden rounded-[2.5rem] border border-gray-200 bg-gray-200/50 backdrop-blur-md shadow-2xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -120,9 +120,8 @@ const SectorsCarousel = () => {
                     transition={{ duration: 1.5 }}
                     src={sectors[currentIndex].image}
                     alt={sectors[currentIndex].title}
-                    className="absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-transparent to-transparent lg:via-zinc-950/20" />
                   
                   {/* Floating Icon Over Image */}
                   <div className="absolute bottom-8 left-8 p-4 bg-[#1871C9] text-white rounded-2xl shadow-2xl">
@@ -131,27 +130,27 @@ const SectorsCarousel = () => {
                 </div>
 
                 {/* RIGHT SIDE: CONTENT BLOCK */}
-                <div className="p-10 md:p-16 flex flex-col justify-center bg-zinc-900/40">
+                <div className="p-10 md:p-16 flex flex-col justify-center bg-gray-200/70">
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-[#1871C9] font-serif italic text-2xl">0{currentIndex + 1}</span>
-                    <div className="h-px w-12 bg-zinc-800" />
+                    <div className="h-px w-12 bg-gray-300" />
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                     {sectors[currentIndex].title}
                   </h3>
                   
-                  <p className="text-zinc-400 text-lg leading-relaxed mb-8 font-light">
+                  <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
                     {sectors[currentIndex].desc}
                   </p>
 
-                  <div className="pt-8 border-t border-zinc-800 flex items-center justify-between">
-                    <span className="text-zinc-600 text-[10px] uppercase tracking-[0.2em] font-bold">Sector Expertise</span>
+                  <div className="pt-8 border-t border-gray-300 flex items-center justify-between">
+                    <span className="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-bold">Sector Expertise</span>
                     <div className="flex gap-4">
-                      <button onClick={prevSlide} className="p-3 rounded-full border border-zinc-700 text-white hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
+                      <button onClick={prevSlide} className="p-3 rounded-full border border-gray-300 text-gray-900 hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
                         <ChevronLeft size={20} />
                       </button>
-                      <button onClick={nextSlide} className="p-3 rounded-full border border-zinc-700 text-white hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
+                      <button onClick={nextSlide} className="p-3 rounded-full border border-gray-300 text-gray-900 hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
                         <ChevronRight size={20} />
                       </button>
                     </div>

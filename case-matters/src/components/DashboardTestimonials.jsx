@@ -146,7 +146,7 @@ const DashboardTestimonials = () => {
           <p className="text-blue-500 font-semibold text-xs uppercase tracking-widest mb-2">
             Admin Panel
           </p>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tighter">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tighter">
             Testimonials
           </h1>
         </div>
@@ -157,7 +157,7 @@ const DashboardTestimonials = () => {
             placeholder="Search by name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-64 bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-all"
+            className="w-full sm:w-64 bg-gray-200/80 border border-gray-200/60 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:border-blue-500 transition-all"
           />
           <button
             type="button"
@@ -190,11 +190,11 @@ const DashboardTestimonials = () => {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
-                  className="bg-zinc-900/60 border border-white/10 rounded-2xl p-5 shadow-xl"
+                  className="bg-gray-200/70 border border-gray-200/60 rounded-2xl p-5 shadow-xl"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-white text-lg font-bold break-words">{item.name}</h3>
+                      <h3 className="text-gray-900 text-lg font-bold break-words">{item.name}</h3>
                       <p className="text-blue-400 text-sm mt-1 break-words">
                         {item.companyName || "Independent"}
                       </p>
@@ -204,12 +204,12 @@ const DashboardTestimonials = () => {
                     </span>
                   </div>
 
-                  <p className="text-zinc-300 text-sm mt-4 leading-relaxed break-words">
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed break-words">
                     {item.description}
                   </p>
 
                   <div className="mt-5 flex items-center justify-between gap-3">
-                    <p className="text-[11px] uppercase tracking-wider text-zinc-500">
+                    <p className="text-[11px] uppercase tracking-wider text-gray-500">
                       {new Date(item.createdAt).toLocaleDateString("en-IN", {
                         day: "2-digit",
                         month: "short",
@@ -236,7 +236,7 @@ const DashboardTestimonials = () => {
                 </motion.div>
               ))
             ) : (
-              <div className="col-span-full text-center py-20 text-zinc-500 font-medium">
+              <div className="col-span-full text-center py-20 text-gray-500 font-medium">
                 No testimonials found.
               </div>
             )}
@@ -250,22 +250,22 @@ const DashboardTestimonials = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm p-4 flex items-center justify-center"
+            className="fixed inset-0 z-[60] bg-black/10 backdrop-blur-sm p-4 flex items-center justify-center"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              className="w-full max-w-xl bg-zinc-900 border border-white/10 rounded-2xl p-6 md:p-7 shadow-2xl"
+              className="w-full max-w-xl bg-gray-200/80 border border-gray-200/60 rounded-2xl p-6 md:p-7 shadow-2xl"
             >
               <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-gray-900">
                   {isEditMode ? "Update Testimonial" : "Create Testimonial"}
                 </h2>
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="text-zinc-400 hover:text-white text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Close
                 </button>
@@ -273,7 +273,7 @@ const DashboardTestimonials = () => {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                  <label className="text-xs uppercase tracking-wider text-gray-500 font-semibold">
                     Name *
                   </label>
                   <input
@@ -282,13 +282,13 @@ const DashboardTestimonials = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="moksh Shakya"
-                    className="mt-1 w-full bg-zinc-950 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                    className="mt-1 w-full bg-gray-200/90 border border-gray-200/60 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none focus:border-blue-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                  <label className="text-xs uppercase tracking-wider text-gray-500 font-semibold">
                     Company Name
                   </label>
                   <input
@@ -297,12 +297,12 @@ const DashboardTestimonials = () => {
                     value={formData.companyName}
                     onChange={handleInputChange}
                     placeholder="FNA Marketing"
-                    className="mt-1 w-full bg-zinc-950 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                    className="mt-1 w-full bg-gray-200/90 border border-gray-200/60 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                  <label className="text-xs uppercase tracking-wider text-gray-500 font-semibold">
                     Rating (1-5) *
                   </label>
                   <input
@@ -312,13 +312,13 @@ const DashboardTestimonials = () => {
                     onChange={handleInputChange}
                     min="1"
                     max="5"
-                    className="mt-1 w-full bg-zinc-950 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                    className="mt-1 w-full bg-gray-200/90 border border-gray-200/60 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none focus:border-blue-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">
+                  <label className="text-xs uppercase tracking-wider text-gray-500 font-semibold">
                     Description *
                   </label>
                   <textarea
@@ -327,7 +327,7 @@ const DashboardTestimonials = () => {
                     onChange={handleInputChange}
                     rows={5}
                     placeholder="The legal expertise provided was exceptional..."
-                    className="mt-1 w-full bg-zinc-950 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500 resize-none"
+                    className="mt-1 w-full bg-gray-200/90 border border-gray-200/60 rounded-lg px-3 py-2.5 text-gray-900 text-sm focus:outline-none focus:border-blue-500 resize-none"
                     required
                   />
                 </div>
@@ -336,7 +336,7 @@ const DashboardTestimonials = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-4 py-2.5 text-sm rounded-lg border border-white/20 text-zinc-300 hover:bg-zinc-800 transition-all"
+                    className="px-4 py-2.5 text-sm rounded-lg border border-gray-200/60 text-gray-600 hover:bg-gray-300 transition-all"
                   >
                     Cancel
                   </button>

@@ -25,16 +25,16 @@ const Arbitration = () => {
 
   return (
    <>
-    <section ref={container} className="pt-30 relative min-h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center">
+    <section ref={container} className="pt-30 relative min-h-screen w-full overflow-hidden bg-white font-sans flex items-center">
       {/* 1. Fully Responsive Background Image */}
       <img
         src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop"
         alt="Legal Firm Architecture"
-        className="absolute inset-0 h-full w-full object-cover opacity-40"
+        className="absolute inset-0 h-full w-full object-cover"
       />
       
       {/* 2. Premium Cinematic Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
+      <div className="absolute inset-0 bg-black/50" />
 
       {/* 3. Main Content Grid */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -42,7 +42,7 @@ const Arbitration = () => {
         {/* LEFT BLOCK: Content & GSAP Animation */}
         <div className="space-y-8">
           <div ref={carpetRef} className="overflow-hidden">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-white leading-[0.9]">
+            <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-gray-900 leading-[0.9]">
               Trusted Legal <br />
               <span className="text-[#1871C9]">Solutions.</span>
             </h1>
@@ -54,7 +54,7 @@ const Arbitration = () => {
             transition={{ duration: 1, delay: 1 }}
             className="space-y-6"
           >
-            <p className="text-xl md:text-2xl text-zinc-300 max-w-xl font-light leading-relaxed">
+            <p className="text-gray-200 text-xl md:text-2xl max-w-xl font-light leading-relaxed">
               Case Matters brings decades of experience to complex commercial, construction, and employment disputes.
             </p>
             
@@ -65,7 +65,7 @@ const Arbitration = () => {
               >
                 Our Practice
               </motion.button>
-              <button className="rounded-full border border-white/20 bg-white/5 px-10 py-4 font-semibold text-white backdrop-blur-md hover:bg-white/10 transition-all">
+              <button className="rounded-full border border-gray-200 bg-gray-200/60 px-10 py-4 font-semibold text-gray-900 backdrop-blur-md hover:bg-gray-200/80 transition-all">
                 Contact Us
               </button>
             </div>
@@ -79,7 +79,7 @@ const Arbitration = () => {
           transition={{ duration: 1.2, delay: 0.5 }}
           className="relative group hidden lg:block"
         >
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 aspect-[4/5] shadow-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-gray-200/60 aspect-[4/5] shadow-2xl">
             <motion.img 
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.8 }}
@@ -87,17 +87,17 @@ const Arbitration = () => {
               className="h-full w-full object-cover"
               alt="Professional Advisory"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             
             {/* Floating Glass Stat Card */}
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1.5 }}
-              className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl"
+              className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-gray-200/70 border border-gray-200/60 backdrop-blur-xl"
             >
               <p className="text-[#1871C9] text-sm font-bold uppercase tracking-widest">Global Expertise</p>
-              <p className="text-white text-lg mt-1 font-medium">Over 70 years of combined legal experience.</p>
+              <p className="text-gray-900 text-lg mt-1 font-medium">Over 70 years of combined legal experience.</p>
             </motion.div>
           </div>
           
@@ -108,7 +108,7 @@ const Arbitration = () => {
 
       {/* 4. Fixed Jurisprudential Quote Background */}
       <div className="absolute bottom-10 right-10 opacity-5 pointer-events-none hidden md:block">
-        <span className="text-8xl font-serif italic text-white select-none">"Lex Est Dictamen Rationis"</span>
+        <span className="text-8xl font-serif italic text-gray-300 select-none">"Lex Est Dictamen Rationis"</span>
       </div>
     </section>
     

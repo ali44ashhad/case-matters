@@ -72,15 +72,15 @@ const Blogs = () => {
   }, []);
 
   return (
-    <section id="blogs" ref={sectionRef} className="w-full py-24 bg-zinc-950 overflow-hidden font-sans">
+    <section id="blogs" ref={sectionRef} className="w-full py-24 bg-white overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
         <div className="mb-16">
-          <h2 className="text-white text-4xl md:text-5xl font-extrabold tracking-tight">
+          <h2 className="text-gray-900 text-4xl md:text-5xl font-extrabold tracking-tight">
             Latest <span className="text-[#1871C9]">Legal Insights</span>
           </h2>
-          <p className="text-zinc-500 mt-4 max-w-2xl text-lg font-light">
+          <p className="text-gray-600 mt-4 max-w-2xl text-lg font-light">
             Stay updated with our latest thoughts on arbitration, compliance, and corporate law.
           </p>
         </div>
@@ -97,7 +97,7 @@ const Blogs = () => {
               <div className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 
                 {/* FRONT SIDE */}
-                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] bg-zinc-900 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] bg-gray-200 border border-gray-200/60 rounded-2xl overflow-hidden shadow-2xl">
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={blog.image}
@@ -110,10 +110,10 @@ const Blogs = () => {
                   </div>
 
                   <div className="p-6 space-y-3">
-                    <h3 className="text-white text-xl font-bold leading-tight group-hover:text-[#1871C9] transition-colors duration-300">
+                    <h3 className="text-gray-900 text-xl font-bold leading-tight group-hover:text-[#1871C9] transition-colors duration-300">
                       {blog.title}
                     </h3>
-                    <p className="text-zinc-400 text-sm line-clamp-3 leading-relaxed">
+                    <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
                       {blog.excerpt}
                     </p>
                   </div>

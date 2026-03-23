@@ -26,7 +26,7 @@ const ContractClaim = () => {
 
   return (
     <>
-      <section ref={container} className="pt-30 relative min-h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center">
+      <section ref={container} className="pt-30 relative min-h-screen w-full overflow-hidden bg-white font-sans flex items-center">
 
         {/* Background Image */}
         <img
@@ -36,7 +36,7 @@ const ContractClaim = () => {
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
+        <div className="absolute inset-0 bg-black/50" />
 
         {/* Content Grid */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -45,7 +45,7 @@ const ContractClaim = () => {
           <div className="space-y-6">
 
             <div ref={carpetRef} className="overflow-hidden">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
                 Contract & Claims <br />
                 <span className="text-[#1871C9]">Management</span>
               </h1>
@@ -57,27 +57,15 @@ const ContractClaim = () => {
               transition={{ duration: 1, delay: 1 }}
               className="space-y-5"
             >
-              <p className="text-base md:text-lg text-zinc-300 max-w-xl leading-relaxed">
+              <p className="text-white text-base md:text-lg text-gray-700 max-w-xl leading-relaxed">
                 Effective claims management requires meticulous preparation, documentation, and legal strategy. We provide comprehensive support in the preparation and prosecution of contractual and commercial claims.
               </p>
 
-              <p className="text-sm md:text-base text-zinc-400 max-w-xl border-l-2 border-[#1871C9]/50 pl-5 italic">
+              <p className="text-white text-sm md:text-base text-gray-600 max-w-xl border-l-2 border-[#1871C9]/50 pl-5 italic">
                 Our services include identifying entitlement, structuring claims, analysing evidence, managing correspondence, and maintaining detailed records to support claims or defences in negotiations, arbitration, or litigation.
               </p>
 
-              <div className="flex flex-wrap gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05, backgroundColor: "#145da5" }} // Darker shade for hover
-                  whileTap={{ scale: 0.95 }}
-                  className="rounded-full bg-[#1871C9] px-8 py-3 font-semibold text-white shadow-lg transition" // Text color changed to white for contrast
-                >
-                  Claims Advisory
-                </motion.button>
-
-                <button className="rounded-full border border-white/20 bg-white/5 px-8 py-3 font-medium text-white backdrop-blur-md hover:bg-white/10 transition">
-                  Legal Consultation
-                </button>
-              </div>
+              
             </motion.div>
           </div>
 
@@ -88,7 +76,7 @@ const ContractClaim = () => {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="relative group hidden lg:block"
           >
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-gray-200/60 shadow-2xl">
 
               <motion.img
                 whileHover={{ scale: 1.1 }}
@@ -98,7 +86,7 @@ const ContractClaim = () => {
                 alt="Claims Management"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-100/80 via-transparent to-transparent" />
 
 
             </div>
@@ -111,7 +99,7 @@ const ContractClaim = () => {
 
         {/* Background Quote */}
         <div className="absolute bottom-10 right-10 opacity-5 pointer-events-none hidden md:block">
-          <span className="text-7xl font-serif italic text-white select-none">
+        <span className="text-7xl font-serif italic text-gray-300 select-none">
             "Lex Est Dictamen Rationis"
           </span>
         </div>

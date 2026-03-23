@@ -22,10 +22,10 @@ const LegalDisclaimer = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-400 font-sans selection:bg-amber-600 selection:text-white">
+    <div className="min-h-screen bg-white text-gray-600 font-sans selection:bg-amber-600 selection:text-white">
       
       {/* Animated Hero Header */}
-      <header className="relative py-24 px-6 text-center border-b border-white/5 overflow-hidden">
+      <header className="relative py-24 px-6 text-center border-b border-gray-200 overflow-hidden">
         {/* Animated Background Element */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
@@ -39,10 +39,10 @@ const LegalDisclaimer = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-white">
+          <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-gray-900">
             Legal <span className="text-amber-600">Disclaimer.</span>
           </h1>
-          <p className="mt-4 text-zinc-500 tracking-[0.4em] uppercase text-xs md:text-sm font-bold">
+          <p className="mt-4 text-gray-600 tracking-[0.4em] uppercase text-xs md:text-sm font-bold">
             Notice of Information & Liability Limits
           </p>
         </motion.div>
@@ -55,9 +55,9 @@ const LegalDisclaimer = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16 p-8 bg-zinc-900/50 border-l-4 border-amber-600 rounded-r-2xl"
+          className="mb-16 p-8 bg-gray-200/70 border-l-4 border-amber-600 rounded-r-2xl"
         >
-          <p className="text-white text-lg italic leading-relaxed font-light">
+          <p className="text-gray-900 text-lg italic leading-relaxed font-light">
             "Your use of this website is subject to the following terms. By remaining on this platform, you acknowledge that no legal counsel is being provided."
           </p>
         </motion.div>
@@ -73,11 +73,11 @@ const LegalDisclaimer = () => {
               viewport={{ once: true }}
               className="group"
             >
-              <h2 className="text-zinc-100 text-xl font-bold uppercase tracking-widest mb-4 flex items-center group-hover:text-amber-500 transition-colors">
+              <h2 className="text-gray-900 text-xl font-bold uppercase tracking-widest mb-4 flex items-center group-hover:text-amber-500 transition-colors">
                 <span className="text-amber-600 mr-3 text-sm">0{index + 1}</span>
                 {point.title}
               </h2>
-              <p className="leading-relaxed border-l border-zinc-800 pl-6 ml-2">
+              <p className="leading-relaxed border-l border-gray-200 pl-6 ml-2">
                 {point.content}
               </p>
             </motion.section>

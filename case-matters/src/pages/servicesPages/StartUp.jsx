@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -27,17 +28,17 @@ const StartUp = () => {
    <>
   <section
   ref={container}
-  className="relative min-h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center pt-20"
+  className="relative min-h-screen w-full overflow-hidden bg-white font-sans flex items-center pt-20"
 >
   {/* 1. Background Image - Updated to a modern, architectural/tech-vibe for startups */}
   <img
     src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2000&auto=format&fit=crop"
     alt="Modern Startup Environment"
-    className="absolute inset-0 h-full w-full object-cover opacity-20"
+    className="absolute inset-0 h-full w-full object-cover opacity-80"
   />
 
   {/* 2. Cinematic Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/90 to-transparent" />
+  <div className="absolute inset-0 bg-black/60" />
 
   {/* 3. Main Content Grid */}
   <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-12">
@@ -48,7 +49,7 @@ const StartUp = () => {
         <p className="text-[#1871C9] font-bold tracking-[0.2em] uppercase mb-3 text-xs md:text-sm">
           Venture Support
         </p>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.1]">
+        <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold tracking-tight text-gray-900 leading-[1.1]">
         MSME / Startup Law<br />
           <span className="text-[#1871C9]">& Compliance.</span>
         </h1>
@@ -61,28 +62,28 @@ const StartUp = () => {
         className="space-y-6"
       >
         <div className="space-y-4">
-          <p className="text-lg md:text-xl text-zinc-300 max-w-xl leading-relaxed font-light">
+          <p className="text-white text-lg md:text-xl text-gray-700 max-w-xl leading-relaxed font-light">
             Early-stage businesses face unique legal challenges. We assist founders with 
             <span className="text-white font-medium"> legal structuring, contractual documentation, and regulatory requirements.</span>
           </p>
           
-          <p className="text-base text-zinc-400 max-w-lg leading-relaxed border-l-2 border-[#1871C9]/30 pl-5 italic">
+          <p className="text-white text-base text-gray-600 max-w-lg leading-relaxed border-l-2 border-white
+           pl-5 italic">
             Our services support growth while ensuring compliance, helping you focus on building your venture with confidence.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-4 pt-2">
-          <motion.button
+         <Link to="/all-services">
+         <motion.button
             whileHover={{ scale: 1.05, backgroundColor: "#145da5" }}
             whileTap={{ scale: 0.95 }}
             className="rounded-full bg-[#1871C9] px-8 py-4 text-sm font-bold text-white shadow-[0_10px_20px_rgba(24,113,201,0.2)] transition-all"
           >
             Launch Securely
           </motion.button>
+         </Link>
 
-          <button className="rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-md hover:bg-white/10 transition-all">
-            Founder Advisory
-          </button>
         </div>
       </motion.div>
     </div>
@@ -95,19 +96,19 @@ const StartUp = () => {
       className="relative space-y-5 hidden lg:block"
     >
       {/* Card 1 */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl group hover:border-white/20 transition-all">
+      <div className="relative overflow-hidden rounded-2xl border border-gray-200/60 bg-black/20 p-8 backdrop-blur group hover:border-gray-200 transition-all">
         <h3 className="text-[#1871C9] text-xs font-black uppercase tracking-[0.2em] mb-3">
           Scalable Infrastructure
         </h3>
-        <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+        <p className="text-white text-gray-700 text-sm md:text-base leading-relaxed">
           We provide clear, commercially sensible advice tailored to the evolving 
           needs of startups and emerging enterprises.
         </p>
       </div>
 
       {/* Card 2 */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#1871C9]/20 bg-zinc-900/40 p-8 group hover:bg-zinc-900/60 transition-all">
-        <p className="text-zinc-200 text-sm md:text-base leading-relaxed relative z-10">
+      <div className="relative overflow-hidden rounded-2xl border border-[#1871C9]/20 bg-black/20 p-8 group backdrop-blur hover:bg-gray-200/80 transition-all">
+        <p className="text-white text-gray-700 text-sm md:text-base leading-relaxed relative z-10">
           From legal structuring to complex regulatory navigation, we manage the risk 
           so you can manage the innovation.
         </p>
@@ -121,7 +122,7 @@ const StartUp = () => {
 
   {/* 4. Background Quote */}
   <div className="absolute bottom-10 right-10 opacity-5 pointer-events-none hidden md:block">
-    <span className="text-6xl lg:text-8xl font-serif italic text-white select-none">
+    <span className="text-6xl lg:text-8xl font-serif italic text-gray-300 select-none">
       "Res Ipsa Loquitur"
     </span>
   </div>

@@ -66,7 +66,7 @@ const Home = () => {
 
   return (
     <>
-      <section className="relative w-full h-screen bg-zinc-950 overflow-hidden">
+      <section className="relative w-full h-screen bg-white overflow-hidden">
         {/* --- BACKGROUND VIDEO --- */}
         <div className="absolute inset-0 z-0">
           <video
@@ -74,12 +74,13 @@ const Home = () => {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-50 md:opacity-60"
+            className="w-full h-full object-cover "
           >
             <source src={bgVideo} type="video/mp4" />
           </video>
           {/* Radial Overlay */}
-          <div className="absolute inset-0 bg-zinc-950/40 bg-[radial-gradient(circle,_transparent_20%,_#09090b_90%)]" />
+          <div className="absolute inset-0 bg-black/50 md:bg-black/60" />
+          
         </div>
 
         {/* --- CONTENT LAYER --- */}
@@ -98,7 +99,7 @@ const Home = () => {
                 <motion.div
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
-                  className="p-2 md:p-3 bg-white/5 backdrop-blur-sm rounded-full border border-white/10"
+                  className="p-2 md:p-3 bg-gray-200/60 backdrop-blur-sm rounded-full border border-gray-200/80"
                 >
                   {contents[currentIndex].icon}
                 </motion.div>
@@ -108,12 +109,12 @@ const Home = () => {
               </div>
               
               {/* FIXED HEADING: Responsive sizes to prevent overflow */}
-              <h1 className="w-full text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.2] md:leading-[1.1] tracking-tight px-2">
+              <h1 className="text-white w-full text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-gray-900 leading-[1.2] md:leading-[1.1] tracking-tight px-2">
                 {contents[currentIndex].title}
               </h1>
               
               {/* Description */}
-              <p className="text-zinc-300 text-sm sm:text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light px-4">
+              <p className="text-white text-sm sm:text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light px-4">
                 {contents[currentIndex].desc}
               </p>
               

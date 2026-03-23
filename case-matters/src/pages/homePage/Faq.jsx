@@ -88,7 +88,7 @@
     }, []);
 
     return (
-<div className="w-full pt-48 sm:pt-40 pb-10 px-6 md:px-10 bg-zinc-950 font-sans">
+<div className="w-full sm:pt-10 pb-10 px-6 md:px-10 bg-white font-sans">
   <div className="max-w-4xl mx-auto">
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -96,7 +96,7 @@
       viewport={{ once: true }}
       className="text-center mb-16"
     >
-      <h2 className="text-white text-4xl md:text-5xl font-extrabold tracking-tight">
+      <h2 className="text-gray-900 text-4xl md:text-5xl font-extrabold tracking-tight">
         Frequently Asked <span className="text-[#1871C9]">Questions</span>
       </h2>
       <div className="w-20 h-1 bg-[#1871C9] mx-auto mt-4 rounded-full" />
@@ -106,21 +106,21 @@
       {faqs.map((faq, index) => (
         <div
           key={index}
-          className="faq-item group border border-[#1871C9]/10 rounded-xl bg-white/5 overflow-hidden transition-colors hover:border-[#1871C9]/30"
+          className="faq-item group border border-[#1871C9]/10 rounded-xl bg-gray-200/70 overflow-hidden transition-colors hover:border-[#1871C9]/30"
         >
           <button
             onClick={() => toggle(index)}
             className="w-full text-left p-6 flex justify-between items-start gap-4"
           >
-            <span className={`font-semibold text-lg md:text-xl transition-colors duration-300 ${active === index ? "text-[#1871C9]" : "text-zinc-200"}`}>
+            <span className={`font-semibold text-lg md:text-xl transition-colors duration-300 ${active === index ? "text-[#1871C9]" : "text-gray-600"}`}>
               {faq.question}
             </span>
 
-            <span className={`flex-shrink-0 mt-1 w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-300 ${active === index ? "bg-[#1871C9] border-[#1871C9] rotate-180" : "bg-transparent border-white/20"}`}>
+            <span className={`flex-shrink-0 mt-1 w-6 h-6 flex items-center justify-center rounded-full border transition-all duration-300 ${active === index ? "bg-[#1871C9] border-[#1871C9] rotate-180" : "bg-transparent border-gray-200/60"}`}>
               {active === index ? (
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7L6 3L10 7" stroke="#09090b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               ) : (
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 5L6 9L10 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 5L6 9L10 5" stroke="#111827" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               ) }
             </span>
           </button>
@@ -133,7 +133,7 @@
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.4, ease: "easeInOut" }}
               >
-                <div className="px-6 pb-6 text-zinc-400 leading-relaxed text-base md:text-lg border-t border-white/5 pt-4">
+                <div className="px-6 pb-6 text-gray-600 leading-relaxed text-base md:text-lg border-t border-gray-200/60 pt-4">
                   {faq.answer}
                 </div>
               </motion.div>

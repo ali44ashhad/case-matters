@@ -59,15 +59,15 @@ const LawHeroExplosion = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-zinc-950 overflow-hidden flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden flex items-center justify-center">
       
       {/* Central Legal Heading */}
       <div className="main-title relative z-50 text-center pointer-events-none px-6">
-        <h1 className="text-white text-6xl md:text-[8rem] font-black uppercase leading-[0.85] tracking-tighter">
+        <h1 className="text-gray-900 text-6xl md:text-[8rem] font-black uppercase leading-[0.85] tracking-tighter">
           Justice <br />
           <span className="text-amber-600">Unified.</span>
         </h1>
-        <p className="mt-8 text-zinc-500 text-xs md:text-sm uppercase tracking-[0.5em] font-semibold">
+        <p className="mt-8 text-gray-600 text-xs md:text-sm uppercase tracking-[0.5em] font-semibold">
           Defending Liberty • Protecting Assets • Defining Truth
         </p>
       </div>
@@ -78,7 +78,7 @@ const LawHeroExplosion = () => {
           <div
             key={i}
             ref={(el) => (blocksRef.current[i] = el)}
-            className={`absolute w-56 h-72 md:w-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-white/10 pointer-events-auto transition-transform duration-500 hover:z-[60]
+            className={`absolute w-56 h-72 md:w-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border border-gray-200/60 pointer-events-auto transition-transform duration-500 hover:z-[60]
               ${i === 0 ? '-translate-x-48 -translate-y-36' : ''}
               ${i === 1 ? 'translate-x-48 -translate-y-48' : ''}
               ${i === 2 ? '-translate-x-64 translate-y-36' : ''}
@@ -89,8 +89,8 @@ const LawHeroExplosion = () => {
             <img src={block.img} alt={block.title} className="w-full h-full object-cover grayscale-[30%]" />
             
             {/* Content Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-6">
-              <h3 className="text-white font-black uppercase text-xl tracking-tight leading-none">
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-100 via-gray-100/30 to-transparent flex flex-col justify-end p-6">
+              <h3 className="text-gray-900 font-black uppercase text-xl tracking-tight leading-none">
                 {block.title.split(' ')[0]} <br />
                 <span className="text-amber-500">{block.title.split(' ')[1]}</span>
               </h3>

@@ -60,10 +60,10 @@ const Testimonials = () => {
   const isAtEnd = currentIndex >= testimonials.length - visibleCards;
 
   // Render nothing or a skeleton while loading to prevent GSAP calculation errors
-  if (loading) return <div className="py-24 bg-[#09090B] text-center text-white">Loading Testimonials...</div>;
+  if (loading) return <div className="py-24 bg-white text-center text-gray-700">Loading Testimonials...</div>;
 
   return (
-    <section className="w-full py-24 bg-[#09090B] overflow-hidden font-sans">
+    <section className="w-full py-24 bg-white overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header Section */}
@@ -72,7 +72,7 @@ const Testimonials = () => {
             <p className="text-[#1871C9] font-bold tracking-[0.3em] uppercase mb-4 text-xs">
               Client Success
             </p>
-            <h2 className="text-white text-4xl md:text-6xl font-serif font-bold leading-tight">
+            <h2 className="text-gray-900 text-4xl md:text-6xl font-serif font-bold leading-tight">
               What our <span className="text-[#1871C9]">Clients say.</span>
             </h2>
           </div>
@@ -83,8 +83,8 @@ const Testimonials = () => {
               disabled={isAtStart}
               className={`p-4 rounded-full border transition-all duration-300 ${
                 isAtStart 
-                ? "opacity-50 text-white border-white/10 cursor-not-allowed" 
-                : "border-white/10 bg-[#1871C9] text-black hover:cursor-pointer"
+                ? "opacity-50 text-gray-400 border-gray-200/60 cursor-not-allowed" 
+                : "border-gray-200/60 bg-[#1871C9] text-black hover:cursor-pointer"
               }`}
             >
               <ChevronLeft size={24} />
@@ -94,8 +94,8 @@ const Testimonials = () => {
               disabled={isAtEnd}
               className={`p-4 rounded-full border transition-all duration-300 ${
                 isAtEnd 
-                ? "opacity-50 text-white border-white/10 cursor-not-allowed" 
-                : "border-white/10 bg-[#1871C9] text-black hover:cursor-pointer"
+                ? "opacity-50 text-gray-400 border-gray-200/60 cursor-not-allowed" 
+                : "border-gray-200/60 bg-[#1871C9] text-black hover:cursor-pointer"
               }`}
             >
               <ChevronRight size={24} />
@@ -114,7 +114,7 @@ const Testimonials = () => {
               key={item._id}
               className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.33%-16px)] snap-center"
             >
-              <div className="h-full p-10 rounded-sm bg-[#161617] border border-white/10 flex flex-col justify-between hover:border-[#1871C9]/50 transition-all duration-500 group relative">
+              <div className="h-full p-10 rounded-sm bg-gray-200 border border-gray-200/60 flex flex-col justify-between hover:border-[#1871C9]/50 transition-all duration-500 group relative">
                 
                 <Quote className="absolute top-8 right-8 text-[#1871C9] opacity-10 group-hover:opacity-40 transition-opacity" size={40} />
 
@@ -129,12 +129,12 @@ const Testimonials = () => {
                   </div>
 
                   {/* Backend Description */}
-                  <p className="text-gray-100 text-lg font-light leading-relaxed italic">
+                  <p className="text-gray-700 text-lg font-light leading-relaxed italic">
                     "{item.description}"
                   </p>
                 </div>
 
-                <div className="mt-10 pt-6 border-t border-white/10">
+                <div className="mt-10 pt-6 border-t border-gray-200">
                   {/* Backend Name & Company */}
                   <h4 className="text-[#1871C9] font-bold text-xl">{item.name}</h4>
                   <p className="text-[#1871C9] text-xs uppercase tracking-widest mt-1 font-semibold">
@@ -151,7 +151,7 @@ const Testimonials = () => {
           {testimonials.map((_, i) => (
             <div 
               key={i} 
-              className={`h-1 transition-all duration-300 rounded-full ${currentIndex === i ? 'w-8 bg-[#1871C9]' : 'w-2 bg-white/20'}`} 
+              className={`h-1 transition-all duration-300 rounded-full ${currentIndex === i ? 'w-8 bg-[#1871C9]' : 'w-2 bg-gray-300/80'}`} 
             />
           ))}
         </div>
