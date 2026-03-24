@@ -1,10 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Scale, ShieldCheck, Gavel, FileText, Users, Rocket, Building2 } from 'lucide-react';
-import service2 from '../assets/services/service2.png'
-import services4 from '../assets/services/services4.jpg'
-
+import { ArrowRight, ShieldCheck, Gavel, FileText, Users, Rocket, Building2 } from 'lucide-react';
+import service2 from '../assets/services/service2.png';
+import services4 from '../assets/services/services4.jpg';
 
 const ServicePage = () => {
   const navigate = useNavigate();
@@ -63,89 +62,130 @@ const ServicePage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       
-      {/* --- HERO SECTION --- */}
-      <section className="relative w-full py-24 md:py-32 flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1871c9]/25 to-gray-100 opacity-60" />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative z-10 text-center px-6 max-w-4xl"
-        >
-          <span className="text-[#1871c9] font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
-            Excellence in Law
-          </span>
-          <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-6">
-            Services
-          </h1>
-          <p className="text-gray-600 text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light">
-            Specialized legal solutions tailored to navigate complex disputes and protect your interests.
-          </p>
-        </motion.div>
-      </section>
+      {/* --- HERO SECTION (Increased Height & Tri-color Gradient) --- */}
+      <section className="relative w-full min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+  
+  {/* THE GRADIENT: TOP-LEFT TO BOTTOM-RIGHT FLOW */}
+  {/* Black (top-left) -> Blue (middle) -> White (bottom-right) */}
+  <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-[#1871c9]/90 to-white" />
+  
+  {/* Blue Glow overlay for extra "pop" in the center */}
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1871c9]/20 via-transparent to-transparent opacity-50" />
 
-      {/* --- SECOND SECTION: HEADING & PARA --- */}
-      <section className="py-20 px-6 md:px-12 lg:px-24 text-center bg-gray-200/50">
+  {/* Subtle texture overlay for premium feel */}
+  <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay" />
+
+  <motion.div 
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    className="relative z-10 text-center px-6 max-w-4xl"
+  >
+    <motion.span 
+      initial={{ opacity: 0, letterSpacing: "0.1em" }}
+      animate={{ opacity: 1, letterSpacing: "0.4em" }}
+      transition={{ duration: 1 }}
+      className="text-white/80 font-bold uppercase text-[10px] md:text-xs mb-6 block drop-shadow-sm"
+    >
+      Excellence in Law
+    </motion.span>
+    
+    <h1 className="text-6xl md:text-9xl font-serif font-bold tracking-tight mb-8 text-white drop-shadow-2xl">
+      Services
+    </h1>
+    
+    <p className="text-white/90 text-lg md:text-2xl leading-relaxed max-w-2xl mx-auto font-light drop-shadow-md">
+      Specialized legal solutions tailored to navigate complex disputes and protect your interests.
+    </p>
+    
+    {/* Visual divider line to anchor the text */}
+    <motion.div 
+      initial={{ width: 0 }}
+      animate={{ width: "80px" }}
+      transition={{ delay: 0.5, duration: 0.8 }}
+      className="h-1 bg-white/40 mx-auto mt-10 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+    />
+  </motion.div>
+</section>
+
+      {/* --- SECOND SECTION --- */}
+      <section className="py-24 px-6 md:px-12 lg:px-24 text-center bg-gray-50">
         <motion.div 
-           initial={{ opacity: 0 }}
-           whileInView={{ opacity: 1 }}
-           className="max-w-3xl mx-auto"
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-5xl font-serif font-bold mb-8">Our Expertise & Commitment</h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-8">Our Expertise & Commitment</h2>
+          <p className="text-gray-600 text-xl leading-relaxed">
             We provide a comprehensive range of legal services designed to meet the unique needs of our clients. 
-            From structured arbitration to complex construction disputes, our team combines deep industry 
-            knowledge with strategic legal thinking to deliver results that matter. We believe in proactive 
-            risk management and dedicated advocacy.
+            Our team combines deep industry knowledge with strategic legal thinking to deliver results that matter.
           </p>
         </motion.div>
       </section>
 
-      {/* --- SERVICES GRID SECTION --- */}
-      <section className="py-20 px-6 md:px-12 lg:px-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              onClick={() => navigate(service.path)}
-              className="group relative bg-gray-200/70 border border-gray-200/70 rounded-2xl overflow-hidden hover:border-[#1871c9]/50 transition-all duration-500 cursor-pointer flex flex-col"
-            >
-              {/* Image Header */}
-              <div className="h-48 w-full overflow-hidden">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                />
-              </div>
-
-              {/* Card Body */}
-              <div className="p-8 flex-grow flex flex-col">
-                <div className="mb-4 text-[#1871c9] p-2 bg-[#1871c9]/10 w-fit rounded-lg">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-[#1871c9] transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  {service.desc}
-                </p>
-                
-                <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#1871c9]">
-                  Explore Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
+      {/* --- SERVICES GRID SECTION (Glowing Blue Borders) --- */}
+      <section className="pb-24 px-6 md:px-12 lg:px-24 bg-white">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    {services.map((service, index) => (
+      <motion.div
+        key={service.id}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -8 }} // Clean lift without shadow
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        onClick={() => navigate(service.path)}
+        // THIN GLOWING BORDER: Shadow removed, replaced with a subtle ring/border glow
+        className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer flex flex-col border-[1px] border-[#1871c9]/30 ring-1 ring-[#1871c9]/10 hover:border-[#1871c9] hover:ring-[#1871c9]/40"
+      >
+        {/* Image Header */}
+        <div className="h-56 w-full overflow-hidden relative">
+          {/* Top-down subtle blue wash on image */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1871c9]/10 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <motion.img 
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.7 }}
+            src={service.image} 
+            alt={service.title} 
+            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all"
+          />
         </div>
-      </section>
 
-      {/* --- FINAL CTA --- */}
-     
+        {/* Card Body */}
+        <div className="p-8 flex-grow flex flex-col bg-gradient-to-br from-white via-white to-[#1871c9]/5">
+          {/* Icon with glow effect */}
+          <div className="mb-4 text-[#1871c9] p-3 bg-[#1871c9]/10 w-fit rounded-xl group-hover:bg-[#1871c9]/20 group-hover:scale-110 transition-all duration-300">
+            {service.icon}
+          </div>
+
+          <h3 className="text-2xl font-bold mb-4 group-hover:text-[#1871c9] transition-colors">
+            {service.title}
+          </h3>
+          
+          <p className="text-gray-600 text-base leading-relaxed mb-8">
+            {service.desc}
+          </p>
+          
+          <div className="mt-auto flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-[#1871c9]">
+            Explore Service 
+            <motion.div
+              animate={{ x: [0, 5, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <ArrowRight size={18} />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* This creates the "Glory" line at the very top of the card on hover */}
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#1871c9] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      </motion.div>
+    ))}
+  </div>
+</section>
+      
     </div>
   );
 };

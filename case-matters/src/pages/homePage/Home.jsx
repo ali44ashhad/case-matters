@@ -9,14 +9,14 @@ import LawExpandingLayout from './LawExpandingLayout';
 import Blogs from './Blogs';
 import Testimonials from './Testimonials';
 import ContactForm from './ContactForm';
-import bgVideo from '../../assets/homeAssets/law.mp4';
+import bgVideo from '../../assets/homeAssets/hero-video.mp4';
 import SectorsSection from './SectorsSection';
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const contents = [
-    {
+    { 
       id: 1,
       title: "Contract and Claims Management",
       desc: "End-to-end claims support, including claim preparation, evidence collation, correspondence strategy, and systematic record management.",

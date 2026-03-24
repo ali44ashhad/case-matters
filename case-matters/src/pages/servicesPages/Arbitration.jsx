@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import { Link } from 'react-router-dom';
 
 const Arbitration = () => {
   const container = useRef();
@@ -59,15 +60,15 @@ const Arbitration = () => {
             </p>
             
             <div className="flex flex-wrap gap-4">
+              <Link to="/all-services">
               <motion.button 
                  whileTap={{ scale: 0.95 }}
                 className="rounded-full bg-[#1871C9] hover:cursor-pointer hover:bg-[#1871C9]/80 px-10 py-4 font-bold text-zinc-950 shadow-[0_0_20px_rgba(24,113,201,0.3)] transition-all"
               >
                 Our Practice
               </motion.button>
-              <button className="rounded-full border border-gray-200 bg-gray-200/60 px-10 py-4 font-semibold text-gray-900 backdrop-blur-md hover:bg-gray-200/80 transition-all">
-                Contact Us
-              </button>
+              </Link>
+              
             </div>
           </motion.div>
         </div>

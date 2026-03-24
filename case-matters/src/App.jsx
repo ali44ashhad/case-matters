@@ -54,23 +54,23 @@ const App = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center px-4 bg-white/90 backdrop-blur-xl"
+            className="fixed inset-0 z-[9999] flex items-center justify-center px-4 bg-black/50 backdrop-blur"
           >
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 10 }}
-              className="relative max-w-2xl w-full bg-gray-200 border border-[#E2B13C]/20 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden"
+              className="relative max-w-2xl w-full bg-gray-200 border border-[#2795F5]/20 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden"
             >
               {/* Top Accent Line */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E2B13C] to-transparent" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#2795F5] to-transparent" />
               
               <div className="space-y-6">
                 <div className="text-center">
-                  <h2 className="text-[#E2B13C] text-2xl md:text-3xl font-serif font-bold tracking-widest uppercase">
+                  <h2 className="text-[#2795F5] text-2xl md:text-3xl font-serif font-bold tracking-widest uppercase">
                     Disclaimer
                   </h2>
-                  <div className="h-px w-16 bg-[#E2B13C]/40 mx-auto mt-2" />
+                  <div className="h-px w-16 bg-[#2795F5] mx-auto mt-2" />
                 </div>
                 
                 <div className="text-gray-600 text-sm md:text-base leading-relaxed text-center space-y-4 max-h-[50vh] overflow-y-auto px-4 custom-scrollbar font-light">
@@ -88,7 +88,7 @@ const App = () => {
                 <div className="pt-6 flex justify-center">
                   <button 
                     onClick={handleAccept}
-                    className="px-12 py-4 bg-[#E2B13C] text-black font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs transition-all hover:bg-white active:scale-95 shadow-xl shadow-[#E2B13C]/10"
+                    className="px-12 py-4 bg-[#2795F5] text-black font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs transition-all hover:bg-[#62AEF5] active:scale-95 shadow-xl shadow-[#E2B13C]/10"
                   >
                     I Accept the Above
                   </button>

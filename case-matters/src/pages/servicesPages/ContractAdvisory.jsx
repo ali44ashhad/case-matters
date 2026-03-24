@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import { Link } from 'react-router-dom';
 
 const ContractAdvisory = () => {
     const container = useRef();
@@ -68,17 +69,16 @@ const ContractAdvisory = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-3 pt-2">
+                    <Link to="/all-services">
                     <motion.button
                         whileHover={{ scale: 1.05, backgroundColor: "#145da5" }}
                         whileTap={{ scale: 0.95 }}
                         className="rounded-full bg-[#1871C9] px-7 py-3 text-sm font-semibold text-white shadow-md"
                     >
-                        Request Review
+                        view services
                     </motion.button>
-
-                    <button className="rounded-full border border-gray-200 bg-gray-200/60 px-7 py-3 text-sm font-medium text-gray-900 backdrop-blur hover:bg-gray-200/80 transition">
-                        Risk Assessment
-                    </button>
+                    </Link>
+                    
                 </div>
             </motion.div>
         </div>

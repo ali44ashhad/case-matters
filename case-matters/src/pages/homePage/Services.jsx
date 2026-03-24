@@ -24,7 +24,6 @@ const Services = () => {
     const cards = gsap.utils.toArray('.service-card');
     let mm = gsap.matchMedia();
 
-    // Desktop Only Stacking (>= 768px)
     mm.add("(min-width: 768px)", () => {
       cards.forEach((card, index) => {
         gsap.to(card, {
@@ -42,7 +41,6 @@ const Services = () => {
       });
     });
 
-    // Mobile Animations Only (No Pinning)
     mm.add("(max-width: 767px)", () => {
       cards.forEach((card) => {
         gsap.fromTo(card, 
@@ -86,30 +84,35 @@ const Services = () => {
               key={service.id}
               className="service-card block relative w-full group"
             >
-              {/* Changed rounded-3xl to rounded-xl for slight rounding */}
-              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-50/50 p-6 md:p-12 backdrop-blur-sm transition-all duration-500 group-hover:border-[#1871C9]/30 group-hover:bg-gray-100 shadow-lg group-hover:shadow-2xl">
+              {/* GLOWING GRADIENT BORDER WRAPPER */}
+              <div className="relative p-[1.5px] rounded-xl overflow-hidden transition-all duration-500 bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent group-hover:shadow-[0_0_20px_rgba(24,113,201,0.4)]">
                 
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#1871C9] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
-                
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
-                  <div className="flex-1 space-y-3 md:space-y-4">
-                    <span className="text-[#1871C9] font-mono text-sm md:text-lg font-bold">0{index + 1}</span>
-                    <h3 className="text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
-                      {service.title}
-                    </h3> 
-                    <p className="text-gray-600 text-sm md:text-lg leading-relaxed max-w-3xl">
-                      {service.desc}
-                    </p>
-                  </div>
+                {/* Background Inner Card */}
+                <div className="relative overflow-hidden rounded-[11px] bg-white p-6 md:p-12 transition-all duration-500 group-hover:bg-gray-50/80">
                   
-                  {/* Icon */}
-                  <div className="h-12 w-12 md:h-16 md:w-16 rounded-lg border border-gray-200 flex items-center justify-center group-hover:bg-[#1871C9] group-hover:border-[#1871C9] transition-all duration-500">
-                    <svg 
-                      className="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors" 
-                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+                  {/* Hover Accent Bar */}
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-[#1871C9] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
+                  
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
+                    <div className="flex-1 space-y-3 md:space-y-4">
+                      <span className="text-[#1871C9] font-mono text-sm md:text-lg font-bold">0{index + 1}</span>
+                      <h3 className="text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
+                        {service.title}
+                      </h3> 
+                      <p className="text-gray-600 text-sm md:text-lg leading-relaxed max-w-3xl">
+                        {service.desc}
+                      </p>
+                    </div>
+                    
+                    {/* Icon Button */}
+                    <div className="h-12 w-12 md:h-16 md:w-16 rounded-lg border border-gray-200 flex items-center justify-center group-hover:bg-[#1871C9] group-hover:border-[#1871C9] transition-all duration-500 group-hover:shadow-[0_0_15px_rgba(24,113,201,0.5)]">
+                      <svg 
+                        className="w-5 h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors" 
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>

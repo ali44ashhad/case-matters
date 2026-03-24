@@ -5,9 +5,10 @@ import {
   Rocket, Wallet, Truck, HeartPulse, Home,
   ChevronLeft, ChevronRight
 } from 'lucide-react';
+
+// Assuming these assets exist in your project structure
 import infrastructureImage from '../../assets/homeAssets/infrastructure-image.jpg';
 import professionalService from '../../assets/homeAssets/professional-service.jpg';
-
 
 const SectorsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -80,9 +81,6 @@ const SectorsCarousel = () => {
 
   return (
     <section className="relative min-h-screen bg-white flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans">
-      {/* Background Ornaments */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#1871C9]/5 blur-[120px] rounded-full pointer-events-none" />
-      
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         {/* Header Section */}
@@ -98,60 +96,73 @@ const SectorsCarousel = () => {
             Every Client, Every <span className="text-[#1871C9] italic font-light">Case Matters.</span>
           </h2>
         </div>
-
+    
         {/* Carousel Container */}
-        <div className="relative">
-          <div className="overflow-hidden rounded-[2.5rem] border border-gray-200 bg-gray-200/50 backdrop-blur-md shadow-2xl">
+        <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-[#1871C9]/30 via-[#1871C9]/10 to-transparent shadow-[0_10px_40px_rgba(24,113,201,0.05)]">
+          
+          <div className="overflow-hidden rounded-[15px] relative bg-white">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]"
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 lg:grid-cols-2 min-h-[550px]"
               >
                 {/* LEFT SIDE: IMAGE BLOCK */}
-                <div className="relative h-64 lg:h-auto overflow-hidden">
+                <div className="relative h-72 lg:h-auto overflow-hidden bg-gray-100">
                   <motion.img
                     key={`img-${currentIndex}`}
-                    initial={{ scale: 1.2, filter: "grayscale(100%)" }}
-                    animate={{ scale: 1, filter: "grayscale(0%)" }}
-                    transition={{ duration: 1.5 }}
+                    initial={{ scale: 1.1, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1.2 }}
                     src={sectors[currentIndex].image}
                     alt={sectors[currentIndex].title}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   
-                  {/* Floating Icon Over Image */}
-                  <div className="absolute bottom-8 left-8 p-4 bg-[#1871C9] text-white rounded-2xl shadow-2xl">
+                  <div className="absolute bottom-8 left-8 p-5 bg-[#1871C9] text-white rounded-xl shadow-2xl z-20">
                     {sectors[currentIndex].icon}
                   </div>
                 </div>
-
-                {/* RIGHT SIDE: CONTENT BLOCK */}
-                <div className="p-10 md:p-16 flex flex-col justify-center bg-gray-200/70">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="text-[#1871C9] font-serif italic text-2xl">0{currentIndex + 1}</span>
-                    <div className="h-px w-12 bg-gray-300" />
+    
+                {/* RIGHT SIDE: CONTENT BLOCK WITH TARGETED GRADIENT */}
+                <div className="p-10 md:p-16 flex flex-col justify-center relative z-10 bg-gradient-to-br from-[#1871C9]/10 via-white to-white">
+                  
+                  {/* Internal Branding Elements */}
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="text-[#1871C9] font-serif italic text-3xl font-bold">
+                      0{currentIndex + 1}
+                    </span>
+                    <div className="h-[2px] w-16 bg-gradient-to-r from-[#1871C9] to-transparent" />
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  <h3 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">
                     {sectors[currentIndex].title}
                   </h3>
                   
-                  <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
+                  <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10 font-light">
                     {sectors[currentIndex].desc}
                   </p>
-
-                  <div className="pt-8 border-t border-gray-300 flex items-center justify-between">
-                    <span className="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-bold">Sector Expertise</span>
-                    <div className="flex gap-4">
-                      <button onClick={prevSlide} className="p-3 rounded-full border border-gray-300 text-gray-900 hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
-                        <ChevronLeft size={20} />
+    
+                  {/* Navigation Footer */}
+                  <div className="pt-10 border-t border-[#1871C9]/10 flex items-center justify-between">
+                    <span className="text-[#1871C9] text-[10px] uppercase tracking-[0.3em] font-black">
+                      Sector Expertise
+                    </span>
+                    <div className="flex gap-5">
+                      <button 
+                        onClick={prevSlide} 
+                        className="p-4 rounded-full border border-[#1871C9]/20 text-gray-900 hover:bg-[#1871C9] hover:text-white transition-all duration-300"
+                      >
+                        <ChevronLeft size={24} />
                       </button>
-                      <button onClick={nextSlide} className="p-3 rounded-full border border-gray-300 text-gray-900 hover:bg-[#1871C9] hover:border-[#1871C9] transition-all">
-                        <ChevronRight size={20} />
+                      <button 
+                        onClick={nextSlide} 
+                        className="p-4 rounded-full border border-[#1871C9]/20 text-gray-900 hover:bg-[#1871C9] hover:text-white transition-all duration-300"
+                      >
+                        <ChevronRight size={24} />
                       </button>
                     </div>
                   </div>
@@ -160,13 +171,6 @@ const SectorsCarousel = () => {
             </AnimatePresence>
           </div>
         </div>
-
-        {/* Quotes Accent */}
-        {/* <div className="mt-16 text-center max-w-3xl mx-auto opacity-40">
-           <p className="text-zinc-400 italic text-sm">
-             "Judiciary is the guardian of civilized life." — Dr. A.P.J. Abdul Kalam
-           </p>
-        </div> */}
       </div>
     </section>
   );
