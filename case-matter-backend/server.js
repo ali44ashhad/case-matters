@@ -6,6 +6,7 @@ import seedAdmin from "./seeding/seedAdmin.js"
 import adminRoutes from "./routes/adminRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import cookieParser from "cookie-parser"
+import mongoose from "mongoose"
 
 dotenv.config()
 
@@ -24,7 +25,14 @@ app.use("/api/admin", adminRoutes)
 app.use("/api/user", userRoutes)
 
 connectDB()
-seedAdmin(); 
+
+mongoose.connection.once("open", async () => {
+    try {
+        await seedAdmin()
+    } catch (e) {
+        console.log("❌ Seed admin failed:", e?.message || e)
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

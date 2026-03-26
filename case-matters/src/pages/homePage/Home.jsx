@@ -103,7 +103,7 @@ const Home = () => {
                 >
                   {contents[currentIndex].icon}
                 </motion.div>
-                <span className="text-[#1871C9] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs">
+                <span className="text-[#1871C9] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-base md:text-lg">
                   Legal Excellence
                 </span>
               </div>
@@ -120,7 +120,7 @@ const Home = () => {
               
               {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-10 sm:px-0">
-                <button onClick={scrollToContact} className="px-8 md:px-10 py-4 bg-[#1871C9] text-white font-bold rounded-sm hover:bg-blue-600 transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/20 active:scale-95 cursor-pointer">
+                <button onClick={scrollToContact} className="px-8 md:px-10 py-4 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white font-bold rounded-sm hover:from-[#145da5] hover:to-[#1871C9] transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/25 active:scale-95 cursor-pointer">
                   Consultation Now
                 </button>
               </div>

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import * as THREE from 'three';
 
 const ContactForm = () => {
+  const canvasContainer = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -57,8 +59,91 @@ const ContactForm = () => {
     }
   };
 
+  // Subtle 3D particles background (light theme)
+  useEffect(() => {
+    if (!canvasContainer.current) return;
+
+    let rafId = 0;
+    const scene = new THREE.Scene();
+    scene.background = null;
+    scene.fog = new THREE.FogExp2(0xe8f0fa, 0.02);
+
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 80);
+    camera.position.set(0, 0.4, 6.2);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    canvasContainer.current.appendChild(renderer.domElement);
+
+    const particlesGeo = new THREE.BufferGeometry();
+    const particleCount = 900;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 18;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 9;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2;
+    }
+    particlesGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    const particlesMat = new THREE.PointsMaterial({
+      color: 0x5a9fe0,
+      size: 0.02,
+      transparent: true,
+      opacity: 0.16,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+
+    const ambient = new THREE.AmbientLight(0xd0dff0, 0.75);
+    scene.add(ambient);
+
+    const resize = () => {
+      if (!canvasContainer.current) return;
+      const { width, height } = canvasContainer.current.getBoundingClientRect();
+      const w = width || window.innerWidth;
+      const h = height || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    resize();
+
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(resize) : null;
+    ro?.observe(canvasContainer.current);
+
+    let t = 0;
+    const animate = () => {
+      rafId = requestAnimationFrame(animate);
+      t += 0.006;
+      particles.rotation.y = t * 0.05;
+      particles.rotation.x = Math.sin(t * 0.25) * 0.06;
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      ro?.disconnect();
+      particlesGeo.dispose();
+      particlesMat.dispose();
+      renderer.dispose();
+      if (canvasContainer.current?.contains(renderer.domElement)) {
+        canvasContainer.current.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
   return (
-    <section id="contact" className="relative bg-white pt-0 md:pt-24 pb-24 px-6 md:px-20 overflow-hidden font-sans">
+    <section id="contact" className="relative pt-0 md:pt-24 pb-24 px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+      <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
+
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E2B13C]/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#1871C9]/10 blur-[100px] rounded-full pointer-events-none" />
 
@@ -155,7 +240,7 @@ const ContactForm = () => {
             <motion.button 
               disabled={loading}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-lg bg-[#1871C9] hover:bg-blue-700 text-white font-bold text-sm uppercase tracking-widest transition-all shadow-lg disabled:opacity-50"
+              className="w-full py-4 rounded-lg bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] hover:from-[#145da5] hover:to-[#1871C9] text-white font-bold text-sm uppercase tracking-widest transition-all shadow-lg shadow-blue-900/25 disabled:opacity-50"
             >
               {loading ? "Sending..." : "Submit Request"}
             </motion.button>

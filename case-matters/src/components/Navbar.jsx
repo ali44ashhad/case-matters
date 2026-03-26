@@ -4,15 +4,6 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navLinks = [
     { name: 'Home', href: 'home' },
@@ -54,23 +45,14 @@ const Navbar = () => {
         `}
       </style>
 
-      {/* CHANGES MADE:
-          - Initial state: bg-white/10 (very transparent) + backdrop-blur-md.
-          - Scrolled state: bg-white/90 (more opaque) + backdrop-blur-xl + shadow.
-          - Added h-20 for height and border-b for definition.
-      */}
       <nav 
-        className={`fixed top-0 left-0 w-full h-20 flex items-center justify-between px-6 md:px-12 z-[100] transition-all duration-500 ${
-          scrolled 
-            ? 'bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-200/50' 
-            : 'bg-white/10 backdrop-blur-md border-b border-white/10'
-        }`}
+        className="fixed top-0 left-0 w-full h-20 flex items-center justify-between px-6 md:px-12 z-[100] transition-all duration-500 bg-black/20 backdrop-blur-md border-b border-white/10"
       >
         
         {/* Logo */}
         <Link to="/" onClick={(e) => scrollToSection(e, 'home')}>
           <div className="text-2xl font-black tracking-tighter cursor-pointer uppercase text-[#1871C9]">
-            Logo<span className={scrolled ? "text-[#6BB1F5]" : "text-white"}>.</span>
+            Logo<span className="text-white">.</span>
           </div>
         </Link>
 
@@ -81,9 +63,7 @@ const Navbar = () => {
               <a 
                 href={`#${link.href}`} 
                 onClick={(e) => scrollToSection(e, link.href)}
-                className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-colors relative group ${
-                    scrolled ? 'text-gray-800' : 'text-gray-100'
-                }`}
+                className="text-[11px] uppercase tracking-[0.2em] font-bold transition-colors relative group text-gray-100"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#1871C9] transition-all duration-300 group-hover:w-full"></span>
@@ -97,7 +77,7 @@ const Navbar = () => {
               href="https://wa.me/yournumber" 
               target="_blank" 
               rel="noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 bg-[#1871C9] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#0F4A81] transition-all rounded-full shadow-lg shadow-blue-500/20 group"
+              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:from-[#145da5] hover:to-[#1871C9] transition-all rounded-full shadow-lg shadow-blue-500/25 group"
             >
               <MessageCircle size={16} className="text-green-400 animate-pulse-soft fill-green-400" />
               Contact Us
@@ -111,7 +91,7 @@ const Navbar = () => {
             href="https://wa.me/yournumber" 
             target="_blank" 
             rel="noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-[#1871C9] text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md shadow-blue-900/20 hover:from-[#145da5] hover:to-[#1871C9] transition-all"
           >
             <MessageCircle size={14} className="text-green-400 fill-green-400" />
             Contact

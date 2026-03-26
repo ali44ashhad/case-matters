@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Building2, Zap, Briefcase, Factory, Scale, 
   Rocket, Wallet, Truck, HeartPulse, Home,
   ChevronLeft, ChevronRight
 } from 'lucide-react';
+import * as THREE from 'three';
 
 // Assuming these assets exist in your project structure
 import infrastructureImage from '../../assets/homeAssets/infrastructure-image.jpg';
@@ -12,6 +13,7 @@ import professionalService from '../../assets/homeAssets/professional-service.jp
 
 const SectorsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const canvasContainer = useRef(null);
 
   const sectors = [
     { 
@@ -79,8 +81,98 @@ const SectorsCarousel = () => {
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % sectors.length);
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + sectors.length) % sectors.length);
 
+  // Subtle 3D particles (light theme) to match other sections
+  useEffect(() => {
+    if (!canvasContainer.current) return;
+
+    let rafId = 0;
+    const scene = new THREE.Scene();
+    scene.background = null;
+    scene.fog = new THREE.FogExp2(0xe8f0fa, 0.02);
+
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 80);
+    camera.position.set(0, 0.4, 6.2);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    canvasContainer.current.appendChild(renderer.domElement);
+
+    const particlesGeo = new THREE.BufferGeometry();
+    const particleCount = 900;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 18;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 9;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2;
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const particlesMat = new THREE.PointsMaterial({
+      color: 0x5a9fe0,
+      size: 0.02,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const particles = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particles);
+
+    const ambient = new THREE.AmbientLight(0xd0dff0, 0.75);
+    scene.add(ambient);
+
+    const key = new THREE.PointLight(0x1871c9, 0.7, 50);
+    key.position.set(2.2, 2, 3);
+    scene.add(key);
+
+    const resize = () => {
+      if (!canvasContainer.current) return;
+      const { width, height } = canvasContainer.current.getBoundingClientRect();
+      const w = width || window.innerWidth;
+      const h = height || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    resize();
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
+    ro?.observe(canvasContainer.current);
+
+    let t = 0;
+    const animate = () => {
+      rafId = requestAnimationFrame(animate);
+      t += 0.006;
+      particles.rotation.y = t * 0.05;
+      particles.rotation.x = Math.sin(t * 0.25) * 0.06;
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      ro?.disconnect();
+      particlesGeo.dispose();
+      particlesMat.dispose();
+      renderer.dispose();
+      if (canvasContainer.current?.contains(renderer.domElement)) {
+        canvasContainer.current.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-screen bg-white flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans">
+    <section className="relative min-h-screen flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+      {/* 3D Canvas Background */}
+      <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
+
+      {/* Light overlays to match AboutSecond */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         {/* Header Section */}
@@ -88,7 +180,7 @@ const SectorsCarousel = () => {
           <motion.p 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="text-[#1871C9] font-bold tracking-[0.3em] uppercase text-xs"
+            className="text-[#1871C9] font-bold tracking-[0.3em] uppercase text-base md:text-lg"
           >
             Industry Verticals
           </motion.p>
@@ -98,9 +190,9 @@ const SectorsCarousel = () => {
         </div>
     
         {/* Carousel Container */}
-        <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-[#1871C9]/30 via-[#1871C9]/10 to-transparent shadow-[0_10px_40px_rgba(24,113,201,0.05)]">
+        <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-[#1871C9]/30 via-[#1871C9]/10 to-transparent shadow-[0_10px_40px_rgba(24,113,201,0.07)]">
           
-          <div className="overflow-hidden rounded-[15px] relative bg-white">
+          <div className="overflow-hidden rounded-[15px] relative bg-white/80 backdrop-blur-md border border-[#1871C9]/10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -148,19 +240,19 @@ const SectorsCarousel = () => {
     
                   {/* Navigation Footer */}
                   <div className="pt-10 border-t border-[#1871C9]/10 flex items-center justify-between">
-                    <span className="text-[#1871C9] text-[10px] uppercase tracking-[0.3em] font-black">
+                    <span className="text-[#1871C9] text-base md:text-lg uppercase tracking-[0.3em] font-black">
                       Sector Expertise
                     </span>
                     <div className="flex gap-5">
                       <button 
                         onClick={prevSlide} 
-                        className="p-4 rounded-full border border-[#1871C9]/20 text-gray-900 hover:bg-[#1871C9] hover:text-white transition-all duration-300"
+                        className="p-4 rounded-full border border-[#1871C9]/20 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white hover:from-[#145da5] hover:to-[#1871C9] transition-all duration-300 shadow-md shadow-blue-900/20"
                       >
                         <ChevronLeft size={24} />
                       </button>
                       <button 
                         onClick={nextSlide} 
-                        className="p-4 rounded-full border border-[#1871C9]/20 text-gray-900 hover:bg-[#1871C9] hover:text-white transition-all duration-300"
+                        className="p-4 rounded-full border border-[#1871C9]/20 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white hover:from-[#145da5] hover:to-[#1871C9] transition-all duration-300 shadow-md shadow-blue-900/20"
                       >
                         <ChevronRight size={24} />
                       </button>
@@ -175,5 +267,4 @@ const SectorsCarousel = () => {
     </section>
   );
 };
-
 export default SectorsCarousel;
