@@ -63,7 +63,7 @@ const Navbar = () => {
               <a 
                 href={`#${link.href}`} 
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-[11px] uppercase tracking-[0.2em] font-bold transition-colors relative group text-gray-100"
+                className="text-sm uppercase tracking-[0.2em] font-bold transition-colors relative group text-gray-100"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#1871C9] transition-all duration-300 group-hover:w-full"></span>
@@ -77,7 +77,7 @@ const Navbar = () => {
               href="https://wa.me/yournumber" 
               target="_blank" 
               rel="noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:from-[#145da5] hover:to-[#1871C9] transition-all rounded-full shadow-lg shadow-blue-500/25 group"
+              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-sm uppercase tracking-[0.2em] font-bold hover:from-[#145da5] hover:to-[#1871C9] transition-all rounded-full shadow-lg shadow-blue-500/25 group"
             >
               <MessageCircle size={16} className="text-green-400 animate-pulse-soft fill-green-400" />
               Contact Us
@@ -91,7 +91,7 @@ const Navbar = () => {
             href="https://wa.me/yournumber" 
             target="_blank" 
             rel="noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md shadow-blue-900/20 hover:from-[#145da5] hover:to-[#1871C9] transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-sm font-bold uppercase tracking-widest rounded-full shadow-md shadow-blue-900/20 hover:from-[#145da5] hover:to-[#1871C9] transition-all"
           >
             <MessageCircle size={14} className="text-green-400 fill-green-400" />
             Contact

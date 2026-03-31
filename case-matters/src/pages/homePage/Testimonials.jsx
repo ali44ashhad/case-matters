@@ -11,6 +11,8 @@ const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const [visibleCards, setVisibleCards] = useState(3);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -104,26 +106,24 @@ const Testimonials = () => {
   }, []);
 
   const getVisibleCards = () => {
-    if (typeof window === 'undefined') return 1;
+    if (typeof window === "undefined") return 3;
     if (window.innerWidth >= 1024) return 3;
     if (window.innerWidth >= 768) return 2;
     return 1;
   };
 
-  const slide = (direction) => {
+  useEffect(() => {
+    const update = () => setVisibleCards(getVisibleCards());
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const scrollToIndex = (newIndex) => {
     const container = scrollRef.current;
     if (!container) return;
     
-    const visibleCards = getVisibleCards();
     const cardWidth = container.offsetWidth / visibleCards;
-    
-    let newIndex = currentIndex;
-    if (direction === "next" && currentIndex < testimonials.length - visibleCards) {
-      newIndex = currentIndex + 1;
-    } else if (direction === "prev" && currentIndex > 0) {
-      newIndex = currentIndex - 1;
-    }
-
     setCurrentIndex(newIndex);
 
     gsap.to(container, {
@@ -133,9 +133,34 @@ const Testimonials = () => {
     });
   };
 
-  const visibleCards = getVisibleCards();
+  const slide = (direction) => {
+    const maxIndex = Math.max(0, testimonials.length - visibleCards);
+    let newIndex = currentIndex;
+    if (direction === "next") {
+      newIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+    } else if (direction === "prev") {
+      newIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+    }
+    scrollToIndex(newIndex);
+  };
+
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex >= testimonials.length - visibleCards;
+
+  // Auto carousel (pause on hover)
+  useEffect(() => {
+    if (loading) return;
+    if (isPaused) return;
+    if (!testimonials?.length) return;
+
+    const id = setInterval(() => {
+      const maxIndex = Math.max(0, testimonials.length - visibleCards);
+      const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+      scrollToIndex(nextIndex);
+    }, 4200);
+
+    return () => clearInterval(id);
+  }, [loading, isPaused, testimonials, visibleCards, currentIndex]);
 
   if (loading) return <div className="py-24 bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff] text-center text-gray-700 italic">Loading Testimonials...</div>;
 
@@ -199,7 +224,9 @@ const Testimonials = () => {
         {/* Testimonials Slider */}
         <div 
           ref={scrollRef}
-          className="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 pb-12 pt-4 px-2"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 pb-12 pt-4 px-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {testimonials.map((item, index) => (
@@ -210,7 +237,7 @@ const Testimonials = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -10 }} // Card lifts on hover
-              className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.33%-16px)] snap-center"
+              className="shrink-0 basis-full md:basis-[calc(50%-12px)] lg:basis-[calc(33.333%-16px)] snap-center"
             >
               <div className="relative p-[2px] h-full rounded-xl transition-all duration-500 group hover:shadow-[0_15px_35px_-10px_rgba(24,113,201,0.4)]">
                 

@@ -53,7 +53,7 @@ const AboutSecond = () => {
     // Scene setup — transparent so CSS white gradient shows through
     scene = new THREE.Scene();
     scene.background = null;
-    scene.fog = new THREE.FogExp2(0xe8f0fa, 0.012);
+    scene.fog = new THREE.FogExp2(0xf2f7ff, 0.02);
 
     // Camera
     const { width: initialW, height: initialH } = canvasContainer.current.getBoundingClientRect();
@@ -65,93 +65,105 @@ const AboutSecond = () => {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(initialW || window.innerWidth, initialH || window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = false;
     canvasContainer.current.appendChild(renderer.domElement);
 
-    // Lights - cinematic dramatic lighting
-    const ambientLight = new THREE.AmbientLight(0xd0dff0, 0.85);
+    // Lights - soft, subtle (keep content as the hero)
+    const ambientLight = new THREE.AmbientLight(0xeaf2ff, 1.0);
     scene.add(ambientLight);
     objectsToDispose.push(ambientLight);
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
-    mainLight.position.set(3, 5, 2);
-    mainLight.castShadow = true;
+    const mainLight = new THREE.DirectionalLight(0xffffff, 0.65);
+    mainLight.position.set(2.5, 4.5, 3.5);
     scene.add(mainLight);
     objectsToDispose.push(mainLight);
 
-    const fillLight = new THREE.PointLight(0x2266aa, 0.5);
-    fillLight.position.set(-2, 1, 3);
+    const fillLight = new THREE.PointLight(0xcfe3ff, 0.35);
+    fillLight.position.set(-2.5, 1.5, 3.5);
     scene.add(fillLight);
     objectsToDispose.push(fillLight);
-
-    const backLight = new THREE.PointLight(0x4488ff, 0.4);
-    backLight.position.set(0, 2, -4);
-    scene.add(backLight);
-    objectsToDispose.push(backLight);
-
-    const rimLight = new THREE.PointLight(0xffaa66, 0.6);
-    rimLight.position.set(1.5, 1.8, -2.5);
-    scene.add(rimLight);
-    objectsToDispose.push(rimLight);
 
     // Main 3D Legal Symbol Group
     const legalGroup = new THREE.Group();
     
-    // Central Torus Knot - symbolizes legal complexity
-    const knotGeo = new THREE.TorusKnotGeometry(0.85, 0.22, 200, 32, 3, 4);
-    const goldMat = new THREE.MeshStandardMaterial({ color: 0xc9a03d, metalness: 0.85, roughness: 0.28, emissive: 0x221100 });
-    const knot = new THREE.Mesh(knotGeo, goldMat);
-    knot.castShadow = true;
-    legalGroup.add(knot);
-    geometriesToDispose.push(knotGeo);
-    materialsToDispose.push(goldMat);
-    objectsToDispose.push(knot);
-    
-    // Orbiting rings
-    const ringGeo = new THREE.TorusGeometry(1.1, 0.05, 64, 200);
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0x3d8fdf, metalness: 0.7, roughness: 0.3, emissive: 0x004466 });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.rotation.x = Math.PI / 2;
-    legalGroup.add(ring);
-    geometriesToDispose.push(ringGeo);
-    materialsToDispose.push(ringMat);
-    objectsToDispose.push(ring);
-    
-    const ring2Geo = new THREE.TorusGeometry(1.32, 0.04, 64, 200);
-    const ring2Mat = new THREE.MeshStandardMaterial({ color: 0x88aaff, metalness: 0.6, emissive: 0x113355 });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = 1.2;
-    ring2.rotation.y = 0.5;
-    legalGroup.add(ring2);
-    geometriesToDispose.push(ring2Geo);
-    materialsToDispose.push(ring2Mat);
-    objectsToDispose.push(ring2);
-    
-    // Gavel representation
-    const gavelHandleGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.8, 8);
-    const gavelHandleMat = new THREE.MeshStandardMaterial({ color: 0xbc9a6c, metalness: 0.45, roughness: 0.4 });
-    const gavelHandle = new THREE.Mesh(gavelHandleGeo, gavelHandleMat);
-    gavelHandle.position.set(1.1, -0.2, 0.6);
-    legalGroup.add(gavelHandle);
-    geometriesToDispose.push(gavelHandleGeo);
-    materialsToDispose.push(gavelHandleMat);
-    objectsToDispose.push(gavelHandle);
-    
-    const gavelHeadGeo = new THREE.BoxGeometry(0.45, 0.25, 0.45);
-    const gavelHeadMat = new THREE.MeshStandardMaterial({ color: 0xb87c4f, metalness: 0.6 });
-    const gavelHead = new THREE.Mesh(gavelHeadGeo, gavelHeadMat);
-    gavelHead.position.set(1.5, -0.15, 0.6);
-    legalGroup.add(gavelHead);
-    geometriesToDispose.push(gavelHeadGeo);
-    materialsToDispose.push(gavelHeadMat);
-    objectsToDispose.push(gavelHead);
+    // Scales of Justice — subtle, low-contrast background motif
+    const symbolMat = new THREE.MeshStandardMaterial({
+      color: 0x7fa6d6,
+      metalness: 0.15,
+      roughness: 0.8,
+      transparent: true,
+      opacity: 0.55,
+      emissive: 0x0b2b4a,
+      emissiveIntensity: 0.08,
+    });
+    materialsToDispose.push(symbolMat);
+
+    // Base + pillar
+    const baseGeo = new THREE.CylinderGeometry(1.0, 1.1, 0.22, 40);
+    const base = new THREE.Mesh(baseGeo, symbolMat);
+    base.position.set(0, -1.05, 0);
+    legalGroup.add(base);
+    geometriesToDispose.push(baseGeo);
+    objectsToDispose.push(base);
+
+    const pillarGeo = new THREE.CylinderGeometry(0.14, 0.16, 2.2, 24);
+    const pillar = new THREE.Mesh(pillarGeo, symbolMat);
+    pillar.position.set(0, 0.05, 0);
+    legalGroup.add(pillar);
+    geometriesToDispose.push(pillarGeo);
+    objectsToDispose.push(pillar);
+
+    // Top finial
+    const finialGeo = new THREE.SphereGeometry(0.18, 18, 18);
+    const finial = new THREE.Mesh(finialGeo, symbolMat);
+    finial.position.set(0, 1.25, 0);
+    legalGroup.add(finial);
+    geometriesToDispose.push(finialGeo);
+    objectsToDispose.push(finial);
+
+    // Crossbar
+    const barGeo = new THREE.BoxGeometry(2.7, 0.12, 0.12);
+    const bar = new THREE.Mesh(barGeo, symbolMat);
+    bar.position.set(0, 1.05, 0);
+    legalGroup.add(bar);
+    geometriesToDispose.push(barGeo);
+    objectsToDispose.push(bar);
+
+    // Pans
+    const panGeo = new THREE.CylinderGeometry(0.42, 0.48, 0.08, 32);
+    const panL = new THREE.Mesh(panGeo, symbolMat);
+    const panR = new THREE.Mesh(panGeo, symbolMat);
+    panL.position.set(-1.1, 0.35, 0);
+    panR.position.set(1.1, 0.35, 0);
+    legalGroup.add(panL, panR);
+    geometriesToDispose.push(panGeo);
+    objectsToDispose.push(panL, panR);
+
+    // Chains (lines) - very subtle
+    const chainMat = new THREE.LineBasicMaterial({ color: 0x93b6de, transparent: true, opacity: 0.28 });
+    materialsToDispose.push(chainMat);
+    const chainPtsL = [
+      new THREE.Vector3(-1.1, 1.02, 0),
+      new THREE.Vector3(-1.1, 0.55, 0),
+    ];
+    const chainPtsR = [
+      new THREE.Vector3(1.1, 1.02, 0),
+      new THREE.Vector3(1.1, 0.55, 0),
+    ];
+    const chainGeoL = new THREE.BufferGeometry().setFromPoints(chainPtsL);
+    const chainGeoR = new THREE.BufferGeometry().setFromPoints(chainPtsR);
+    const chainL = new THREE.Line(chainGeoL, chainMat);
+    const chainR = new THREE.Line(chainGeoR, chainMat);
+    legalGroup.add(chainL, chainR);
+    geometriesToDispose.push(chainGeoL, chainGeoR);
+    objectsToDispose.push(chainL, chainR);
     
     scene.add(legalGroup);
     legalGroupRef.current = legalGroup;
     objectsToDispose.push(legalGroup);
     
     // Floating particle system (dust motes)
-    const particleCount = 1800;
+    const particleCount = 700;
     const particlesGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
@@ -161,11 +173,10 @@ const AboutSecond = () => {
     }
     particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
-      color: 0x5a9fe0,
-      size: 0.03,
+      color: 0xa9c6ea,
+      size: 0.022,
       transparent: true,
-      opacity: 0.35,
-      blending: THREE.AdditiveBlending,
+      opacity: 0.12,
       depthWrite: false,
     });
     const particleSystem = new THREE.Points(particlesGeo, particleMat);
@@ -174,41 +185,20 @@ const AboutSecond = () => {
     materialsToDispose.push(particleMat);
     objectsToDispose.push(particleSystem);
     
-    // Glowing orbs
-    const orbMat = new THREE.MeshStandardMaterial({ color: 0x2266cc, emissive: 0x1155aa, emissiveIntensity: 0.35 });
-    const orb1Geo = new THREE.SphereGeometry(0.12, 16, 16);
-    const orb1 = new THREE.Mesh(orb1Geo, orbMat);
-    orb1.position.set(-1.8, 1.2, -1.5);
-    scene.add(orb1);
-    const orb2Geo = new THREE.SphereGeometry(0.09, 16, 16);
-    const orb2 = new THREE.Mesh(orb2Geo, orbMat);
-    orb2.position.set(2.2, -0.7, -2);
-    scene.add(orb2);
-    geometriesToDispose.push(orb1Geo, orb2Geo);
-    materialsToDispose.push(orbMat);
-    objectsToDispose.push(orb1, orb2);
-    
     // Animation variables
     let time = 0;
     
     // Animation loop
     function animate() {
       rafId = requestAnimationFrame(animate);
-      time += 0.008;
-      
-      knot.rotation.y = time * 0.6;
-      knot.rotation.x = Math.sin(time * 0.4) * 0.2;
-      ring.rotation.z = time * 0.5;
-      ring2.rotation.x = time * 0.3;
-      ring2.rotation.y = time * 0.2;
-      legalGroup.rotation.y = Math.sin(time * 0.15) * 0.1;
-      legalGroup.position.y = Math.sin(time * 0.7) * 0.05;
-      
-      particleSystem.rotation.y = time * 0.02;
-      particleSystem.rotation.x = Math.sin(time * 0.1) * 0.1;
-      
-      orb1.position.y += Math.sin(time * 1.5) * 0.003;
-      orb2.position.y += Math.cos(time * 1.2) * 0.003;
+      time += 0.006;
+
+      legalGroup.rotation.y = Math.sin(time * 0.18) * 0.08;
+      legalGroup.rotation.x = Math.sin(time * 0.12) * 0.03;
+      legalGroup.position.y = -0.1 + Math.sin(time * 0.55) * 0.04;
+
+      particleSystem.rotation.y = time * 0.012;
+      particleSystem.rotation.x = Math.sin(time * 0.08) * 0.06;
       
       renderer.render(scene, camera);
     }
@@ -411,9 +401,9 @@ const AboutSecond = () => {
         EST.
       </div>
       
-      {/* Floating Gavel Icon Animation (Optional overlay) */}
-      <div className="absolute top-20 left-[-5%] opacity-[0.05] text-[#1871C9] pointer-events-none z-0 animate-float-slow">
-        <Gavel size={400} strokeWidth={0.8} />
+      {/* Floating Scale Icon Animation (Subtle overlay) */}
+      <div className="absolute top-24 left-[-6%] opacity-[0.028] text-[#1871C9] pointer-events-none z-0 animate-float-slow">
+        <Scale size={360} strokeWidth={0.8} />
       </div>
     </section>
   );

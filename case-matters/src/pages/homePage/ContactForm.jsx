@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
+import { Scale } from 'lucide-react';
 
 const ContactForm = () => {
   const canvasContainer = useRef(null);
@@ -157,13 +158,48 @@ const ContactForm = () => {
         {/* LEFT SIDE: Contact Information */}
         <div className="space-y-8 md:space-y-12 pt-0"> {/* Removed mobile padding here */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <p className='text-gray-600 text-sm'>One Month Free Advisory and Consulting Retainership for Start-Ups, Small and Medium Construction Companies - <a href="mailto:casematters.info@gmail.com" className='text-[#1871C9]'>casematters.info@gmail.com</a></p>
+            <p className="text-gray-700 text-sm md:text-base font-semibold leading-relaxed">
+              <span className="inline-flex items-center gap-2 mr-2">
+                <span className="relative inline-flex items-center rounded-full px-3 py-1 text-[11px] md:text-xs font-black uppercase tracking-[0.28em] text-[#1a4f86] bg-gradient-to-r from-[#EAF4FF] to-white border border-[#1871C9]/20 overflow-hidden">
+                  <span className="relative z-10">Limited-Time Offer</span>
+                  <span className="absolute inset-0 bg-[linear-gradient(90deg,_transparent_0%,_rgba(226,177,60,0.18)_35%,_transparent_70%)] animate-[cmShine_2.8s_ease-in-out_infinite]" />
+                </span>
+              </span>
+              <span className="bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-[#145da5] bg-clip-text text-transparent font-extrabold">
+                One Month Free Advisory & Consulting Retainership
+              </span>{" "}
+              for Start-Ups, Small and Medium Construction Companies —{" "}
+              <a href="mailto:casematters.info@gmail.com" className="text-[#1871C9] underline decoration-[#1871C9]/40 underline-offset-4 hover:decoration-[#1871C9]">
+                casematters.info@gmail.com
+              </a>
+            </p>
             <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tighter leading-tight">
-              Request a free <br /> consultation
+              Request a free <br />
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#145da5] bg-clip-text text-transparent">
+                  consultation
+                </span>
+                <span className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent rounded-full animate-[cmUnderline_2.2s_ease-in-out_infinite]" />
+              </span>
             </h1>
             <p className="text-gray-600 text-lg max-w-md font-light">
               Our experts are ready to provide the precision and results your legal matters require.
             </p>
+
+            <style>{`
+              @keyframes cmShine {
+                0% { transform: translateX(-120%); opacity: 0; }
+                20% { opacity: 1; }
+                50% { transform: translateX(120%); opacity: 1; }
+                70% { opacity: 0.6; }
+                100% { transform: translateX(120%); opacity: 0; }
+              }
+              @keyframes cmUnderline {
+                0% { transform: scaleX(0.55); opacity: 0.55; }
+                50% { transform: scaleX(1); opacity: 1; }
+                100% { transform: scaleX(0.55); opacity: 0.55; }
+              }
+            `}</style>
           </motion.div>
 
           <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">

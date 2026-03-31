@@ -188,7 +188,7 @@ const Services = () => {
         
         {/* Header Section */}
         <div className="mb-16 md:mb-24 space-y-4">
-          <h2 className="text-[#1871C9] uppercase tracking-[0.28em] text-base md:text-lg font-bold">
+          <h2 className="text-[#1871C9] uppercase tracking-[0.28em] text-lg md:text-xl lg:text-2xl font-bold">
             Our Services
           </h2>
           <p className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
