@@ -92,35 +92,35 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-full max-w-6xl flex flex-col items-center text-center space-y-6 md:space-y-8"
+              className="w-full max-w-6xl flex flex-col items-center text-center space-y-4 sm:space-y-6 md:space-y-8"
             >
               {/* Badge & Icon */}
               <div className="flex flex-col items-center gap-3">
                 <motion.div
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
-                  className="p-2 md:p-3 bg-gray-200/60 backdrop-blur-sm rounded-full border border-gray-200/80"
+                  className="p-1.5 sm:p-2 md:p-3 bg-gray-200/60 backdrop-blur-sm rounded-full border border-gray-200/80"
                 >
                   {contents[currentIndex].icon}
                 </motion.div>
-                <span className="text-[#1871C9] font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-base md:text-lg">
+                <span className="text-[#1871C9] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] md:tracking-[0.3em] text-sm sm:text-base md:text-lg">
                   Legal Excellence
                 </span>
               </div>
               
               {/* FIXED HEADING: Responsive sizes to prevent overflow */}
-              <h1 className="text-white w-full text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-gray-900 leading-[1.2] md:leading-[1.1] tracking-tight px-2">
+              <h1 className="text-white w-full text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-gray-900 leading-[1.18] sm:leading-[1.2] md:leading-[1.1] tracking-tight px-1 sm:px-2">
                 {contents[currentIndex].title}
               </h1>
               
               {/* Description */}
-              <p className="text-white text-sm sm:text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light px-4">
+              <p className="text-white text-xs sm:text-base md:text-xl leading-relaxed max-w-2xl mx-auto font-light px-2 sm:px-4">
                 {contents[currentIndex].desc}
               </p>
               
               {/* CTA Button */}
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-10 sm:px-0">
-                <button onClick={scrollToContact} className="px-8 md:px-10 py-4 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white font-bold rounded-sm hover:from-[#145da5] hover:to-[#1871C9] transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/25 active:scale-95 cursor-pointer">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
+                <button onClick={scrollToContact} className="px-7 sm:px-8 md:px-10 py-3.5 sm:py-4 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white font-bold rounded-sm hover:from-[#145da5] hover:to-[#1871C9] transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/25 active:scale-95 cursor-pointer">
                   Consultation Now
                 </button>
               </div>
@@ -132,7 +132,7 @@ const Home = () => {
         <motion.div 
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
+          className="absolute bottom-5 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
         >
           <div className="w-[1px] h-8 md:h-12 bg-gradient-to-b from-blue-500 to-transparent" />
         </motion.div>

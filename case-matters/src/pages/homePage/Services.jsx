@@ -44,20 +44,21 @@ const Services = () => {
     });
 
     mm.add("(max-width: 767px)", () => {
-      cards.forEach((card) => {
-        gsap.fromTo(card, 
-          { opacity: 0, y: 50 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
+      cards.forEach((card, index) => {
+        // Mobile: keep the same "stacking" feel (lighter offsets)
+        gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: `top ${88 + index * 18}px`,
+            endTrigger: containerRef.current,
+            end: "bottom bottom",
+            pin: true,
+            pinSpacing: false,
+            scrub: true,
+            invalidateOnRefresh: true,
+            anticipatePin: 1,
+          },
+        });
       });
     });
 
@@ -173,7 +174,7 @@ const Services = () => {
     <section
       id="services"
       ref={containerRef}
-      className="relative overflow-hidden py-20 md:py-32 px-6 md:px-20 min-h-screen bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]"
+      className="relative overflow-hidden py-8 sm:py-16 md:py-32 px-4 sm:px-6 md:px-20 min-h-0 md:min-h-screen bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]"
     >
       {/* 3D Canvas Background */}
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
@@ -187,18 +188,18 @@ const Services = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         
         {/* Header Section */}
-        <div className="mb-16 md:mb-24 space-y-4">
+        <div className="mb-6 sm:mb-12 md:mb-24 space-y-2 sm:space-y-3 md:space-y-4">
           <h2 className="text-[#1871C9] uppercase tracking-[0.28em] text-lg md:text-xl lg:text-2xl font-bold">
             Our Services
           </h2>
-          <p className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
+          <p className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
             From contracts to courtrooms — we cover it all.
           </p>
           <div className="w-24 h-[3px] bg-gradient-to-r from-[#1871C9] to-transparent" />
         </div>
 
         {/* The Cards Container */}
-        <div ref={stackRef} className="relative space-y-6 md:space-y-10 pb-10 md:pb-32">
+        <div ref={stackRef} className="relative space-y-3 sm:space-y-5 md:space-y-10 pb-4 sm:pb-8 md:pb-32">
           {services.map((service, index) => (
             <Link 
               to={service.path} 
@@ -209,18 +210,18 @@ const Services = () => {
               <div className="relative p-[1.5px] rounded-2xl overflow-hidden transition-all duration-500 bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent group-hover:shadow-[0_0_20px_rgba(24,113,201,0.28)]">
                 
                 {/* Background Inner Card */}
-                <div className="relative overflow-hidden rounded-[15px] bg-white/70 backdrop-blur-md border border-[#1871C9]/10 p-6 md:p-12 transition-all duration-500 group-hover:bg-white/85 group-hover:border-[#1871C9]/20">
+                <div className="relative overflow-hidden rounded-[15px] bg-white/70 backdrop-blur-md border border-[#1871C9]/10 p-5 sm:p-6 md:p-12 transition-all duration-500 group-hover:bg-white/85 group-hover:border-[#1871C9]/20">
                   
                   {/* Hover Accent Bar */}
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#1871C9] to-[#6BB1F5] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
                   
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
                     <div className="flex-1 space-y-3 md:space-y-4">
-                      <span className="text-[#1871C9] font-mono text-sm md:text-lg font-bold">0{index + 1}</span>
+                      <span className="text-[#1871C9] font-mono text-xs sm:text-sm md:text-lg font-bold">0{index + 1}</span>
                       <h3 className="text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
                         {service.title}
                       </h3> 
-                      <p className="text-gray-600 text-sm md:text-lg leading-relaxed max-w-3xl">
+                      <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
                         {service.desc}
                       </p>
                     </div>

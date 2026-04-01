@@ -151,32 +151,32 @@ const Blogs = () => {
   }, []);
 
   return (
-    <section id="blogs" ref={sectionRef} className="relative w-full py-24 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+    <section id="blogs" ref={sectionRef} className="relative w-full py-8 sm:py-16 md:py-24 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Header */}
-        <div className="mb-16">
-          <h2 className="text-gray-900 text-4xl md:text-5xl font-extrabold tracking-tight">
+        <div className="mb-5 sm:mb-10 md:mb-16">
+          <h2 className="text-gray-900 text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight">
             Latest <span className="text-[#1871C9]">Legal Insights</span>
           </h2>
-          <p className="text-gray-600 mt-4 max-w-2xl text-lg font-light">
+          <p className="text-gray-600 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg font-light">
             Stay updated with our latest thoughts on arbitration, compliance, and corporate law.
           </p>
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 [perspective:1000px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 [perspective:1000px]">
           {blogs.map((blog, index) => (
             <div
               key={blog.id}
               ref={(el) => (cardRefs.current[index] = el)}
-              className="group relative h-[400px] w-full cursor-pointer"
+              className="group relative h-[320px] sm:h-[360px] lg:h-[400px] w-full cursor-pointer"
             >
               {/* Corner highlights */}
               <div className="pointer-events-none absolute inset-0 z-20">
@@ -202,31 +202,31 @@ const Blogs = () => {
                 
                 {/* FRONT SIDE */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] bg-gray-200 border border-gray-200/60 rounded-2xl overflow-hidden shadow-2xl">
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 sm:h-44 lg:h-48 overflow-hidden">
                     <img
                       src={blog.image}
                       alt={blog.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute top-4 left-4 bg-[#1871C9] text-white text-base md:text-lg font-black uppercase tracking-widest px-3 py-1 rounded-full">
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-[#1871C9] text-white text-[11px] sm:text-sm md:text-lg font-black uppercase tracking-[0.22em] sm:tracking-widest px-2.5 sm:px-3 py-1 rounded-full">
                       {blog.category}
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-3">
-                    <h3 className="text-gray-900 text-xl font-bold leading-tight group-hover:text-[#1871C9] transition-colors duration-300">
+                  <div className="p-4 sm:p-5 lg:p-6 space-y-2.5 sm:space-y-3">
+                    <h3 className="text-gray-900 text-base sm:text-lg lg:text-xl font-bold leading-tight group-hover:text-[#1871C9] transition-colors duration-300">
                       {blog.title}
                     </h3>
-                    <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
+                    <p className="text-gray-600 text-[12px] sm:text-sm line-clamp-3 leading-relaxed">
                       {blog.excerpt}
                     </p>
                   </div>
                 </div>
 
                 {/* BACK SIDE (Shown on Hover) */}
-                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#1871C9] rounded-2xl flex items-center justify-center p-8 shadow-2xl">
+                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#1871C9] rounded-2xl flex items-center justify-center p-5 sm:p-8 shadow-2xl">
                    <div className="text-center">
-                      <h3 className="text-white text-2xl font-black uppercase tracking-widest">
+                      <h3 className="text-white text-lg sm:text-2xl font-black uppercase tracking-widest">
                         {blog.category}
                       </h3>
                       <div className="w-12 h-1 bg-white/30 mx-auto mt-4" />

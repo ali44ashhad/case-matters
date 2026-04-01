@@ -167,16 +167,16 @@ const AboutFirst = () => {
 
           <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center px-6 text-center">
             <motion.div className="z-20 max-w-4xl" {...contentMotion}>
-              <h1 className="text-5xl font-black leading-none tracking-tight text-white drop-shadow-md md:text-7xl lg:text-8xl">
+              <h1 className="text-4xl sm:text-5xl font-black leading-none tracking-tight text-white drop-shadow-md md:text-7xl lg:text-8xl">
                 Why Choose <span className="text-[#8bc5ff]">Case Matters?</span>
               </h1>
 
-              <p className="mx-auto mt-8 max-w-3xl text-base font-medium leading-relaxed text-white/90 md:text-lg lg:text-xl">
+              <p className="mx-auto mt-5 md:mt-8 max-w-3xl text-sm sm:text-base font-medium leading-relaxed text-white/90 md:text-lg lg:text-xl">
                 Decades of expertise in arbitration, contract management, and litigation.
                 We transform complex legal challenges into practical, effective commercial solutions.
               </p>
 
-              <div className="about-accent-glow mx-auto mt-10 h-1 w-24 rounded-full bg-gradient-to-r from-[#1871C9] to-[#6BB1F5] shadow-[0_0_18px_rgba(24,113,201,0.45)]" />
+              <div className="about-accent-glow mx-auto mt-7 md:mt-10 h-1 w-20 md:w-24 rounded-full bg-gradient-to-r from-[#1871C9] to-[#6BB1F5] shadow-[0_0_18px_rgba(24,113,201,0.45)]" />
             </motion.div>
           </section>
         </div>
@@ -202,10 +202,10 @@ const AboutFirst = () => {
 
           <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center border-t border-white/15 px-6 text-center shadow-[0_-40px_80px_rgba(0,0,0,0.12)]">
             <motion.div className="z-10 max-w-4xl" {...contentMotion}>
-              <h2 className="text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
+              <h2 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
                 Strategic <span className="text-[#8bc5ff]">Prevention</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-lg font-medium leading-relaxed text-white/90 md:text-xl">
+              <p className="mx-auto mt-4 md:mt-6 max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-white/90 md:text-xl">
                 Legal support goes beyond resolving disputes—it’s about preventing them. Through robust
                 contract advisory and risk assessment, we minimize your exposure before conflicts arise.
               </p>
@@ -228,22 +228,22 @@ const AboutFirst = () => {
 
           <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center px-6 text-center shadow-[0_-40px_80px_rgba(0,0,0,0.2)]">
             <motion.div className="z-10 max-w-5xl" {...contentMotion}>
-              <h2 className="text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
+              <h2 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
                 Expert <span className="text-[#8bc5ff]">Arbitration</span>
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-lg font-semibold leading-relaxed text-white/90 md:text-xl">
+              <p className="mx-auto mt-4 md:mt-6 max-w-2xl text-base sm:text-lg font-semibold leading-relaxed text-white/90 md:text-xl">
                 We guide clients through private dispute resolution with strategic clarity. From claim
                 preparation to final enforcement, we manage the entire process with diligence and
                 confidentiality.
               </p>
               <motion.div
-                className="mt-12 flex justify-center"
+                className="mt-7 md:mt-12 flex justify-center"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <button
                   type="button"
-                  className="w-fit rounded-full bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] px-6 py-3 font-black tracking-wider text-sm text-white shadow-xl shadow-blue-900/25 transition-all hover:from-[#145da5] hover:to-[#1871C9] md:px-12 md:py-5 md:text-xl md:tracking-widest"
+                  className="w-fit rounded-full bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] px-6 py-3 font-black tracking-wider text-xs sm:text-sm text-white shadow-xl shadow-blue-900/25 transition-all hover:from-[#145da5] hover:to-[#1871C9] md:px-12 md:py-5 md:text-xl md:tracking-widest"
                 >
                   Consult an Expert
                 </button>

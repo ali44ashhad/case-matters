@@ -64,6 +64,11 @@ const ContactForm = () => {
   useEffect(() => {
     if (!canvasContainer.current) return;
 
+    const isSmallScreen =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia !== "undefined" &&
+      window.matchMedia("(max-width: 639px)").matches;
+
     let rafId = 0;
     const scene = new THREE.Scene();
     scene.background = null;
@@ -77,7 +82,7 @@ const ContactForm = () => {
     canvasContainer.current.appendChild(renderer.domElement);
 
     const particlesGeo = new THREE.BufferGeometry();
-    const particleCount = 900;
+    const particleCount = isSmallScreen ? 520 : 900;
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 18;
@@ -88,9 +93,9 @@ const ContactForm = () => {
 
     const particlesMat = new THREE.PointsMaterial({
       color: 0x5a9fe0,
-      size: 0.02,
+      size: isSmallScreen ? 0.017 : 0.02,
       transparent: true,
-      opacity: 0.16,
+      opacity: isSmallScreen ? 0.12 : 0.16,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -138,42 +143,45 @@ const ContactForm = () => {
   }, []);
 
   return (
-    <section id="contact" className="relative pt-0 md:pt-24 pb-24 px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+    <section id="contact" className="relative pt-8 sm:pt-0 md:pt-24 pb-8 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
 
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E2B13C]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#1871C9]/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[340px] h-[340px] sm:w-[500px] sm:h-[500px] bg-[#E2B13C]/5 blur-[110px] sm:blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] bg-[#1871C9]/10 blur-[90px] sm:blur-[100px] rounded-full pointer-events-none" />
 
       <motion.div 
-        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 relative z-10"
+        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-16 relative z-10"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
       >
         {/* LEFT SIDE: Contact Information */}
-        <div className="space-y-8 md:space-y-12 pt-0"> {/* Removed mobile padding here */}
+        <div className="space-y-5 sm:space-y-6 md:space-y-12 pt-0">
           <motion.div variants={itemVariants} className="space-y-4">
-            <p className="text-gray-700 text-sm md:text-base font-semibold leading-relaxed">
-              <span className="inline-flex items-center gap-2 mr-2">
-                <span className="relative inline-flex items-center rounded-full px-3 py-1 text-[11px] md:text-xs font-black uppercase tracking-[0.28em] text-[#1a4f86] bg-gradient-to-r from-[#EAF4FF] to-white border border-[#1871C9]/20 overflow-hidden">
+            <div className="relative mt-4 rounded-xl border border-[#1871C9]/15 bg-white/65 backdrop-blur-md px-4 pt-7 pb-4 shadow-[0_14px_45px_rgba(24,113,201,0.08)]">
+              <div className="absolute left-4 top-0 -translate-y-1/2">
+                <span className="relative inline-flex items-center rounded-full px-3 py-1 text-[10px] sm:text-[11px] md:text-xs font-black uppercase tracking-[0.22em] sm:tracking-[0.28em] text-[#1a4f86] bg-gradient-to-r from-[#EAF4FF] to-white border border-[#1871C9]/25 overflow-hidden shadow-sm">
                   <span className="relative z-10">Limited-Time Offer</span>
                   <span className="absolute inset-0 bg-[linear-gradient(90deg,_transparent_0%,_rgba(226,177,60,0.18)_35%,_transparent_70%)] animate-[cmShine_2.8s_ease-in-out_infinite]" />
                 </span>
-              </span>
-              <span className="bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-[#145da5] bg-clip-text text-transparent font-extrabold">
-                One Month Free Advisory & Consulting Retainership
-              </span>{" "}
-              for Start-Ups, Small and Medium Construction Companies —{" "}
-              <a href="mailto:casematters.info@gmail.com" className="text-[#1871C9] underline decoration-[#1871C9]/40 underline-offset-4 hover:decoration-[#1871C9]">
-                casematters.info@gmail.com
-              </a>
-            </p>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tighter leading-tight">
+              </div>
+
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base font-semibold leading-relaxed">
+                <span className="bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-[#145da5] bg-clip-text text-transparent font-extrabold">
+                  One Month Free Advisory & Consulting Retainership
+                </span>{" "}
+                for Start-Ups, Small and Medium Construction Companies —{" "}
+                <a href="mailto:casematters.info@gmail.com" className="text-[#1871C9] underline decoration-[#1871C9]/40 underline-offset-4 hover:decoration-[#1871C9]">
+                  casematters.info@gmail.com
+                </a>
+              </p>
+            </div>
+            <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tighter leading-[1.05] sm:leading-tight">
               Request a free <br />
               <span className="relative inline-block">
                 <span className="bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#145da5] bg-clip-text text-transparent">
@@ -182,7 +190,7 @@ const ContactForm = () => {
                 <span className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent rounded-full animate-[cmUnderline_2.2s_ease-in-out_infinite]" />
               </span>
             </h1>
-            <p className="text-gray-600 text-lg max-w-md font-light">
+            <p className="text-gray-600 text-sm sm:text-lg max-w-md font-light leading-relaxed">
               Our experts are ready to provide the precision and results your legal matters require.
             </p>
 
@@ -202,15 +210,15 @@ const ContactForm = () => {
             `}</style>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+            <div className="space-y-4 sm:space-y-5 md:space-y-6">
               <div>
                 <p className="text-[#1871C9] font-bold text-[10px] uppercase tracking-[0.2em] mb-2">Email Us</p>
-                <a href="mailto:casematters.info@gmail.com" className="text-gray-900 text-lg hover:text-[#E2B13C] transition-colors">casematters.info@gmail.com</a>
+                <a href="mailto:casematters.info@gmail.com" className="text-gray-900 text-base sm:text-lg hover:text-[#E2B13C] transition-colors">casematters.info@gmail.com</a>
               </div>
               <div>
                 <p className="text-[#1871C9] font-bold text-[10px] uppercase tracking-[0.2em] mb-2">Call Us</p>
-                <a href="tel:+919810238083" className="text-gray-900 text-lg hover:text-[#E2B13C] transition-colors">+91 9810238083</a>
+                <a href="tel:+919810238083" className="text-gray-900 text-base sm:text-lg hover:text-[#E2B13C] transition-colors">+91 9810238083</a>
               </div>
             </div>
 
@@ -224,37 +232,44 @@ const ContactForm = () => {
           </motion.div>
 
           {/* Slightly rounded (xl) instead of 2xl */}
-          <motion.div variants={itemVariants} className="p-6 rounded-xl border border-gray-200/70 bg-gray-50/50 backdrop-blur-sm">
+          <motion.div variants={itemVariants} className="p-4 sm:p-6 rounded-xl border border-gray-200/70 bg-gray-50/50 backdrop-blur-sm">
             <p className="text-[#1871C9] font-bold text-[10px] uppercase tracking-[0.2em] mb-2">Visit Our Office</p>
-            <p className="text-gray-900 text-lg leading-relaxed">DLF Almeda, Sector 73, SPR Road, <br /> Gurgaon - 122101</p>
+            <a
+              href="https://www.google.com/maps?q=DLF+Almeda,+Sector+73,+SPR+Road,+Gurgaon+122101"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block text-gray-900 text-base sm:text-lg leading-relaxed hover:text-[#1871C9] transition-colors underline decoration-[#1871C9]/25 hover:decoration-[#1871C9]/60 underline-offset-4"
+            >
+              DLF Almeda, Sector 73, SPR Road, <br /> Gurgaon - 122101
+            </a>
           </motion.div>
         </div>
 
         {/* RIGHT SIDE: The Form */}
         <motion.div 
           variants={itemVariants}
-          className="relative p-8 md:p-12 rounded-xl bg-gray-50/80 border border-gray-200/70 backdrop-blur-2xl shadow-xl"
+          className="relative p-4 sm:p-8 md:p-12 rounded-xl bg-gray-50/80 border border-gray-200/70 backdrop-blur-2xl shadow-xl"
         > {/* Changed rounded-[2.5rem] to rounded-xl */}
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Full Name</label>
-                <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="John Doe" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3.5 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all" />
+                <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Full Name</label>
+                <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="John Doe" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all md:py-3.5" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Phone Number</label>
-                <input required name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="+91 00000 00000" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3.5 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all" />
+                <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Phone Number</label>
+                <input required name="phone" value={formData.phone} onChange={handleChange} type="tel" placeholder="+91 00000 00000" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all md:py-3.5" />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Email Address</label>
-              <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="example@email.com" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3.5 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all" />
+              <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Email Address</label>
+              <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="example@email.com" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all md:py-3.5" />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Subject</label>
-              <select name="subject" value={formData.subject} onChange={handleChange} className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3.5 text-gray-900 focus:outline-none focus:border-[#1871C9] appearance-none">
+              <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Subject</label>
+              <select name="subject" value={formData.subject} onChange={handleChange} className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] appearance-none md:py-3.5">
                 <option value="Arbitration">Arbitration</option>
                 <option value="Construction Disputes">Construction Disputes</option>
                 <option value="Contract Advisory">Contract Advisory</option>
@@ -263,8 +278,8 @@ const ContactForm = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Message</label>
-              <textarea required name="message" value={formData.message} onChange={handleChange} rows="3" placeholder="Describe your situation..." className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3.5 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all resize-none"></textarea>
+              <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Message</label>
+              <textarea required name="message" value={formData.message} onChange={handleChange} rows="3" placeholder="Describe your situation..." className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all resize-none md:py-3.5"></textarea>
             </div>
 
             {status.message && (
@@ -276,7 +291,7 @@ const ContactForm = () => {
             <motion.button 
               disabled={loading}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-lg bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] hover:from-[#145da5] hover:to-[#1871C9] text-white font-bold text-sm uppercase tracking-widest transition-all shadow-lg shadow-blue-900/25 disabled:opacity-50"
+              className="w-full py-3.5 sm:py-4 rounded-lg bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] hover:from-[#145da5] hover:to-[#1871C9] text-white font-bold text-sm uppercase tracking-widest transition-all shadow-lg shadow-blue-900/25 disabled:opacity-50"
             >
               {loading ? "Sending..." : "Submit Request"}
             </motion.button>

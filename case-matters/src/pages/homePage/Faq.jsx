@@ -162,7 +162,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <div className="relative w-full py-20 px-6 md:px-10 font-sans overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+    <div className="relative w-full py-7 sm:py-12 md:py-20 px-4 sm:px-6 md:px-10 font-sans overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
@@ -176,19 +176,19 @@ const Faq = () => {
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-5 sm:mb-10 md:mb-16"
         >
-          <p className="text-[#1871C9] font-bold tracking-[0.3em] uppercase mb-4 text-base md:text-lg">
+          <p className="text-[#1871C9] font-bold tracking-[0.24em] sm:tracking-[0.28em] md:tracking-[0.3em] uppercase mb-2 sm:mb-3 md:mb-4 text-[11px] sm:text-sm md:text-lg">
             Assistance & Support
           </p>
-          <h2 className="text-gray-900 text-4xl md:text-5xl font-serif font-bold tracking-tight leading-tight">
+          <h2 className="text-gray-900 text-2xl sm:text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight">
             Frequently Asked <span className="text-[#1871C9]">Questions</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#1871C9] to-[#6BB1F5] mx-auto mt-6 rounded-full" />
+          <div className="w-14 sm:w-20 h-[3px] md:h-1 bg-gradient-to-r from-[#1871C9] to-[#6BB1F5] mx-auto mt-4 sm:mt-6 rounded-full" />
         </motion.div>
 
         {/* FAQ Accordion List */}
-        <div ref={containerRef} className="space-y-6">
+        <div ref={containerRef} className="space-y-3 sm:space-y-4 md:space-y-6">
           {faqs.map((faq, index) => (
             <div key={index} className="faq-item">
               
@@ -202,20 +202,20 @@ const Faq = () => {
               >
                 <button
                   onClick={() => toggle(index)}
-                  className={`w-full text-left p-6 md:p-8 flex justify-between items-center gap-4 transition-all ${
+                  className={`w-full text-left p-3 sm:p-4 md:p-8 flex justify-between items-center gap-3 sm:gap-4 transition-all ${
                     active === index
                       ? "bg-gradient-to-r from-[#1871C9]/10 via-[#DCEEFF]/70 to-transparent"
                       : "hover:bg-gradient-to-r hover:from-[#1871C9]/8 hover:via-[#EAF4FF] hover:to-transparent"
                   }`}
                 >
-                  <span className={`font-bold text-lg md:text-xl transition-colors duration-300 ${
+                  <span className={`font-bold text-sm sm:text-base md:text-xl transition-colors duration-300 ${
                     active === index ? "text-[#1871C9]" : "text-gray-700"
                   }`}>
                     {faq.question}
                   </span>
 
                   {/* Circular Icon Toggle */}
-                  <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-500 ${
+                  <span className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full border transition-all duration-500 ${
                     active === index 
                     ? "bg-[#1871C9] border-[#1871C9] text-white rotate-180" 
                     : "bg-white border-gray-200 text-gray-400"
@@ -235,7 +235,7 @@ const Faq = () => {
                       transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
                     >
                       {/* Answer area with transparent background to show the card's gradient */}
-                      <div className="px-6 md:px-8 pb-8 text-gray-600 leading-relaxed text-base md:text-lg border-t border-[#1871C9]/10 pt-6">
+                      <div className="px-3 sm:px-4 md:px-8 pb-4 sm:pb-6 md:pb-8 text-gray-600 leading-relaxed text-[12px] sm:text-sm md:text-lg border-t border-[#1871C9]/10 pt-4 sm:pt-5 md:pt-6">
                         {faq.answer}
                       </div>
                     </motion.div>
@@ -247,8 +247,8 @@ const Faq = () => {
         </div>  
 
         {/* Help Link */}
-        <div className="mt-16 text-center">
-          <p className="text-gray-500 text-sm">
+        <div className="mt-6 sm:mt-10 md:mt-16 text-center">
+          <p className="text-gray-500 text-xs sm:text-sm">
             Have more questions? <span className="text-[#1871C9] font-bold cursor-pointer hover:underline">Contact our legal team.</span>
           </p>
         </div>

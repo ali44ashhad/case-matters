@@ -16,47 +16,92 @@ const LawExpandingLayout = () => {
   const canvasContainer = useRef(null);
 
   useGSAP(() => {
-    gsap.set(".center-text", { scale: 0.4, opacity: 0 });
-    
-    // Blocks start clustered in the center
-    gsap.set(blocksRef.current, { x: 0, y: 0, scale: 1 });
+    const mm = gsap.matchMedia();
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=200%", 
-        scrub: 1, // Smoothly follows scroll
-        pin: true,
-        anticipatePin: 1,
-      }
+    const buildTimeline = (opts) => {
+      const { directions, scrollEnd, textScale } = opts;
+      gsap.set(".center-text", { scale: 0.4, opacity: 0 });
+      gsap.set(blocksRef.current, { x: 0, y: 0, scale: 1 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: scrollEnd,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(
+        blocksRef.current,
+        {
+          x: (i) => directions[i].x,
+          y: (i) => directions[i].y,
+          rotation: (i) => directions[i].r,
+          opacity: 0,
+          scale: 0.5,
+          duration: 1,
+          stagger: 0.05,
+          ease: "power2.inOut",
+        },
+        0
+      ).to(
+        ".center-text",
+        {
+          scale: textScale,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power2.out",
+        },
+        0.1
+      );
+    };
+
+    // Mobile: smaller motion + less scroll so it feels app-sized
+    mm.add("(max-width: 639px)", () => {
+      buildTimeline({
+        scrollEnd: "+=130%",
+        textScale: 1.05,
+        directions: [
+          { x: -150, y: -125, r: -14 },
+          { x: 155, y: -135, r: 14 },
+          { x: -165, y: 130, r: -10 },
+          { x: 170, y: 138, r: 12 },
+        ],
+      });
     });
 
-    const directions = [
-      { x: -500, y: -400, r: -25 }, // Top Left
-      { x: 500, y: -450, r: 25 },  // Top Right
-      { x: -550, y: 400, r: -15 }, // Bottom Left
-      { x: 580, y: 450, r: 20 },   // Bottom Right
-    ];
+    // Tablet: medium scatter
+    mm.add("(min-width: 640px) and (max-width: 1023px)", () => {
+      buildTimeline({
+        scrollEnd: "+=170%",
+        textScale: 1.12,
+        directions: [
+          { x: -280, y: -230, r: -20 },
+          { x: 285, y: -255, r: 20 },
+          { x: -305, y: 235, r: -12 },
+          { x: 320, y: 265, r: 16 },
+        ],
+      });
+    });
 
-    // 2. Animate Blocks & Text together
-    tl.to(blocksRef.current, {
-      x: (i) => directions[i].x,
-      y: (i) => directions[i].y,
-      rotation: (i) => directions[i].r,
-      opacity: 0,
-      scale: 0.5,
-      duration: 1,
-      stagger: 0.05, // Slight delay between each block for "shatter" effect
-      ease: "power2.inOut"
-    }, 0)
-    .to(".center-text", {
-      scale: 1.2, // The "Zoom In" effect
-      opacity: 1,
-      duration: 1.2,
-      ease: "power2.out"
-    }, 0.1); // Starts slightly after blocks begin moving
+    // Desktop: full effect
+    mm.add("(min-width: 1024px)", () => {
+      buildTimeline({
+        scrollEnd: "+=200%",
+        textScale: 1.2,
+        directions: [
+          { x: -500, y: -400, r: -25 },
+          { x: 500, y: -450, r: 25 },
+          { x: -550, y: 400, r: -15 },
+          { x: 580, y: 450, r: 20 },
+        ],
+      });
+    });
 
+    return () => mm.revert();
   }, { scope: containerRef });
 
   // Subtle 3D particles background (light theme)
@@ -152,12 +197,12 @@ const LawExpandingLayout = () => {
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
       
       {/* 1. TEXT LAYER (Behind Blocks) */}
-      <div className="center-text absolute z-10 text-center pointer-events-none px-4">
-        <h1 className="text-gray-900 text-6xl md:text-[12rem] font-black uppercase leading-[0.8] tracking-tighter">
+      <div className="center-text absolute z-10 text-center pointer-events-none px-3 sm:px-4 max-w-[92vw] sm:max-w-none mx-auto left-0 right-0">
+        <h1 className="text-gray-900 text-3xl sm:text-5xl md:text-[12rem] font-black uppercase leading-[0.9] sm:leading-[0.85] md:leading-[0.8] tracking-tighter">
           Justice <br />
           <span className="text-[#1871C9]">Defined.</span>
         </h1>
-        <p className="mt-8 text-gray-600 text-xs md:text-xl uppercase tracking-[0.5em] font-light">
+        <p className="mt-3 sm:mt-5 md:mt-8 text-gray-600 text-[9px] sm:text-[10px] md:text-xl uppercase tracking-[0.32em] sm:tracking-[0.42em] md:tracking-[0.5em] font-light leading-snug">
         Every Client, Every Case Matters
         </p>
       </div>
@@ -168,11 +213,11 @@ const LawExpandingLayout = () => {
           <div
             key={i}
             ref={(el) => (blocksRef.current[i] = el)}
-            className="absolute w-64 h-80 rounded-2xl overflow-hidden border border-gray-200/60 pointer-events-auto"
+            className="absolute w-[9.25rem] h-[11.5rem] sm:w-56 sm:h-72 md:w-64 md:h-80 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/60 pointer-events-auto shadow-sm sm:shadow-none"
           >
             <img src={block.img} alt={block.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 flex flex-col justify-end p-6">
-              <h3 className="text-white font-bold uppercase text-lg italic">
+            <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-5 md:p-6">
+              <h3 className="text-white font-bold uppercase text-[11px] sm:text-sm md:text-lg italic leading-tight">
                 {block.title}
               </h3>
             </div>

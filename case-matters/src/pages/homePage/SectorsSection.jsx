@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Building2, Zap, Briefcase, Factory, Scale, 
   Rocket, Wallet, Truck, HeartPulse, Home,
-  ChevronLeft, ChevronRight
 } from 'lucide-react';
 import * as THREE from 'three';
 
@@ -14,6 +13,8 @@ import professionalService from '../../assets/homeAssets/professional-service.jp
 const SectorsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [loopReady, setLoopReady] = useState(false);
+  const [isJumping, setIsJumping] = useState(false);
   const canvasContainer = useRef(null);
 
   const sectors = [
@@ -69,21 +70,50 @@ const SectorsCarousel = () => {
     }
   ];
 
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % sectors.length);
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + sectors.length) % sectors.length);
-
   // Auto carousel
   useEffect(() => {
     if (isPaused) return;
+    if (!loopReady) return;
     const id = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % sectors.length);
+      setCurrentIndex((prev) => prev + 1);
     }, 4200);
     return () => clearInterval(id);
-  }, [isPaused, sectors.length]);
+  }, [isPaused, loopReady]);
+
+  // Start from the middle copy for seamless looping
+  useEffect(() => {
+    const len = sectors.length;
+    if (!len) return;
+    setLoopReady(false);
+    requestAnimationFrame(() => {
+      setCurrentIndex(len);
+      setLoopReady(true);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Seamless wrap: jump back by 1 length (no visible change)
+  useEffect(() => {
+    if (!loopReady) return;
+    const len = sectors.length;
+    if (!len) return;
+
+    // when we reach the end of the duplicated track, jump back into the middle copy
+    if (currentIndex >= len * 2 - 1) {
+      setIsJumping(true);
+      setCurrentIndex((prev) => prev - len);
+      requestAnimationFrame(() => setIsJumping(false));
+    }
+  }, [currentIndex, loopReady, sectors.length]);
 
   // Subtle 3D particles (light theme) to match other sections
   useEffect(() => {
     if (!canvasContainer.current) return;
+
+    const isSmallScreen =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
 
     let rafId = 0;
     const scene = new THREE.Scene();
@@ -98,7 +128,7 @@ const SectorsCarousel = () => {
     canvasContainer.current.appendChild(renderer.domElement);
 
     const particlesGeo = new THREE.BufferGeometry();
-    const particleCount = 900;
+    const particleCount = isSmallScreen ? 520 : 900;
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 18;
@@ -109,9 +139,9 @@ const SectorsCarousel = () => {
 
     const particlesMat = new THREE.PointsMaterial({
       color: 0x5a9fe0,
-      size: 0.02,
+      size: isSmallScreen ? 0.017 : 0.02,
       transparent: true,
-      opacity: 0.22,
+      opacity: isSmallScreen ? 0.16 : 0.22,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -122,7 +152,7 @@ const SectorsCarousel = () => {
     const ambient = new THREE.AmbientLight(0xd0dff0, 0.75);
     scene.add(ambient);
 
-    const key = new THREE.PointLight(0x1871c9, 0.7, 50);
+    const key = new THREE.PointLight(0x1871c9, isSmallScreen ? 0.55 : 0.7, 50);
     key.position.set(2.2, 2, 3);
     scene.add(key);
 
@@ -163,7 +193,7 @@ const SectorsCarousel = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center py-20 px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+    <section className="relative flex flex-col justify-center py-7 sm:py-16 md:py-20 px-4 sm:px-6 md:px-20 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
       {/* 3D Canvas Background */}
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
 
@@ -176,42 +206,42 @@ const SectorsCarousel = () => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         {/* Header Section */}
-        <div className="mb-12 space-y-4">
+        <div className="mb-5 sm:mb-10 md:mb-12 space-y-2 sm:space-y-3 md:space-y-4">
           <motion.p 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="text-[#1871C9] font-bold tracking-[0.3em] uppercase text-lg md:text-xl lg:text-2xl"
+            className="text-[#1871C9] font-bold tracking-[0.28em] sm:tracking-[0.3em] uppercase text-sm sm:text-lg md:text-xl lg:text-2xl"
           >
             Industry Verticals
           </motion.p>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-gray-900">
+          <h2 className="text-2xl sm:text-4xl md:text-6xl font-serif font-bold text-gray-900 leading-tight">
             Every Client, Every <span className="text-[#1871C9] italic font-light">Case Matters.</span>
           </h2>
         </div>
     
         {/* Carousel Container */}
         <div
-          className="relative p-[1px] rounded-2xl bg-gradient-to-r from-[#1871C9]/30 via-[#1871C9]/10 to-transparent shadow-[0_10px_40px_rgba(24,113,201,0.07)]"
+          className="relative p-[1px] rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#1871C9]/30 via-[#1871C9]/10 to-transparent shadow-[0_10px_40px_rgba(24,113,201,0.07)]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           
           <div className="overflow-hidden rounded-[15px] relative bg-white/80 backdrop-blur-md border border-[#1871C9]/10">
             {/* Viewport padding makes the next card peek */}
-            <div className="w-full overflow-hidden pr-[14%] md:pr-[18%]">
+            <div className="w-full overflow-hidden pr-[10%] sm:pr-[14%] md:pr-[18%]">
               <motion.div
-                className="flex gap-6 md:gap-8"
+                className="flex gap-4 sm:gap-6 md:gap-8"
                 animate={{ x: `-${currentIndex * 86}%` }}
-                transition={{ type: "spring", stiffness: 80, damping: 18 }}
+                transition={isJumping ? { duration: 0 } : { type: "spring", stiffness: 80, damping: 18 }}
               >
-                {sectors.map((sector, idx) => (
+                {[...sectors, ...sectors].map((sector, idx) => (
                   <div
-                    key={sector.title}
-                    className="shrink-0 w-[86%] lg:w-[84%] min-h-[550px] grid grid-cols-1 lg:grid-cols-2"
+                    key={`${sector.title}-${idx}`}
+                    className="shrink-0 w-[86%] lg:w-[84%] min-h-[360px] sm:min-h-[500px] lg:min-h-[550px] grid grid-cols-1 lg:grid-cols-2"
                     aria-hidden={idx !== currentIndex}
                   >
                     {/* LEFT SIDE: IMAGE BLOCK */}
-                    <div className="relative h-72 lg:h-auto overflow-hidden bg-gray-100">
+                    <div className="relative h-56 sm:h-72 lg:h-auto overflow-hidden bg-gray-100">
                       <motion.img
                         key={`img-${idx}`}
                         initial={{ scale: 1.06 }}
@@ -224,44 +254,26 @@ const SectorsCarousel = () => {
                     </div>
 
                     {/* RIGHT SIDE: CONTENT BLOCK */}
-                    <div className="p-10 md:p-16 flex flex-col justify-center relative z-10 bg-gradient-to-br from-[#1871C9]/10 via-white to-white">
-                      <div className="flex items-center gap-4 mb-8">
-                        <span className="text-[#1871C9] font-serif italic text-3xl font-bold">
-                          0{idx + 1}
+                    <div className="p-4 sm:p-8 md:p-16 flex flex-col justify-center relative z-10 bg-gradient-to-br from-[#1871C9]/10 via-white to-white">
+                      <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
+                        <span className="text-[#1871C9] font-serif italic text-xl sm:text-3xl font-bold">
+                          0{(idx % sectors.length) + 1}
                         </span>
-                        <div className="h-[2px] w-16 bg-gradient-to-r from-[#1871C9] to-transparent" />
+                        <div className="h-[2px] w-12 sm:w-16 bg-gradient-to-r from-[#1871C9] to-transparent" />
                       </div>
 
-                      <h3 className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">
+                      <h3 className="text-xl sm:text-3xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-6 md:mb-8 tracking-tight leading-tight">
                         {sector.title}
                       </h3>
 
-                      <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10 font-light">
+                      <p className="text-gray-600 text-sm sm:text-lg md:text-xl leading-relaxed mb-5 sm:mb-8 md:mb-10 font-light">
                         {sector.desc}
                       </p>
 
-                      <div className="pt-10 border-t border-[#1871C9]/10 flex items-center justify-between">
-                        <span className="text-[#1871C9] text-base md:text-lg uppercase tracking-[0.3em] font-black">
+                      <div className="pt-5 sm:pt-8 md:pt-10 border-t border-[#1871C9]/10 flex items-center justify-between">
+                        <span className="text-[#1871C9] text-xs sm:text-sm md:text-lg uppercase tracking-[0.26em] sm:tracking-[0.3em] font-black">
                           Sector Expertise
                         </span>
-                        <div className="flex gap-5">
-                          <button
-                            type="button"
-                            onClick={prevSlide}
-                            className="p-4 rounded-full border border-[#1871C9]/20 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white hover:from-[#145da5] hover:to-[#1871C9] transition-all duration-300 shadow-md shadow-blue-900/20"
-                            aria-label="Previous sector"
-                          >
-                            <ChevronLeft size={24} />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={nextSlide}
-                            className="p-4 rounded-full border border-[#1871C9]/20 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white hover:from-[#145da5] hover:to-[#1871C9] transition-all duration-300 shadow-md shadow-blue-900/20"
-                            aria-label="Next sector"
-                          >
-                            <ChevronRight size={24} />
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as THREE from 'three';
-import { CheckCircle2, Award, Scale, Briefcase, Gavel } from 'lucide-react';
+import { Scale } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,27 +13,24 @@ const AboutSecond = () => {
   const rightBlock = useRef(null);
   const canvasContainer = useRef(null);
   const legalGroupRef = useRef(null);
+  const statRefs = useRef([]);
 
   const strengths = [
     {
       title: "Extensive Legal Expertise",
       desc: "200+ legal matters handled, managed and advised by our legal experts.",
-      icon: <Scale size={28} />,
     },
     {
       title: "Decades of Experience",
       desc: "Over 70 years of combined legal and advisory experience across diverse jurisdictions.",
-      icon: <Award size={28} />,
     },
     {
       title: "High-Value Claims",
       desc: "Matters involving high-value claim amounts exceeding ₹350 crores handled with precision.",
-      icon: <CheckCircle2 size={28} />,
     },
     {
       title: "Large-Scale Projects",
       desc: "Strategic advisory for high-value projects reaching up to ₹2,000 crores.",
-      icon: <Briefcase size={28} />,
     }
   ];
 
@@ -284,6 +281,32 @@ const AboutSecond = () => {
         }
       }
     );
+
+    // Count-up numbers inside the original text (1 -> end) on scroll
+    const formatNumber = (n) => new Intl.NumberFormat('en-IN').format(Math.max(1, Math.floor(n)));
+    const targets = [200, 70, 350, 2000];
+
+    statRefs.current.forEach((el, index) => {
+      const end = targets[index];
+      if (!el || !end) return;
+
+      const holder = { value: 1 };
+      el.textContent = formatNumber(1);
+
+      gsap.to(holder, {
+        value: end,
+        duration: 1.6,
+        ease: "power2.out",
+        onUpdate: () => {
+          el.textContent = formatNumber(holder.value);
+        },
+        scrollTrigger: {
+          trigger: rightBlock.current,
+          start: "top 75%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    });
     
     // Button subtle pulse animation
     const btn = container.current?.querySelector?.('.btn-cinematic');
@@ -316,7 +339,7 @@ const AboutSecond = () => {
   return (
     <section 
       ref={container} 
-      className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]"
+      className="relative w-full overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]"
     >
       <style>
         {`
@@ -340,70 +363,84 @@ const AboutSecond = () => {
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
       
       {/* Content Layer */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-20 lg:py-32">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-16 lg:py-32">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-12 lg:gap-16 items-start">
           
           {/* Left Block - Cinematic Text Section */}
-          <div ref={leftBlock} className="lg:w-1/2 space-y-6 will-change-transform">
-            <div className="inline-block px-5 py-1.5 rounded-full bg-[#1871C9]/10 text-[#1871C9] text-base md:text-lg font-bold uppercase tracking-widest border border-[#1871C9]/25 backdrop-blur-sm">
+          <div ref={leftBlock} className="lg:w-1/2 space-y-5 sm:space-y-6 will-change-transform">
+            <div className="inline-block px-4 sm:px-5 py-1.5 rounded-full bg-[#1871C9]/10 text-[#1871C9] text-sm sm:text-base md:text-lg font-bold uppercase tracking-widest border border-[#1871C9]/25 backdrop-blur-sm">
             Our Core Strengths
             </div>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-gray-900">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-gray-900">
               Trusted Legal <br />
               <span className="bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#145da5] bg-clip-text text-transparent">
                 Solutions
               </span>
             </h2>
-            <div className="w-24 h-[3px] bg-gradient-to-r from-[#1871C9] to-transparent" />
-            <p className="text-gray-800 font-semibold text-lg md:text-xl leading-relaxed max-w-lg font-light tracking-wide">
+            <div className="w-20 sm:w-24 h-[3px] bg-gradient-to-r from-[#1871C9] to-transparent" />
+            <p className="text-gray-800 font-semibold text-base sm:text-lg md:text-xl leading-relaxed max-w-lg font-light tracking-wide">
               At Case Matters, transparency and consistency are at the core of everything we do — 
               delivering results that truly redefine legal excellence.
             </p>
-            <div className="pt-5">
-              <button className="btn-cinematic px-8 py-4 rounded-full bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#1a60b0] text-white font-bold uppercase tracking-wider text-sm shadow-2xl transition-all duration-300 hover:shadow-[0_20px_35px_-8px_rgba(24,113,201,0.6)] hover:scale-105 active:scale-95">
+            <div className="pt-3 sm:pt-5">
+              <button className="btn-cinematic px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#1a60b0] text-white font-bold uppercase tracking-wider text-[11px] sm:text-sm shadow-2xl transition-all duration-300 hover:shadow-[0_20px_35px_-8px_rgba(24,113,201,0.6)] hover:scale-105 active:scale-95">
                 Discover Our Practice ✦
               </button>
             </div>
           </div>
           
           {/* Right Block - Strengths with 3D Cards */}
-          <div ref={rightBlock} className="lg:w-1/2 w-full space-y-5 will-change-transform">
-            {strengths.map((item, index) => (
-              <div 
-                key={index} 
-                className="strength-item-3d group transition-all duration-500 p-4 rounded-2xl bg-white/70 backdrop-blur-md border border-[#1871C9]/15 hover:border-[#1871C9]/45 hover:translate-x-2 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-900/10"
-              >
-                <div className="flex gap-5 items-start">
-                  <div className="relative">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1871C9]/25 to-[#1871C9]/5 flex items-center justify-center border border-[#1871C9]/40 shadow-md group-hover:shadow-[0_0_15px_rgba(24,113,201,0.35)] transition-all duration-300">
-                      <div className="text-[#1871C9] group-hover:text-[#145da5] transition-colors">
-                        {item.icon}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#1871C9] transition-colors">
+          <div ref={rightBlock} className="lg:w-1/2 w-full will-change-transform">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+              {strengths.map((item, index) => (
+                <div
+                  key={index}
+                  className="strength-item-3d group relative p-[1.5px] rounded-2xl bg-gradient-to-br from-[#1871C9]/35 via-[#6BB1F5]/20 to-transparent transition-all duration-500 hover:shadow-[0_18px_45px_-18px_rgba(24,113,201,0.45)]"
+                >
+                  <div className="h-full rounded-[15px] bg-white/75 backdrop-blur-md border border-white/40 p-4 sm:p-5 md:p-6 transition-all duration-500 group-hover:bg-white/90 group-hover:translate-y-[-2px]">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed group-hover:text-gray-700 transition-colors">
-                      {item.desc}
+
+                    <p className="mt-2.5 sm:mt-3 text-gray-600 text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                      {index === 0 && (
+                        <>
+                          <span ref={(el) => { statRefs.current[0] = el; }} className="font-bold text-gray-900">1</span>+ legal matters handled, managed and advised by our legal experts.
+                        </>
+                      )}
+                      {index === 1 && (
+                        <>
+                          Over <span ref={(el) => { statRefs.current[1] = el; }} className="font-bold text-gray-900">1</span> years of combined legal and advisory experience across diverse jurisdictions.
+                        </>
+                      )}
+                      {index === 2 && (
+                        <>
+                          Matters involving high-value claim amounts exceeding ₹<span ref={(el) => { statRefs.current[2] = el; }} className="font-bold text-gray-900">1</span> crores handled with precision.
+                        </>
+                      )}
+                      {index === 3 && (
+                        <>
+                          Strategic advisory for high-value projects reaching up to ₹<span ref={(el) => { statRefs.current[3] = el; }} className="font-bold text-gray-900">1</span> crores.
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
       
       {/* Background EST. Text - Cinematic Depth */}
-      <div className="absolute bottom-8 right-6 text-[11rem] lg:text-[18rem] font-serif font-black text-gray-900/[0.04] select-none pointer-events-none z-0">
+      <div className="absolute bottom-6 right-4 text-[7rem] sm:text-[9rem] lg:text-[18rem] font-serif font-black text-gray-900/[0.04] select-none pointer-events-none z-0">
         EST.
       </div>
       
       {/* Floating Scale Icon Animation (Subtle overlay) */}
-      <div className="absolute top-24 left-[-6%] opacity-[0.028] text-[#1871C9] pointer-events-none z-0 animate-float-slow">
-        <Scale size={360} strokeWidth={0.8} />
+      <div className="absolute top-16 sm:top-24 left-[-10%] sm:left-[-6%] opacity-[0.024] sm:opacity-[0.028] text-[#1871C9] pointer-events-none z-0 animate-float-slow">
+        <Scale size={260} className="sm:hidden" strokeWidth={0.8} />
+        <Scale size={360} className="hidden sm:block" strokeWidth={0.8} />
       </div>
     </section>
   );
