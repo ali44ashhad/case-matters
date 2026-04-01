@@ -1,4 +1,5 @@
 import Testimonial from "../models/testimonial.js";
+import mongoose from "mongoose";
 
 /* ================= CREATE ================= */
 export const createTestimonial = async (req, res) => {
@@ -40,6 +41,15 @@ export const createTestimonial = async (req, res) => {
 /* ================= GET ALL ================= */
 export const getAllTestimonials = async (req, res) => {
   try {
+    // If DB isn't connected (common on misconfigured deploys), fail fast with a clear status.
+    // readyState: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message: "Database not connected. Please try again shortly.",
+      });
+    }
+
     const testimonials = await Testimonial.find()
       .sort({ createdAt: -1 }); // latest first
 
