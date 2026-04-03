@@ -1,5 +1,6 @@
 import Testimonial from "../models/testimonial.js";
 import mongoose from "mongoose";
+import connectDB from "../config/db.js";
 
 /* ================= CREATE ================= */
 export const createTestimonial = async (req, res) => {
@@ -41,6 +42,9 @@ export const createTestimonial = async (req, res) => {
 /* ================= GET ALL ================= */
 export const getAllTestimonials = async (req, res) => {
   try {
+    // Ensure DB connection (serverless-safe)
+    await connectDB();
+
     // If DB isn't connected (common on misconfigured deploys), fail fast with a clear status.
     // readyState: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
     if (mongoose.connection.readyState !== 1) {

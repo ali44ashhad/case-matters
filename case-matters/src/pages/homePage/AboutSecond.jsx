@@ -1,18 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import * as THREE from 'three';
 import { Scale } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger); 
 
 const AboutSecond = () => {
   const container = useRef(null);
   const leftBlock = useRef(null);
   const rightBlock = useRef(null);
-  const canvasContainer = useRef(null);
-  const legalGroupRef = useRef(null);
   const statRefs = useRef([]);
 
   const strengths = [
@@ -33,207 +30,6 @@ const AboutSecond = () => {
       desc: "Strategic advisory for high-value projects reaching up to ₹2,000 crores.",
     }
   ];
-
-  // Initialize 3D Scene
-  useEffect(() => {
-    if (!canvasContainer.current) return;
-
-    let rafId = 0;
-    let renderer = null;
-    let camera = null;
-    let scene = null;
-
-    const objectsToDispose = [];
-    const geometriesToDispose = [];
-    const materialsToDispose = [];
-
-    // Scene setup — transparent so CSS white gradient shows through
-    scene = new THREE.Scene();
-    scene.background = null;
-    scene.fog = new THREE.FogExp2(0xf2f7ff, 0.02);
-
-    // Camera
-    const { width: initialW, height: initialH } = canvasContainer.current.getBoundingClientRect();
-    camera = new THREE.PerspectiveCamera(45, (initialW || 1) / (initialH || 1), 0.1, 1000);
-    camera.position.set(0, 1.5, 8);
-    camera.lookAt(0, 0, 0);
-
-    // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-    renderer.setSize(initialW || window.innerWidth, initialH || window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.shadowMap.enabled = false;
-    canvasContainer.current.appendChild(renderer.domElement);
-
-    // Lights - soft, subtle (keep content as the hero)
-    const ambientLight = new THREE.AmbientLight(0xeaf2ff, 1.0);
-    scene.add(ambientLight);
-    objectsToDispose.push(ambientLight);
-
-    const mainLight = new THREE.DirectionalLight(0xffffff, 0.65);
-    mainLight.position.set(2.5, 4.5, 3.5);
-    scene.add(mainLight);
-    objectsToDispose.push(mainLight);
-
-    const fillLight = new THREE.PointLight(0xcfe3ff, 0.35);
-    fillLight.position.set(-2.5, 1.5, 3.5);
-    scene.add(fillLight);
-    objectsToDispose.push(fillLight);
-
-    // Main 3D Legal Symbol Group
-    const legalGroup = new THREE.Group();
-    
-    // Scales of Justice — subtle, low-contrast background motif
-    const symbolMat = new THREE.MeshStandardMaterial({
-      color: 0x7fa6d6,
-      metalness: 0.15,
-      roughness: 0.8,
-      transparent: true,
-      opacity: 0.55,
-      emissive: 0x0b2b4a,
-      emissiveIntensity: 0.08,
-    });
-    materialsToDispose.push(symbolMat);
-
-    // Base + pillar
-    const baseGeo = new THREE.CylinderGeometry(1.0, 1.1, 0.22, 40);
-    const base = new THREE.Mesh(baseGeo, symbolMat);
-    base.position.set(0, -1.05, 0);
-    legalGroup.add(base);
-    geometriesToDispose.push(baseGeo);
-    objectsToDispose.push(base);
-
-    const pillarGeo = new THREE.CylinderGeometry(0.14, 0.16, 2.2, 24);
-    const pillar = new THREE.Mesh(pillarGeo, symbolMat);
-    pillar.position.set(0, 0.05, 0);
-    legalGroup.add(pillar);
-    geometriesToDispose.push(pillarGeo);
-    objectsToDispose.push(pillar);
-
-    // Top finial
-    const finialGeo = new THREE.SphereGeometry(0.18, 18, 18);
-    const finial = new THREE.Mesh(finialGeo, symbolMat);
-    finial.position.set(0, 1.25, 0);
-    legalGroup.add(finial);
-    geometriesToDispose.push(finialGeo);
-    objectsToDispose.push(finial);
-
-    // Crossbar
-    const barGeo = new THREE.BoxGeometry(2.7, 0.12, 0.12);
-    const bar = new THREE.Mesh(barGeo, symbolMat);
-    bar.position.set(0, 1.05, 0);
-    legalGroup.add(bar);
-    geometriesToDispose.push(barGeo);
-    objectsToDispose.push(bar);
-
-    // Pans
-    const panGeo = new THREE.CylinderGeometry(0.42, 0.48, 0.08, 32);
-    const panL = new THREE.Mesh(panGeo, symbolMat);
-    const panR = new THREE.Mesh(panGeo, symbolMat);
-    panL.position.set(-1.1, 0.35, 0);
-    panR.position.set(1.1, 0.35, 0);
-    legalGroup.add(panL, panR);
-    geometriesToDispose.push(panGeo);
-    objectsToDispose.push(panL, panR);
-
-    // Chains (lines) - very subtle
-    const chainMat = new THREE.LineBasicMaterial({ color: 0x93b6de, transparent: true, opacity: 0.28 });
-    materialsToDispose.push(chainMat);
-    const chainPtsL = [
-      new THREE.Vector3(-1.1, 1.02, 0),
-      new THREE.Vector3(-1.1, 0.55, 0),
-    ];
-    const chainPtsR = [
-      new THREE.Vector3(1.1, 1.02, 0),
-      new THREE.Vector3(1.1, 0.55, 0),
-    ];
-    const chainGeoL = new THREE.BufferGeometry().setFromPoints(chainPtsL);
-    const chainGeoR = new THREE.BufferGeometry().setFromPoints(chainPtsR);
-    const chainL = new THREE.Line(chainGeoL, chainMat);
-    const chainR = new THREE.Line(chainGeoR, chainMat);
-    legalGroup.add(chainL, chainR);
-    geometriesToDispose.push(chainGeoL, chainGeoR);
-    objectsToDispose.push(chainL, chainR);
-    
-    scene.add(legalGroup);
-    legalGroupRef.current = legalGroup;
-    objectsToDispose.push(legalGroup);
-    
-    // Floating particle system (dust motes)
-    const particleCount = 700;
-    const particlesGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      positions[i*3] = (Math.random() - 0.5) * 18;
-      positions[i*3+1] = (Math.random() - 0.5) * 8;
-      positions[i*3+2] = (Math.random() - 0.5) * 12 - 5;
-    }
-    particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMat = new THREE.PointsMaterial({
-      color: 0xa9c6ea,
-      size: 0.022,
-      transparent: true,
-      opacity: 0.12,
-      depthWrite: false,
-    });
-    const particleSystem = new THREE.Points(particlesGeo, particleMat);
-    scene.add(particleSystem);
-    geometriesToDispose.push(particlesGeo);
-    materialsToDispose.push(particleMat);
-    objectsToDispose.push(particleSystem);
-    
-    // Animation variables
-    let time = 0;
-    
-    // Animation loop
-    function animate() {
-      rafId = requestAnimationFrame(animate);
-      time += 0.006;
-
-      legalGroup.rotation.y = Math.sin(time * 0.18) * 0.08;
-      legalGroup.rotation.x = Math.sin(time * 0.12) * 0.03;
-      legalGroup.position.y = -0.1 + Math.sin(time * 0.55) * 0.04;
-
-      particleSystem.rotation.y = time * 0.012;
-      particleSystem.rotation.x = Math.sin(time * 0.08) * 0.06;
-      
-      renderer.render(scene, camera);
-    }
-    
-    animate();
-    
-    // Handle resize
-    const handleResize = () => {
-      if (!canvasContainer.current) return;
-      const { width, height } = canvasContainer.current.getBoundingClientRect();
-      const w = width || window.innerWidth;
-      const h = height || window.innerHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (rafId) cancelAnimationFrame(rafId);
-      if (canvasContainer.current && renderer.domElement) {
-        canvasContainer.current.removeChild(renderer.domElement);
-      }
-
-      geometriesToDispose.forEach((g) => g?.dispose?.());
-      materialsToDispose.forEach((m) => m?.dispose?.());
-      objectsToDispose.forEach((o) => {
-        if (o && typeof o === "object") {
-          scene?.remove?.(o);
-        }
-      });
-
-      renderer?.dispose?.();
-    };
-  }, []);
 
   // GSAP Animations
   useGSAP(() => {
@@ -320,20 +116,6 @@ const AboutSecond = () => {
         boxShadow: "0 0 20px rgba(24,113,201,0.7)",
       });
     }
-    
-    // Parallax effect for 3D group on scroll
-    ScrollTrigger.create({
-      trigger: container.current,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1.5,
-      onUpdate: (self) => {
-        if (legalGroupRef.current) {
-          legalGroupRef.current.position.y = (self.progress * 0.3);
-        }
-      }
-    });
-    
   }, { scope: container });
   
   return (
@@ -351,16 +133,37 @@ const AboutSecond = () => {
           .animate-float-slow {
             animation: floatSlow 7s ease-in-out infinite;
           }
+          @keyframes prismFloat {
+            0%, 100% { transform: translate3d(0, 0, 0) rotateX(18deg) rotateY(-22deg) rotateZ(8deg); }
+            50% { transform: translate3d(0, -10px, 0) rotateX(18deg) rotateY(-22deg) rotateZ(8deg); }
+          }
+          .cm-prism {
+            transform-style: preserve-3d;
+            animation: prismFloat 7.5s ease-in-out infinite;
+            will-change: transform;
+          }
         `}
       </style>
-      {/* 3D Canvas Background */}
-      <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
+
+      {/* Decorative 3D-ish background element (CSS, no canvas) */}
+      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+        {/* Big blue prism */}
+        <div className="cm-prism absolute -top-28 -right-20 h-[560px] w-[560px] sm:h-[720px] sm:w-[720px] rounded-[3.75rem] opacity-95 [filter:saturate(1.25)] shadow-[0_35px_80px_rgba(24,113,201,0.18)] bg-[conic-gradient(from_210deg_at_55%_45%,_rgba(24,113,201,0.65),_rgba(95,169,244,0.45),_rgba(120,196,255,0.38),_rgba(24,113,201,0.6)),radial-gradient(circle_at_30%_25%,_rgba(255,255,255,0.55),_transparent_58%),radial-gradient(circle_at_70%_70%,_rgba(24,113,201,0.38),_transparent_62%)]" />
+        {/* Inner bevel highlight */}
+        <div className="absolute -top-28 -right-20 h-[560px] w-[560px] sm:h-[720px] sm:w-[720px] rounded-[3.75rem] opacity-70 bg-[linear-gradient(135deg,_rgba(255,255,255,0.65)_0%,_transparent_42%,_rgba(255,255,255,0.18)_100%)]" />
+
+        {/* Supporting blue orb */}
+        <div className="absolute -bottom-28 -left-24 h-[460px] w-[460px] sm:h-[560px] sm:w-[560px] rounded-full opacity-90 bg-[radial-gradient(circle_at_center,_rgba(24,113,201,0.28),_transparent_62%)]" />
+
+        {/* Highlight streak */}
+        <div className="absolute right-[-22%] top-[16%] h-24 w-[560px] rotate-12 bg-[linear-gradient(90deg,_transparent,_rgba(255,255,255,0.58),_transparent)] opacity-70 blur-[12px]" />
+      </div>
       
       {/* Overlay Gradients for Depth (light) */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
-      <div className="absolute inset-0 z-[1] bg-[linear-gradient(120deg,_rgba(24,113,201,0.08)_0%,_transparent_42%,_rgba(24,113,201,0.06)_100%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[2] bg-gradient-to-t from-white/85 via-transparent to-white/35 pointer-events-none" />
+      <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.18),_transparent_58%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.12),_transparent_48%)] pointer-events-none" />
+      <div className="absolute inset-0 z-[2] bg-[linear-gradient(120deg,_rgba(24,113,201,0.07)_0%,_transparent_42%,_rgba(24,113,201,0.05)_100%)] pointer-events-none" />
       
       {/* Content Layer */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-16 lg:py-32">
@@ -391,7 +194,7 @@ const AboutSecond = () => {
           
           {/* Right Block - Strengths with 3D Cards */}
           <div ref={rightBlock} className="lg:w-1/2 w-full will-change-transform">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
               {strengths.map((item, index) => (
                 <div
                   key={index}
