@@ -398,32 +398,110 @@ const AboutSecond = () => {
                   className="strength-item-3d group relative p-[1.5px] rounded-2xl bg-gradient-to-br from-[#1871C9]/35 via-[#6BB1F5]/20 to-transparent transition-all duration-500 hover:shadow-[0_18px_45px_-18px_rgba(24,113,201,0.45)]"
                 >
                   <div className="h-full rounded-[15px] bg-white/75 backdrop-blur-md border border-white/40 p-4 sm:p-5 md:p-6 transition-all duration-500 group-hover:bg-white/90 group-hover:translate-y-[-2px]">
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors leading-snug">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-2.5 sm:mt-3 text-gray-600 text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                    <div className="space-y-1.5">
+                      {/* Top line: Big coloured number */}
                       {index === 0 && (
-                        <>
-                          <span ref={(el) => { statRefs.current[0] = el; }} className="font-bold text-gray-900">1</span>+ legal matters handled, managed and advised by our legal experts.
-                        </>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+                          <span
+                            ref={(el) => {
+                              statRefs.current[0] = el;
+                            }}
+                            className="font-extrabold"
+                          >
+                            1
+                          </span>
+                          +
+                        </p>
                       )}
                       {index === 1 && (
-                        <>
-                          Over <span ref={(el) => { statRefs.current[1] = el; }} className="font-bold text-gray-900">1</span> years of combined legal and advisory experience across diverse jurisdictions.
-                        </>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+                          <span
+                            ref={(el) => {
+                              statRefs.current[1] = el;
+                            }}
+                            className="font-extrabold"
+                          >
+                            1
+                          </span>
+                          +{" "}
+                          <span className="align-baseline text-lg sm:text-xl md:text-2xl">
+                            Years
+                          </span>
+                        </p>
                       )}
                       {index === 2 && (
-                        <>
-                          Matters involving high-value claim amounts exceeding ₹<span ref={(el) => { statRefs.current[2] = el; }} className="font-bold text-gray-900">1</span> crores handled with precision.
-                        </>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+                          ₹
+                          <span
+                            ref={(el) => {
+                              statRefs.current[2] = el;
+                            }}
+                            className="font-extrabold"
+                          >
+                            1
+                          </span>
+                          + Cr
+                        </p>
                       )}
                       {index === 3 && (
-                        <>
-                          Strategic advisory for high-value projects reaching up to ₹<span ref={(el) => { statRefs.current[3] = el; }} className="font-bold text-gray-900">1</span> crores.
-                        </>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+                          ₹
+                          <span
+                            ref={(el) => {
+                              statRefs.current[3] = el;
+                            }}
+                            className="font-extrabold"
+                          >
+                            1
+                          </span>
+                          + Cr
+                        </p>
                       )}
-                    </p>
+
+                      {/* Second line: Short label */}
+                      {index === 0 && (
+                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
+                          Matters Delivered
+                        </p>
+                      )}
+                      {index === 1 && (
+                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
+                          Combined Experience
+                        </p>
+                      )}
+                      {index === 2 && (
+                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
+                          Claims Managed
+                        </p>
+                      )}
+                      {index === 3 && (
+                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
+                          Project Exposure
+                        </p>
+                      )}
+
+                      {/* Third line: Supporting description */}
+                      {index === 0 && (
+                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                          Across arbitration, contracts & disputes.
+                        </p>
+                      )}
+                      {index === 1 && (
+                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                          Multi-jurisdictional legal expertise.
+                        </p>
+                      )}
+                      {index === 2 && (
+                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                          High-value disputes handled with precision.
+                        </p>
+                      )}
+                      {index === 3 && (
+                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
+                          Advising on large-scale infrastructure & commercial projects.
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
