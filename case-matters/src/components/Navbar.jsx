@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Menu, X, MessageCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+const NAV_OFFSET = 80;
+
+const scrollToId = (id) => {
+  const element = document.getElementById(id);
+  if (!element) return;
+  const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({
+    top: elementPosition - NAV_OFFSET,
+    behavior: 'smooth',
+  });
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: 'Home', href: 'home' },
@@ -12,22 +26,24 @@ const Navbar = () => {
     { name: 'Sectors', href: 'sectors' },
   ];
 
-  const scrollToSection = (e, id) => {
+  const handleSectionNav = (e, id) => {
     e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
     setIsOpen(false);
+    if (location.pathname !== '/') {
+      navigate({ pathname: '/', hash: `#${id}` });
+      return;
+    }
+    scrollToId(id);
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+      return;
+    }
+    scrollToId('home');
   };
 
   return (
@@ -50,7 +66,7 @@ const Navbar = () => {
       >
         
         {/* Logo */}
-        <Link to="/" onClick={(e) => scrollToSection(e, 'home')}>
+        <Link to="/" onClick={handleLogoClick}>
           <div className="text-2xl font-black tracking-tighter cursor-pointer uppercase text-[#1871C9]">
             Logo<span className="text-white">.</span>
           </div>
@@ -61,8 +77,8 @@ const Navbar = () => {
           {navLinks.map((link) => (
             <li key={link.name}>
               <a 
-                href={`#${link.href}`} 
-                onClick={(e) => scrollToSection(e, link.href)}
+                href={`/#${link.href}`} 
+                onClick={(e) => handleSectionNav(e, link.href)}
                 className="text-sm uppercase tracking-[0.2em] font-bold transition-colors relative group text-gray-100"
               >
                 {link.name}
@@ -128,8 +144,8 @@ const Navbar = () => {
           {navLinks.map((link) => (
             <li key={link.name}>
               <a 
-                href={`#${link.href}`} 
-                onClick={(e) => scrollToSection(e, link.href)}
+                href={`/#${link.href}`} 
+                onClick={(e) => handleSectionNav(e, link.href)}
                 className="text-3xl font-bold text-gray-900 hover:text-[#1871C9] tracking-tight transition-colors"
               >
                 {link.name}

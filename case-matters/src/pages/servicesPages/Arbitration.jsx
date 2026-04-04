@@ -42,11 +42,10 @@ const Arbitration = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
         {/* LEFT BLOCK: Content & GSAP Animation */}
-        <div className="space-y-8">
+        <div className="space-y-4">
           <div ref={carpetRef} className="overflow-hidden">
-            <h1 className="text-white text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-gray-900 leading-[0.9]">
-              Trusted Legal <br />
-              <span className="text-[#1871C9]">Solutions.</span>
+            <h1 className="text-[#1871C9] text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-[0.9]">
+              Arbitration  
             </h1>
           </div>
 
@@ -56,11 +55,16 @@ const Arbitration = () => {
             transition={{ duration: 1, delay: 1 }}
             className="space-y-6"
           >
-            <p className="text-gray-200 text-xl md:text-2xl max-w-xl font-light leading-relaxed">
-              Case Matters brings decades of experience to complex commercial, construction, and employment disputes.
-            </p>
+            <div className="space-y-3 ">
+              <p className="text-gray-200 text-lg md:text-xl font-light leading-relaxed">
+                Arbitration is a private and efficient dispute resolution mechanism that allows parties to resolve disputes outside the traditional court system. It offers confidentiality, procedural flexibility, and faster resolution when compared to conventional litigation.
+              </p>
+              <p className="text-gray-200 text-lg md:text-xl font-light leading-relaxed">
+                We advise and represent clients at every stage of the arbitration process, right from drafting and invoking arbitration clauses to conducting proceedings and enforcing arbitral awards. Our approach is strategic and evidence-driven, ensuring that disputes are resolved fairly while safeguarding commercial interests. Arbitration is particularly effective for commercial, contractual, construction, and infrastructure-related disputes where time, cost, and business continuity are critical considerations.
+              </p>
+            </div>
             
-            <div className="flex flex-wrap gap-4">
+            {/* <div className="flex flex-wrap gap-4">
               <Link to="/all-services">
               <motion.button 
                  whileTap={{ scale: 0.95 }}
@@ -70,7 +74,7 @@ const Arbitration = () => {
               </motion.button>
               </Link>
               
-            </div>
+            </div> */}
           </motion.div>
         </div>
 
