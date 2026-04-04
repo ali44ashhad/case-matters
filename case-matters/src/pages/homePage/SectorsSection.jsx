@@ -68,7 +68,7 @@ const SectorsCarousel = () => {
   };
 
   return (
-    <section className="py-20 bg-[#f5f5f7] overflow-hidden">
+    <section id="sectors" className="py-20 bg-[#f5f5f7] overflow-hidden">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Header */}

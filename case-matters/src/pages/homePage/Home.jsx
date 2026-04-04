@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Scale, ShieldCheck, Gavel } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AboutFirst from './AboutFirst';
@@ -12,8 +13,27 @@ import ContactForm from './ContactForm';
 import bgVideo from '../../assets/homeAssets/hero-video.mp4';
 import SectorsSection from './SectorsSection';
 
+const SECTION_SCROLL_OFFSET = 80;
+
 const Home = () => {
+  const location = useLocation();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    const id = location.hash.replace(/^#/, '');
+    if (!id) return;
+    const run = () => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - SECTION_SCROLL_OFFSET;
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(run);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [location.pathname, location.hash]);
 
   const contents = [
     { 
@@ -66,7 +86,7 @@ const Home = () => {
 
   return (
     <>
-      <section className="relative w-full h-screen bg-white overflow-hidden">
+      <section id="home" className="relative w-full h-screen bg-white overflow-hidden">
         {/* --- BACKGROUND VIDEO --- */}
         <div className="absolute inset-0 z-0">
           <video
