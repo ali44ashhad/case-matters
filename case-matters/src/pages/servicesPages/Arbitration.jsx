@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import OtherServicesSection from '../../components/OtherServicesSection';
 import { Link } from 'react-router-dom';
 
 const Arbitration = () => {
@@ -114,6 +115,7 @@ const Arbitration = () => {
     </section>
     
     <ContactForm/>
+    <OtherServicesSection currentPath="/services/arbitration" />
    </>
   );
 };

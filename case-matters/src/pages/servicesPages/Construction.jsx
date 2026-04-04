@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import OtherServicesSection from '../../components/OtherServicesSection';
 
 const Construction = () => {
   const container = useRef();
@@ -171,6 +172,7 @@ const Construction = () => {
       </section>
       
       <ContactForm/>
+      <OtherServicesSection currentPath="/services/construction" />
     </>
   );
 };

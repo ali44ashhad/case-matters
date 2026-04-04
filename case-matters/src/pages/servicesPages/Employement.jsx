@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import OtherServicesSection from '../../components/OtherServicesSection';
 import employementImage from '../../assets/homeAssets/advisory-image.jpg';
 
 const Employement = () => {
@@ -126,6 +127,7 @@ const Employement = () => {
 </section>
     
     <ContactForm/>
+    <OtherServicesSection currentPath="/services/employement" />
    </>
   );
 };

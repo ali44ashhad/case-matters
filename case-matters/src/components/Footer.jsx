@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react'; // Added icons for better UX
 
 const Footer = () => {
@@ -75,9 +76,9 @@ const Footer = () => {
             <ul className="space-y-2.5 sm:space-y-3">
               {practiceAreas.map((item, index) => (
                 <li key={index}>
-                  <a href={item.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
+                  <Link to={item.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -91,9 +92,9 @@ const Footer = () => {
             <ul className="space-y-2.5 sm:space-y-3">
               {usefulLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
+                  <Link to={link.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -107,9 +108,9 @@ const Footer = () => {
             <ul className="space-y-2.5 sm:space-y-3">
               {legalLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
+                  <Link to={link.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

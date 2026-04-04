@@ -6,56 +6,57 @@ const SectorsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const sectors = [
-  {
-    title: "Infrastructure & Construction",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e",
-    desc: "Advisory and dispute resolution for contractors and developers across roads, railways, and infrastructure projects.",
-  },
-  {
-    title: "Energy, Power & Renewable",
-    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e",
-    desc: "Legal services for power producers and renewable energy developers covering contracts, compliance, and arbitration.",
-  },
-  {
-    title: "Professional Services",
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-    desc: "Advisory on contracts and dispute resolution for consultancy, advisory, and service-based organizations.",
-  },
-  {
-    title: "Manufacturing & Industrial",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-    desc: "Contractual advisory and compliance support for manufacturing entities across operations and supply chains.",
-  },
-  {
-    title: "Corporate & Commercial",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85",
-    desc: "Comprehensive legal support on contracts, commercial disputes, and regulatory advisory for businesses.",
-  },
-  {
-    title: "Startups & MSME",
-    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd",
-    desc: "End-to-end legal advisory for startups covering structuring, contracts, funding, and compliance requirements.",
-  },
-  {
-    title: "Financial Services & FinTech",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3",
-    desc: "Regulatory and contractual advisory for financial institutions and fintech companies in evolving markets.",
-  },
-  {
-    title: "Logistics & Supply Chain",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-    desc: "Legal support for logistics contracts, vendor agreements, and dispute resolution in supply chains.",
-  },
-  {
-    title: "Healthcare & Life Sciences",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-    desc: "Advisory for hospitals and healthcare providers covering contracts, employment, and compliance matters.",
-  },
-  {
-    title: "Real Estate & Development",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
-    desc: "Support for developers and landowners on construction contracts, joint development, and real estate disputes.",
-  },]
+    {
+      title: "Infrastructure & Construction",
+      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e",
+      desc: "Advisory and dispute resolution for contractors, concessionaires, developers, and project stakeholders across roads, highways, railways, ports, airports, power, and urban infrastructure projects, including arbitration and contract management support involving complex contract models such as EPC, item-rate, and PPP frameworks including BOT, DBFOT, DBFOO, and HAM.",
+    },
+    {
+      title: "Energy, Power & Renewable Sector",
+      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e",
+      desc: "Legal services for power producers, renewable energy developers, and operators involving project contracts, arbitration, and employment compliance.",
+    },
+    {
+      title: "Professional Services & Consultancy Firm",
+      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+      desc: "Advisory on contracts and dispute resolution for consultancy, advisory, and service-based organizations.",
+    },
+    {
+      title: "Manufacturing & Industrial Enterprises",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+      desc: "Contractual advisory, employment compliance, and dispute resolution for manufacturing entities across production, supply chain, and labour management functions.",
+    },
+    {
+      title: "Corporate & Commercial Enterprises",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85",
+      desc: "Legal support for businesses on contract management, commercial disputes, employment advisory, and arbitration arising from commercial relationships.",
+    },
+    {
+      title: "Startups, MSME & Emerging Businesses",
+      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd",
+      desc: "End-to-end legal advisory for startups covering business structuring, contracts, employment compliance, and regulatory obligations at early and growth stages.",
+    },
+    {
+      title: "Financial Services & FinTech",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3",
+      desc: "Contract drafting, regulatory compliance advisory, employment structuring, and dispute resolution support for financial institutions and fintech companies.",
+    },
+    {
+      title: "Logistics, Supply Chain & Transportation",
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
+      desc: "Legal advisory on logistics contracts, service agreements, employment compliance, and arbitration arising from operational and commercial disputes.",
+    },
+    {
+      title: "Healthcare & Life Sciences",
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+      desc: "Contractual and employment advisory for hospitals, clinics, and healthcare service providers, along with dispute resolution support.",
+    },
+    {
+      title: "Real Estate & Property Development",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+      desc: "Legal support for developers, investors, and landowners involving construction contracts, joint development agreements, employment matters, and commercial dispute resolution.",
+    },
+  ];
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % sectors.length);
   };
@@ -119,7 +120,7 @@ const SectorsCarousel = () => {
                   <div className="h-64 md:h-80 overflow-hidden">
                     <img
                       src={sector.image}
-                      alt=""
+                      alt={sector.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -129,7 +130,7 @@ const SectorsCarousel = () => {
                     <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
                       {sector.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                       {sector.desc}
                     </p>
                   </div>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
+import OtherServicesSection from '../../components/OtherServicesSection';
 import contractClaimImage from '../../assets/homeAssets/contract-claim.jpg';
 
 const ContractClaim = () => {
@@ -107,6 +108,7 @@ const ContractClaim = () => {
       </section>
 
       <ContactForm />
+      <OtherServicesSection currentPath="/services/contract-claim" />
     </>
   );
 };
