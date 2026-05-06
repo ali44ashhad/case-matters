@@ -13,13 +13,13 @@ const Services = () => {
   const canvasContainer = useRef(null);
 
   const services = [
-    { id: "arbitration", title: "Arbitration", desc: "Private dispute resolution through structured proceedings, offering confidentiality and procedural efficiency.", path: "/services/arbitration" },
+    { id: "arbitration", title: "Arbitration", desc: "Private dispute resolution through procedural efficiency, offering confidentiality, and enforceable outcomes without prolonged court litigation.", path: "/services/arbitration" },
     { id: "construction", title: "Construction & Infrastructure Disputes", desc: "Advisory and representation in project-related disputes, focused on protecting contractual entitlements.", path: "/services/construction" },
     { id: "contract-advisory", title: "Contract Advisory & Risk Management", desc: "Drafting, review, and interpretation of contracts, with strategic advice on rights and obligations.", path: "/services/contract-advisory" },
     { id: "claims-management", title: "Contract and Claims Management", desc: "End-to-end claims support, including claim preparation, evidence collation, and strategy.", path: "/services/contract-claim" },
     { id: "employment", title: "Employment Advisory & Compliance", desc: "Advisory services relating to employment contracts, HR policies, and statutory compliance.", path: "/services/employement" },
-    { id: "startup-law", title: "Startup Law & Compliance", desc: "Legal support for startups and founders, covering business structuring and regulatory compliance.", path: "/services/startup" },
-    { id: "litigation", title: "Civil & Business Litigation", desc: "Representation before courts in civil and commercial disputes including stakeholder conflicts.", path: "/services/civil" }
+    { id: "startup-law", title: "MSME/Startup Law & Compliance", desc: "Legal support for startups and founders, covering business structuring and regulatory compliance.", path: "/services/startup" },
+    { id: "litigation", title: "Civil, Commercial and Business Litigation", desc: "Conflicts involving shareholders, partners, vendors, customers and stakeholders.", path: "/services/civil" }
   ];
 
   useGSAP(() => {
@@ -70,6 +70,7 @@ const Services = () => {
     if (!canvasContainer.current) return;
 
     let rafId = 0;
+    let running = false;
     let renderer = null;
     let camera = null;
     let scene = null;
@@ -86,9 +87,9 @@ const Services = () => {
     camera.position.set(0, 0.6, 6.5);
     camera.lookAt(0, 0, 0);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(initialW || window.innerWidth, initialH || window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
     canvasContainer.current.appendChild(renderer.domElement);
 
     const ambient = new THREE.AmbientLight(0xd0dff0, 0.85);
@@ -99,7 +100,8 @@ const Services = () => {
     scene.add(key);
 
     // Particles
-    const particleCount = 1200;
+    const isSmallScreen = typeof window !== 'undefined' && window.matchMedia?.('(max-width: 639px)')?.matches;
+    const particleCount = isSmallScreen ? 650 : 1200;
     const particlesGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
@@ -145,7 +147,27 @@ const Services = () => {
       grid.rotation.z = Math.sin(t * 0.25) * 0.02;
       renderer.render(scene, camera);
     };
-    animate();
+    const start = () => {
+      if (running) return;
+      running = true;
+      animate();
+    };
+    const stop = () => {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    };
+
+    const host = containerRef.current || canvasContainer.current;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const isOn = Boolean(entry?.isIntersecting);
+        isOn ? start() : stop();
+      },
+      { root: null, threshold: 0.01, rootMargin: '200px 0px 200px 0px' }
+    );
+    if (host) io.observe(host);
 
     const handleResize = () => {
       if (!canvasContainer.current) return;
@@ -160,7 +182,8 @@ const Services = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (rafId) cancelAnimationFrame(rafId);
+      io.disconnect();
+      stop();
       if (canvasContainer.current && renderer?.domElement) {
         canvasContainer.current.removeChild(renderer.domElement);
       }

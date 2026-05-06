@@ -37,6 +37,7 @@ const AboutFirst = () => {
         scrub: 1,
         pin: true,
         anticipatePin: 1,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -44,7 +45,54 @@ const AboutFirst = () => {
       if (i === 0) return;
       tl.fromTo(panel, { yPercent: 100 }, { yPercent: 0, ease: 'none' });
     });
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, { scope: container });
+
+  // Ensure pin calculations happen after images load (prevents "stuck" pin due to wrong heights)
+  useEffect(() => {
+    const root = container.current;
+    if (!root) return;
+
+    const images = Array.from(root.querySelectorAll('img'));
+    if (images.length === 0) return;
+
+    let cancelled = false;
+    const refresh = () => {
+      if (cancelled) return;
+      ScrollTrigger.refresh();
+    };
+
+    const pending = images.filter((img) => !img.complete);
+    if (pending.length === 0) {
+      const id = requestAnimationFrame(refresh);
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(id);
+      };
+    }
+
+    const onDone = () => {
+      const stillPending = images.some((img) => !img.complete);
+      if (!stillPending) refresh();
+    };
+
+    pending.forEach((img) => {
+      img.addEventListener('load', onDone, { once: true });
+      img.addEventListener('error', onDone, { once: true });
+    });
+
+    return () => {
+      cancelled = true;
+      pending.forEach((img) => {
+        img.removeEventListener('load', onDone);
+        img.removeEventListener('error', onDone);
+      });
+    };
+  }, []);
 
   // Lightweight particles per panel (sits above photo, below text)
   useEffect(() => {
@@ -53,9 +101,11 @@ const AboutFirst = () => {
 
     const layers = root.querySelectorAll('[data-panel-particles]');
     const cleanups = [];
+    const controllers = [];
 
     layers.forEach((layer) => {
       let raf = 0;
+      let running = false;
       const scene = new THREE.Scene();
       scene.background = null;
       scene.fog = new THREE.FogExp2(0xe8f0fa, 0.035);
@@ -65,13 +115,14 @@ const AboutFirst = () => {
 
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true,
+        antialias: false,
         powerPreference: 'high-performance',
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       layer.appendChild(renderer.domElement);
 
-      const n = 420;
+      const isSmallScreen = typeof window !== 'undefined' && window.matchMedia?.('(max-width: 639px)')?.matches;
+      const n = isSmallScreen ? 240 : 420;
       const geom = new THREE.BufferGeometry();
       const pos = new Float32Array(n * 3);
       for (let i = 0; i < n; i++) {
@@ -113,10 +164,24 @@ const AboutFirst = () => {
         points.rotation.x = Math.sin(t * 0.3) * 0.06;
         renderer.render(scene, camera);
       };
-      loop();
+
+      const start = () => {
+        if (running) return;
+        running = true;
+        loop();
+      };
+
+      const stop = () => {
+        if (!running) return;
+        running = false;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      controllers.push({ start, stop });
 
       cleanups.push(() => {
-        cancelAnimationFrame(raf);
+        stop();
         ro?.disconnect();
         geom.dispose();
         mat.dispose();
@@ -127,7 +192,19 @@ const AboutFirst = () => {
       });
     });
 
-    return () => cleanups.forEach((fn) => fn());
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const isOn = Boolean(entry?.isIntersecting);
+        controllers.forEach((c) => (isOn ? c.start() : c.stop()));
+      },
+      { root: null, threshold: 0.01, rootMargin: '200px 0px 200px 0px' }
+    );
+    io.observe(root);
+
+    return () => {
+      io.disconnect();
+      cleanups.forEach((fn) => fn());
+    };
   }, []);
 
   return (

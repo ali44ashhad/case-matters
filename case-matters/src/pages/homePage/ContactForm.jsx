@@ -9,7 +9,7 @@ const ContactForm = () => {
     name: '',
     phone: '',
     email: '',
-    subject: 'Arbitration',
+    subject: '',
     message: ''
   });
 
@@ -49,7 +49,7 @@ const ContactForm = () => {
 
       if (data.success) {
         setStatus({ type: 'success', message: data.message });
-        setFormData({ name: '', phone: '', email: '', subject: 'Arbitration', message: '' });
+        setFormData({ name: '', phone: '', email: '', subject: '', message: '' });
       } else {
         setStatus({ type: 'error', message: data.message });
       }
@@ -172,10 +172,10 @@ const ContactForm = () => {
               </div>
 
               <p className="text-gray-700 text-xs sm:text-sm md:text-base font-semibold leading-relaxed">
-                <span className="bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-[#145da5] bg-clip-text text-transparent font-extrabold">
-                  One Month Free Advisory & Consulting Retainership
-                </span>{" "}
-                for Start-Ups, Small and Medium Construction Companies —{" "}
+                <span className="text-lg bg-gradient-to-r from-[#1871C9] to-[#145da5] bg-clip-text text-transparent font-extrabold">
+                Initial Advisory Retainership - One Month Free Advisory & Consulting Retainership
+                </span> 
+                 &nbsp;for Start-Ups, Small and Medium Construction Companies —{" "}
                 <a href="mailto:casematters.info@gmail.com" className="text-[#1871C9] underline decoration-[#1871C9]/40 underline-offset-4 hover:decoration-[#1871C9]">
                   casematters.info@gmail.com
                 </a>
@@ -190,8 +190,8 @@ const ContactForm = () => {
                 <span className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent rounded-full animate-[cmUnderline_2.2s_ease-in-out_infinite]" />
               </span>
             </h1>
-            <p className="text-gray-600 text-sm sm:text-lg max-w-md font-light leading-relaxed">
-              Our experts are ready to provide the precision and results your legal matters require.
+            <p className="text-gray-800 text-sm sm:text-lg max-w-md font-light leading-relaxed">
+            Speak with our team for precise, clear and practical legal guidance tailored for your matter.
             </p>
 
             <style>{`
@@ -254,7 +254,7 @@ const ContactForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
               <div className="space-y-1.5">
                 <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Full Name</label>
-                <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="John Doe" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all md:py-3.5" />
+                <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="Aman Singh" className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all md:py-3.5" />
               </div>
               <div className="space-y-1.5">
                 <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Phone Number</label>
@@ -269,19 +269,46 @@ const ContactForm = () => {
 
             <div className="space-y-1.5">
               <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Subject</label>
-              <select name="subject" value={formData.subject} onChange={handleChange} className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] appearance-none md:py-3.5">
-                <option value="Arbitration">Arbitration</option>
-                <option value="Construction Disputes">Construction Disputes</option>
-                <option value="Contract Advisory">Contract Advisory</option>
-                <option value="Other Legal Matters">Other Legal Matters</option>
-              </select>
+              <select
+    name="subject"
+    value={formData.subject}
+    onChange={handleChange}
+    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] appearance-none md:py-3.5"
+  >
+    <option value="" disabled>
+      Select any one
+    </option>
+
+    <option value="Arbitration">Arbitration</option>
+    <option value="Construction Disputes">Construction Disputes</option>
+    <option value="Contract Advisory">Contract Advisory</option>
+    <option value="Other Legal Matters">Other Legal Matters</option>
+  </select>
             </div>
+            
 
             <div className="space-y-1.5">
               <label className="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase ml-1">Message</label>
               <textarea required name="message" value={formData.message} onChange={handleChange} rows="3" placeholder="Describe your situation..." className="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 sm:py-3 text-gray-900 focus:outline-none focus:border-[#1871C9] transition-all resize-none md:py-3.5"></textarea>
             </div>
 
+
+            <div className="flex items-start space-x-3 pt-1">
+              <div className="flex items-center h-5">
+                <input
+                  id="consent"
+                  name="consent"
+                  type="checkbox"
+                  required
+                  checked={formData.consent}
+                  onChange={handleChange}
+                  className="h-4 w-4 rounded border-gray-300 text-[#1871C9] focus:ring-[#1871C9] cursor-pointer"
+                />
+              </div>
+              <label htmlFor="consent" className="text-[11px] sm:text-xs text-gray-600 leading-tight cursor-pointer select-none">
+                I have read and understood the Privacy Policy and Terms & Conditions and consent to the collection, processing, and use of my personal information for the purpose of responding to my query and providing legal services.
+              </label>
+            </div>
             {status.message && (
               <p className={`text-xs font-medium p-3 rounded-lg ${status.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
                 {status.message}

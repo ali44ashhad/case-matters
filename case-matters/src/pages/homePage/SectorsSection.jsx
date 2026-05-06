@@ -2,68 +2,79 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import infrastructureImage from "../../assets/homeAssets/sector-infrastructure.jpg";
+import manufactureImage from "../../assets/homeAssets/sector-manufacture.png";
+import professionalImage from "../../assets/homeAssets/sector-professional.jpg";
+import startupImage from "../../assets/homeAssets/sector-startup.jpg";
+
 const SectorsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const sectors = [
     {
       title: "Infrastructure & Construction",
-      image: "https://www.freepik.com/free-photo/construction-silhouette_1242953.htm",
-      desc: "Advisory and dispute resolution for contractors, concessionaires, developers, and project stakeholders across roads, highways, railways, ports, airports, power, and urban infrastructure projects, including arbitration and contract management support involving complex contract models such as EPC, item-rate, and PPP frameworks including BOT, DBFOT, DBFOO, and HAM.",
+      image: infrastructureImage,
+      desc: "Advisory and dispute resolution for contractors, concessionaires, developers, and project stakeholders across roads, highways, railways, ports, airports, power, and urban infrastructure projects.",
     },
     {
       title: "Energy, Power & Renewable Sector",
       image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e",
-      desc: "Legal services for power producers, renewable energy developers, and operators involving project contracts, arbitration, and employment compliance.",
+      desc: "Legal services for power producers, renewable energy developers, and operators involving project contracts and compliance.",
     },
     {
       title: "Professional Services & Consultancy Firm",
-      image: "https://www.freepik.com/free-photo/diverse-people-working-office_15653914.htm",
-      desc: "Advisory on contracts and dispute resolution for consultancy, advisory, and service-based organizations.",
+      image: professionalImage,
+      desc: "Advisory on contracts and dispute resolution for consultancy and service-based organizations.",
     },
     {
       title: "Manufacturing & Industrial Enterprises",
-      image: "https://www.freepik.com/premium-photo/factory-floor-with-workers-operating-machinery_272905692.htm",
-      desc: "Contractual advisory, employment compliance, and dispute resolution for manufacturing entities across production, supply chain, and labour management functions.",
+      image: manufactureImage,
+      desc: "Contractual advisory and dispute resolution across production and supply chain functions.",
     },
     {
       title: "Corporate & Commercial Enterprises",
       image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85",
-      desc: "Legal support for businesses on contract management, commercial disputes, employment advisory, and arbitration arising from commercial relationships.",
+      desc: "Legal support on contract management, commercial disputes, and employment advisory.",
     },
     {
       title: "Startups, MSME & Emerging Businesses",
-      image: "https://www.freepik.com/free-photo/tired-asian-it-specialist-drinking-coffee-watching-female-colleague-working-with-laptop-indoor-portrait-young-business-people-sitting-table-together-conference-hall_10483915.htm",
-      desc: "End-to-end legal advisory for startups covering business structuring, contracts, employment compliance, and regulatory obligations at early and growth stages.",
+      image: startupImage,
+      desc: "End-to-end legal advisory for startups covering structuring, contracts, and compliance.",
     },
     {
       title: "Financial Services & FinTech",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3",
-      desc: "Contract drafting, regulatory compliance advisory, employment structuring, and dispute resolution support for financial institutions and fintech companies.",
+      desc: "Regulatory compliance, contracts, and dispute resolution for fintech companies.",
     },
     {
       title: "Logistics, Supply Chain & Transportation",
       image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-      desc: "Legal advisory on logistics contracts, service agreements, employment compliance, and arbitration arising from operational and commercial disputes.",
+      desc: "Legal advisory on logistics contracts and operational disputes.",
     },
     {
       title: "Healthcare & Life Sciences",
       image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-      desc: "Contractual and employment advisory for hospitals, clinics, and healthcare service providers, along with dispute resolution support.",
+      desc: "Contractual and employment advisory for healthcare providers.",
     },
     {
       title: "Real Estate & Property Development",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
-      desc: "Legal support for developers, investors, and landowners involving construction contracts, joint development agreements, employment matters, and commercial dispute resolution.",
+      desc: "Legal support for developers, investors, and landowners involving construction contracts, joint-venture / development agreements, service agreements, vendor agreements and commercial dispute resolution.",
     },
-  ].filter((s) => s?.title && s?.desc && s?.image);
+  ];
+
+  // ✅ IMPORTANT FIX
+  const maxIndex = sectors.length - 1;
+
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % sectors.length);
+    setCurrentIndex((prev) =>
+      prev < maxIndex ? prev + 1 : prev
+    );
   };
 
   const prev = () => {
     setCurrentIndex((prev) =>
-      prev === 0 ? sectors.length - 1 : prev - 1
+      prev > 0 ? prev - 1 : prev
     );
   };
 
@@ -84,7 +95,7 @@ const SectorsCarousel = () => {
         {/* Carousel */}
         <div className="relative">
 
-          {/* Buttons */}
+          {/* Left Button */}
           <button
             onClick={prev}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-md shadow-lg p-3 rounded-full"
@@ -92,6 +103,7 @@ const SectorsCarousel = () => {
             <ChevronLeft />
           </button>
 
+          {/* Right Button */}
           <button
             onClick={next}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-md shadow-lg p-3 rounded-full"
@@ -103,13 +115,15 @@ const SectorsCarousel = () => {
           <div className="overflow-hidden">
             <motion.div
               className="flex gap-6"
-              animate={{ x: `calc(-${currentIndex} * 70% - ${currentIndex} * 1.5rem)` }}
+              animate={{
+                x: `calc(-${currentIndex} * 70% - ${currentIndex} * 1.5rem)`
+              }}
               transition={{ type: "spring", stiffness: 70, damping: 20 }}
             >
               {sectors.map((sector, i) => (
                 <motion.div
                   key={i}
-                  className="min-w-[70%] md:min-w-[60%] bg-white rounded-3xl overflow-hidden shadow-xl"
+                  className="min-w-[70%] bg-white rounded-3xl overflow-hidden shadow-xl"
                   animate={{
                     scale: i === currentIndex ? 1 : 0.9,
                     opacity: i === currentIndex ? 1 : 0.5,
@@ -151,6 +165,7 @@ const SectorsCarousel = () => {
               />
             ))}
           </div>
+
         </div>
       </div>
     </section>

@@ -103,7 +103,7 @@ const Arbitration = () => {
               className="absolute bottom-8 left-8 right-8 p-6 rounded-2xl bg-gray-200/70 border border-gray-200/60 backdrop-blur-xl"
             >
               <p className="text-[#1871C9] text-sm font-bold uppercase tracking-widest">Global Expertise</p>
-              <p className="text-gray-900 text-lg mt-1 font-medium">Over 70 years of combined legal experience.</p>
+              <p className="text-gray-900 text-sm mt-1 font-medium">We provide strategic representation in arbitration proceedings, including assistance in initiating arbitration, appointment of tribunals, conduct of proceedings, and enforcement of awards. Throughout the process, we focus on achieving timely, commercially viable resolutions while safeguarding our clients’ contractual rights and project interests.</p>
             </motion.div>
           </div>
           

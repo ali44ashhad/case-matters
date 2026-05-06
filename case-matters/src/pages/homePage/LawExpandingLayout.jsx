@@ -3,8 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as THREE from 'three';
-import civilRightsImage from '../../assets/homeAssets/civil-rights.webp'
-import familyLawImage from '../../assets/homeAssets/family-law.jpg'
+import civilRightsImage from '../../assets/homeAssets/effective-remedies.jpg'
+import familyLawImage from '../../assets/homeAssets/legal-charity.jpg'
 import criminalJusticeImage from '../../assets/homeAssets/criminal-justice.jpg'
 import propertyLawImage from '../../assets/homeAssets/property-law.jpg'
 

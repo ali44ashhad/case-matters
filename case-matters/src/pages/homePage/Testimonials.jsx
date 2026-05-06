@@ -3,15 +3,37 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import axios from "axios";
 
+const GAP = 24;
+
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [cardWidth, setCardWidth] = useState(500);
+
+  // ✅ Responsive width handler
+  useEffect(() => {
+    const updateWidth = () => {
+      if (window.innerWidth < 640) {
+        setCardWidth(window.innerWidth * 0.85); // mobile
+      } else if (window.innerWidth < 1024) {
+        setCardWidth(window.innerWidth * 0.65); // tablet
+      } else {
+        setCardWidth(600); // desktop bigger center
+      }
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/all-testimonials`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/admin/all-testimonials`
+        );
         setTestimonials(res.data.data);
       } catch (err) {
         console.error(err);
@@ -23,7 +45,9 @@ const Testimonials = () => {
   }, []);
 
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) =>
+      prev === testimonials.length - 1 ? 0 : prev + 1
+    );
   };
 
   const prev = () => {
@@ -36,71 +60,84 @@ const Testimonials = () => {
 
   return (
     <section className="py-20 bg-[#f5f5f7] overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 text-center">
 
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h2 className="text-4xl md:text-6xl font-semibold text-gray-900">
-            What our Clients say
-          </h2>
-        </div>
+        <h2 className="text-4xl md:text-6xl font-semibold text-gray-900 mb-12">
+          What our Clients say
+        </h2>
 
         <div className="relative">
 
           {/* Buttons */}
           <button
             onClick={prev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-md shadow-lg p-3 rounded-full"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-3 rounded-full"
           >
             <ChevronLeft />
           </button>
 
           <button
             onClick={next}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-md shadow-lg p-3 rounded-full"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-3 rounded-full"
           >
             <ChevronRight />
           </button>
 
-          {/* Track */}
+          {/* VIEWPORT */}
           <div className="overflow-hidden">
+
             <motion.div
               className="flex gap-6"
-              animate={{ x: `calc(-${currentIndex} * 70% - ${currentIndex} * 1.5rem)` }}
-              transition={{ type: "spring", stiffness: 70, damping: 20 }}
+              animate={{
+                x: `calc(50% - ${cardWidth / 2}px - ${
+                  currentIndex * (cardWidth + GAP)
+                }px)`
+              }}
+              transition={{ type: "spring", stiffness: 80, damping: 20 }}
             >
               {testimonials.map((item, index) => (
                 <motion.div
                   key={item._id}
-                  className="min-w-[70%] md:min-w-[60%] bg-white rounded-3xl shadow-xl p-6 md:p-10 relative"
+                  style={{ width: cardWidth }}
+                  className="flex-shrink-0 bg-white rounded-3xl shadow-xl p-6 md:p-10 relative"
                   animate={{
-                    scale: index === currentIndex ? 1 : 0.9,
-                    opacity: index === currentIndex ? 1 : 0.5,
+                    scale: index === currentIndex ? 1 : 0.85,
+                    opacity: index === currentIndex ? 1 : 0.4,
+                    filter:
+                      index === currentIndex
+                        ? "blur(0px) brightness(1)"
+                        : "blur(5px) brightness(0.7)",
                   }}
+                  transition={{ duration: 0.4 }}
                 >
                   <Quote className="absolute top-6 right-6 text-[#1871C9] opacity-10" />
 
-                  {/* Rating (UNCHANGED) */}
-                  <div className="flex gap-1 mb-4">
+                  {/* Rating */}
+                  <div className="flex gap-1 mb-4 justify-center">
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
                         width="14"
                         height="14"
                         viewBox="0 0 24 24"
-                        fill={i < (item.rating || 5) ? "#1871C9" : "#E5E7EB"}
+                        fill={
+                          i < (item.rating || 5)
+                            ? "#1871C9"
+                            : "#E5E7EB"
+                        }
                       >
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                       </svg>
                     ))}
                   </div>
 
-                  {/* TEXT (UNCHANGED) */}
-                  <p className="text-gray-700 text-base md:text-lg italic leading-relaxed line-clamp-4">
+                  {/* Text */}
+                  <p className="text-gray-700 text-base md:text-lg italic leading-relaxed text-center">
                     "{item.description}"
                   </p>
 
-                  <div className="mt-6 pt-4 border-t">
+                  {/* Footer */}
+                  <div className="mt-6 pt-4 border-t text-center">
                     <h4 className="text-[#1871C9] font-bold text-lg">
                       {item.name}
                     </h4>
@@ -111,6 +148,7 @@ const Testimonials = () => {
                 </motion.div>
               ))}
             </motion.div>
+
           </div>
 
           {/* Dots */}
@@ -125,6 +163,12 @@ const Testimonials = () => {
               />
             ))}
           </div>
+
+          {/* Note */}
+          <p className="text-xs text-gray-500 mt-6">
+            Names and identifying details have been modified to protect client confidentiality
+          </p>
+
         </div>
       </div>
     </section>
