@@ -56,6 +56,12 @@ const Home = () => {
     },
     {
       id: 4,
+      title: "Initial Advisory Retainership",
+      desc: "One Month Free Advisory & Consulting Retainership for Start-Ups, Small and Medium Construction Companies - casematters.info@gmail.com",
+      icon: <Gavel className="text-[#1871C9]" size={32} />
+    },
+    {
+      id: 5,
       title: "Employment Advisory & Compliance",
       desc: "Advisory services relating to employment contracts, HR policies, workplace regulations, and ongoing statutory compliance requirements.",
       icon: <Gavel className="text-[#1871C9]" size={32} />
@@ -113,20 +119,7 @@ const Home = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="w-full max-w-6xl flex flex-col items-center text-center space-y-4 sm:space-y-6 md:space-y-8"
-            >
-              {/* Badge & Icon */}
-              <div className="flex flex-col items-center gap-3">
-                <motion.div
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  className="p-1.5 sm:p-2 md:p-3 bg-gray-200/60 backdrop-blur-sm rounded-full border border-gray-200/80"
-                >
-                  {contents[currentIndex].icon}
-                </motion.div>
-                <span className="text-[#1871C9] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] md:tracking-[0.3em] text-sm sm:text-base md:text-lg">
-                  Legal Excellence
-                </span>
-              </div>
+            > 
               
               {/* FIXED HEADING: Responsive sizes to prevent overflow */}
               <h1 className="text-white w-full text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-gray-900 leading-[1.18] sm:leading-[1.2] md:leading-[1.1] tracking-tight px-1 sm:px-2">
@@ -141,7 +134,7 @@ const Home = () => {
               {/* CTA Button */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
                 <button onClick={scrollToContact} className="px-7 sm:px-8 md:px-10 py-3.5 sm:py-4 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white font-bold rounded-sm hover:from-[#145da5] hover:to-[#1871C9] transition-all uppercase text-[10px] md:text-xs tracking-widest shadow-xl shadow-blue-900/25 active:scale-95 cursor-pointer">
-                  Consultation Now
+                  Consult Now
                 </button>
               </div>
             </motion.div>

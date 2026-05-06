@@ -194,8 +194,7 @@ const Services = () => {
           </h2>
           <p className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
             From contracts to courtrooms — we cover it all.
-          </p>
-          <div className="w-24 h-[3px] bg-gradient-to-r from-[#1871C9] to-transparent" />
+          </p> 
         </div>
 
         {/* The Cards Container */}

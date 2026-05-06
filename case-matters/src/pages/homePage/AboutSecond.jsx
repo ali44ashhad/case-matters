@@ -11,25 +11,7 @@ const AboutSecond = () => {
   const leftBlock = useRef(null);
   const rightBlock = useRef(null);
   const statRefs = useRef([]);
-
-  const strengths = [
-    {
-      title: "Extensive Legal Expertise",
-      desc: "200+ legal matters handled, managed and advised by our legal experts.",
-    },
-    {
-      title: "Decades of Experience",
-      desc: "Over 70 years of combined legal and advisory experience across diverse jurisdictions.",
-    },
-    {
-      title: "High-Value Claims",
-      desc: "Matters involving high-value claim amounts exceeding ₹350 crores handled with precision.",
-    },
-    {
-      title: "Large-Scale Projects",
-      desc: "Strategic advisory for high-value projects reaching up to ₹2,000 crores.",
-    }
-  ];
+  const strengthCards = [0, 1, 2, 3];
 
   // GSAP Animations
   useGSAP(() => {
@@ -79,7 +61,7 @@ const AboutSecond = () => {
     );
 
     // Count-up numbers inside the original text (1 -> end) on scroll
-    const formatNumber = (n) => new Intl.NumberFormat('en-IN').format(Math.max(1, Math.floor(n)));
+    const formatNumber = (n) => String(Math.max(1, Math.floor(n))); // no commas (e.g. 2000, not 2,000)
     const targets = [200, 70, 350, 2000];
 
     statRefs.current.forEach((el, index) => {
@@ -117,6 +99,14 @@ const AboutSecond = () => {
       });
     }
   }, { scope: container });
+
+  const scrollToServices = () => {
+    const servicesSection = document.getElementById('services');
+    if (!servicesSection) return;
+    const offset = 80; // matches navbar height used elsewhere
+    const top = servicesSection.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
   
   return (
     <section 
@@ -179,14 +169,17 @@ const AboutSecond = () => {
               <span className="bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#145da5] bg-clip-text text-transparent">
                 Solutions
               </span>
-            </h2>
-            <div className="w-20 sm:w-24 h-[3px] bg-gradient-to-r from-[#1871C9] to-transparent" />
+            </h2> 
             <p className="text-gray-800 font-semibold text-base sm:text-lg md:text-xl leading-relaxed max-w-lg font-light tracking-wide">
               At Case Matters, transparency and consistency are at the core of everything we do — 
               delivering results that truly redefine legal excellence.
             </p>
             <div className="pt-3 sm:pt-5">
-              <button className="btn-cinematic px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#1a60b0] text-white font-bold uppercase tracking-wider text-[11px] sm:text-sm shadow-2xl transition-all duration-300 hover:shadow-[0_20px_35px_-8px_rgba(24,113,201,0.6)] hover:scale-105 active:scale-95">
+              <button
+                type="button"
+                onClick={scrollToServices}
+                className="btn-cinematic px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#1871C9] via-[#3d8fdf] to-[#1a60b0] text-white font-bold uppercase tracking-wider text-[11px] sm:text-sm shadow-2xl transition-all duration-300 hover:shadow-[0_20px_35px_-8px_rgba(24,113,201,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
+              >
                 Discover Our Practice ✦
               </button>
             </div>
@@ -195,7 +188,7 @@ const AboutSecond = () => {
           {/* Right Block - Strengths with 3D Cards */}
           <div ref={rightBlock} className="lg:w-1/2 w-full will-change-transform">
             <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
-              {strengths.map((item, index) => (
+              {strengthCards.map((index) => (
                 <div
                   key={index}
                   className="strength-item-3d group relative p-[1.5px] rounded-2xl bg-gradient-to-br from-[#1871C9]/35 via-[#6BB1F5]/20 to-transparent transition-all duration-500 hover:shadow-[0_18px_45px_-18px_rgba(24,113,201,0.45)]"
@@ -233,8 +226,8 @@ const AboutSecond = () => {
                         </p>
                       )}
                       {index === 2 && (
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-                          ₹
+                        <p className="flex items-baseline gap-1 whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+                          <span aria-hidden="true">₹</span>
                           <span
                             ref={(el) => {
                               statRefs.current[2] = el;
@@ -243,12 +236,12 @@ const AboutSecond = () => {
                           >
                             1
                           </span>
-                          + Cr
+                          <span className="text-base sm:text-lg md:text-2xl font-extrabold">+ Crore</span>
                         </p>
                       )}
                       {index === 3 && (
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-                          ₹
+                        <p className="flex items-baseline gap-1 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1871C9] leading-tight">
+                          <span aria-hidden="true">₹</span>
                           <span
                             ref={(el) => {
                               statRefs.current[3] = el;
@@ -257,7 +250,7 @@ const AboutSecond = () => {
                           >
                             1
                           </span>
-                          + Cr
+                          <span className="text-base sm:text-lg md:text-xl font-extrabold">Crore</span>
                         </p>
                       )}
 

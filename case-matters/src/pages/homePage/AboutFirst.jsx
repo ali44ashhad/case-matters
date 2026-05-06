@@ -18,6 +18,14 @@ const contentMotion = {
 const AboutFirst = () => {
   const container = useRef(null);
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (!contactSection) return;
+    const offset = 80; // navbar height
+    const top = contactSection.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
+
   useGSAP(() => {
     const panels = gsap.utils.toArray('.panel-wrapper');
 
@@ -176,8 +184,7 @@ const AboutFirst = () => {
                 We transform complex legal challenges into practical, effective commercial solutions.
               </p>
 
-              <div className="about-accent-glow mx-auto mt-7 md:mt-10 h-1 w-20 md:w-24 rounded-full bg-gradient-to-r from-[#1871C9] to-[#6BB1F5] shadow-[0_0_18px_rgba(24,113,201,0.45)]" />
-            </motion.div>
+             </motion.div>
           </section>
         </div>
 
@@ -243,6 +250,7 @@ const AboutFirst = () => {
               >
                 <button
                   type="button"
+                  onClick={scrollToContact}
                   className="w-fit rounded-full bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] px-6 py-3 font-black tracking-wider text-xs sm:text-sm text-white shadow-xl shadow-blue-900/25 transition-all hover:from-[#145da5] hover:to-[#1871C9] md:px-12 md:py-5 md:text-xl md:tracking-widest"
                 >
                   Consult an Expert

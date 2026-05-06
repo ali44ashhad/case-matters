@@ -8,7 +8,7 @@ const SectorsCarousel = () => {
   const sectors = [
     {
       title: "Infrastructure & Construction",
-      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e",
+      image: "https://www.freepik.com/free-photo/construction-silhouette_1242953.htm",
       desc: "Advisory and dispute resolution for contractors, concessionaires, developers, and project stakeholders across roads, highways, railways, ports, airports, power, and urban infrastructure projects, including arbitration and contract management support involving complex contract models such as EPC, item-rate, and PPP frameworks including BOT, DBFOT, DBFOO, and HAM.",
     },
     {
@@ -18,12 +18,12 @@ const SectorsCarousel = () => {
     },
     {
       title: "Professional Services & Consultancy Firm",
-      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+      image: "https://www.freepik.com/free-photo/diverse-people-working-office_15653914.htm",
       desc: "Advisory on contracts and dispute resolution for consultancy, advisory, and service-based organizations.",
     },
     {
       title: "Manufacturing & Industrial Enterprises",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+      image: "https://www.freepik.com/premium-photo/factory-floor-with-workers-operating-machinery_272905692.htm",
       desc: "Contractual advisory, employment compliance, and dispute resolution for manufacturing entities across production, supply chain, and labour management functions.",
     },
     {
@@ -33,7 +33,7 @@ const SectorsCarousel = () => {
     },
     {
       title: "Startups, MSME & Emerging Businesses",
-      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd",
+      image: "https://www.freepik.com/free-photo/tired-asian-it-specialist-drinking-coffee-watching-female-colleague-working-with-laptop-indoor-portrait-young-business-people-sitting-table-together-conference-hall_10483915.htm",
       desc: "End-to-end legal advisory for startups covering business structuring, contracts, employment compliance, and regulatory obligations at early and growth stages.",
     },
     {
@@ -56,7 +56,7 @@ const SectorsCarousel = () => {
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
       desc: "Legal support for developers, investors, and landowners involving construction contracts, joint development agreements, employment matters, and commercial dispute resolution.",
     },
-  ];
+  ].filter((s) => s?.title && s?.desc && s?.image);
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % sectors.length);
   };
