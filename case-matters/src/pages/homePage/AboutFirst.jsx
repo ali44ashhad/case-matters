@@ -174,7 +174,7 @@ const AboutFirst = () => {
               <h2 className="text-5xl font-black text-white md:text-8xl">
                 Strategic <span className="text-[#8bc5ff]">Prevention</span>
                 <p className="font-semibold mt-6 text-lg text-white/90 max-w-2xl mx-auto ">
-                Legal support goes beyond resolving disputes—it’s about preventing them. Through robust contract advisory and risk assessment, we minimize your exposure before conflicts arise.
+                Legal support goes beyond resolving disputes. it’s about preventing them. Through robust contract advisory and risk assessment, we minimize your exposure before conflicts arise.
                 </p>
               </h2>
             </motion.div>
