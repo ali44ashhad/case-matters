@@ -4,13 +4,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as THREE from 'three';
-import expertImage from '../../assets/homeAssets/expert-abrivation.png';
+import expertImage from '../../assets/homeAssets/expert-arbritration.jpeg';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const contentMotion = {
   initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
+  whileInView: { opacity: 1, y: 0 },  
   viewport: { once: true, amount: 0.3 },
   transition: { duration: 0.5, ease: "easeOut" },
 };

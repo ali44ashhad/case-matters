@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import ContactForm from '../homePage/ContactForm';
 import OtherServicesSection from '../../components/OtherServicesSection';
 import { Link } from 'react-router-dom';
+import arbitrationImage from '../../assets/homeAssets/arbritation-left.jpeg';
 
 const Arbitration = () => {
   const container = useRef();
@@ -89,7 +90,7 @@ const Arbitration = () => {
             <motion.img 
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.8 }}
-              src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop" 
+              src={arbitrationImage} 
               className="h-full w-full object-cover"
               alt="Professional Advisory"
             />

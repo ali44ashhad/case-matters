@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, MessageCircle } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import logo from '../assets/homeAssets/CM-logo.png';
 
 const NAV_OFFSET = 80;
 
@@ -68,7 +69,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" onClick={handleLogoClick}>
           <div className="text-2xl font-black tracking-tighter cursor-pointer uppercase text-[#1871C9]">
-            Logo<span className="text-white">.</span>
+            <img src={logo} alt=""  className='h-12 w-12'/>
           </div>
         </Link>
 
