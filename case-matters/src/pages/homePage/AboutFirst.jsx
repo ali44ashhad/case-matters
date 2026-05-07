@@ -4,15 +4,15 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as THREE from 'three';
-import expertImage from '../../assets/homeAssets/expert-abrivation.png'
+import expertImage from '../../assets/homeAssets/expert-abrivation.png';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const contentMotion = {
-  initial: { opacity: 0, y: 36 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.45 },
-  transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+  viewport: { once: true, amount: 0.3 },
+  transition: { duration: 0.5, ease: "easeOut" },
 };
 
 const AboutFirst = () => {
@@ -21,108 +21,72 @@ const AboutFirst = () => {
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (!contactSection) return;
-    const offset = 80; // navbar height
+    const offset = 80;
     const top = contactSection.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
+  // MAIN ANIMATION LOGIC
   useGSAP(() => {
     const panels = gsap.utils.toArray('.panel-wrapper');
-
+    
+    // Create the timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: 'top top',
-        end: '+=300%',
-        scrub: 1,
+        end: '+=250%', // Shortened end for faster overall section transition
+        scrub: 0.3,    // Reduced from 1 to 0.5 for snappier response
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
       },
     });
 
+    // Animate panels 2 and 3 over the first one
     panels.forEach((panel, i) => {
       if (i === 0) return;
-      tl.fromTo(panel, { yPercent: 100 }, { yPercent: 0, ease: 'none' });
+      tl.fromTo(
+        panel,
+        { yPercent: 100, clipPath: 'inset(0% 0% 0% 0%)' },
+        { yPercent: 0, ease: 'none' },
+        i - 1 // Aligns the start of this animation with the progress of the timeline
+      );
     });
 
-    return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
   }, { scope: container });
 
-  // Ensure pin calculations happen after images load (prevents "stuck" pin due to wrong heights)
+  // REFRESH TRIGGER ON LOAD (Prevents sticking/wrong heights)
   useEffect(() => {
-    const root = container.current;
-    if (!root) return;
-
-    const images = Array.from(root.querySelectorAll('img'));
-    if (images.length === 0) return;
-
-    let cancelled = false;
-    const refresh = () => {
-      if (cancelled) return;
-      ScrollTrigger.refresh();
-    };
-
-    const pending = images.filter((img) => !img.complete);
-    if (pending.length === 0) {
-      const id = requestAnimationFrame(refresh);
-      return () => {
-        cancelled = true;
-        cancelAnimationFrame(id);
-      };
-    }
-
-    const onDone = () => {
-      const stillPending = images.some((img) => !img.complete);
-      if (!stillPending) refresh();
-    };
-
-    pending.forEach((img) => {
-      img.addEventListener('load', onDone, { once: true });
-      img.addEventListener('error', onDone, { once: true });
-    });
-
+    const handleLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', handleLoad);
+    // Extra refresh after short delay to catch late renders
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 500);
+    
     return () => {
-      cancelled = true;
-      pending.forEach((img) => {
-        img.removeEventListener('load', onDone);
-        img.removeEventListener('error', onDone);
-      });
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
     };
   }, []);
 
-  // Lightweight particles per panel (sits above photo, below text)
+  // LIGHTWEIGHT PARTICLES (Optimized for performance)
   useEffect(() => {
     const root = container.current;
-    if (!root) return;
+    if (!root || window.innerWidth < 768) return; // Disable on small mobile for performance
 
     const layers = root.querySelectorAll('[data-panel-particles]');
     const cleanups = [];
-    const controllers = [];
 
     layers.forEach((layer) => {
-      let raf = 0;
-      let running = false;
       const scene = new THREE.Scene();
-      scene.background = null;
-      scene.fog = new THREE.FogExp2(0xe8f0fa, 0.035);
-
       const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 60);
-      camera.position.set(0, 0.2, 5);
+      camera.position.z = 5;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: false,
-        powerPreference: 'high-performance',
-      });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+      renderer.setPixelRatio(1); // Force 1 for speed
       layer.appendChild(renderer.domElement);
 
-      const isSmallScreen = typeof window !== 'undefined' && window.matchMedia?.('(max-width: 639px)')?.matches;
-      const n = isSmallScreen ? 240 : 420;
+      const n = 150; // Reduced count for speed
       const geom = new THREE.BufferGeometry();
       const pos = new Float32Array(n * 3);
       for (let i = 0; i < n; i++) {
@@ -131,137 +95,67 @@ const AboutFirst = () => {
         pos[i * 3 + 2] = (Math.random() - 0.5) * 7;
       }
       geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const mat = new THREE.PointsMaterial({
-        color: 0x5a9fe0,
-        size: 0.045,
-        transparent: true,
-        opacity: 0.32,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        sizeAttenuation: true,
-      });
+      const mat = new THREE.PointsMaterial({ color: 0x5a9fe0, size: 0.05, transparent: true, opacity: 0.3 });
       const points = new THREE.Points(geom, mat);
       scene.add(points);
 
       const resize = () => {
         const rect = layer.getBoundingClientRect();
-        const w = Math.max(1, rect.width);
-        const h = Math.max(1, rect.height);
-        camera.aspect = w / h;
+        renderer.setSize(rect.width, rect.height);
+        camera.aspect = rect.width / rect.height;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
       };
-
+      
       resize();
-      const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
-      ro?.observe(layer);
+      window.addEventListener('resize', resize);
 
-      let t = 0;
-      const loop = () => {
-        raf = requestAnimationFrame(loop);
-        t += 0.005;
-        points.rotation.y = t * 0.07;
-        points.rotation.x = Math.sin(t * 0.3) * 0.06;
+      let raf;
+      const animate = () => {
+        points.rotation.y += 0.002;
         renderer.render(scene, camera);
+        raf = requestAnimationFrame(animate);
       };
-
-      const start = () => {
-        if (running) return;
-        running = true;
-        loop();
-      };
-
-      const stop = () => {
-        if (!running) return;
-        running = false;
-        cancelAnimationFrame(raf);
-        raf = 0;
-      };
-
-      controllers.push({ start, stop });
+      animate();
 
       cleanups.push(() => {
-        stop();
-        ro?.disconnect();
+        window.removeEventListener('resize', resize);
+        cancelAnimationFrame(raf);
         geom.dispose();
         mat.dispose();
         renderer.dispose();
-        if (layer.contains(renderer.domElement)) {
-          layer.removeChild(renderer.domElement);
-        }
       });
     });
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        const isOn = Boolean(entry?.isIntersecting);
-        controllers.forEach((c) => (isOn ? c.start() : c.stop()));
-      },
-      { root: null, threshold: 0.01, rootMargin: '200px 0px 200px 0px' }
-    );
-    io.observe(root);
-
-    return () => {
-      io.disconnect();
-      cleanups.forEach((fn) => fn());
-    };
+    return () => cleanups.forEach(fn => fn());
   }, []);
 
   return (
     <>
-      <style>
-        {`
-          @keyframes about-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-          }
-          .about-accent-glow {
-            animation: about-float 5s ease-in-out infinite;
-          }
-        `}
-      </style>
-
       <div
         id="about"
         ref={container}
-        className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff] font-sans"
+        className="relative w-full h-screen overflow-hidden bg-[#0a1118]"
       >
-        {/* Global light overlays (peeks at panel edges / pin gutters) */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-white/85 via-transparent to-white/35" />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.18),_transparent_55%)]" />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.1),_transparent_45%)]" />
-
         {/* --- Panel 1 --- */}
         <div className="panel-wrapper absolute inset-0 z-10 h-full w-full overflow-hidden">
           <div className="absolute inset-0 h-full w-full">
             <img
               src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop"
-              alt="Legal Background"
+              alt="Legal"
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-black/38 to-black/62" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(24,113,201,0.2),_transparent_58%)]" />
-            <div className="absolute inset-0 backdrop-blur-[1.5px]" />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
-
-          <div
-            data-panel-particles
-            className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen"
-            aria-hidden
-          />
-
-          <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center px-6 text-center">
-            <motion.div className="z-20 max-w-4xl" {...contentMotion}>
-              <h1 className="text-4xl sm:text-5xl font-black leading-none tracking-tight text-white drop-shadow-md md:text-7xl lg:text-8xl">
+          <div data-panel-particles className="absolute inset-0 z-[5]" />
+          <section className="relative z-20 flex h-screen items-center justify-center px-6 text-center">
+            <motion.div {...contentMotion}>
+              <h1 className="text-5xl font-black text-white md:text-8xl">
                 Why Choose <span className="text-[#8bc5ff]">Case Matters?</span>
               </h1>
-
-              <p className="mx-auto mt-5 md:mt-8 max-w-3xl text-sm sm:text-base font-medium leading-relaxed text-white/90 md:text-lg lg:text-xl">
-                Decades of expertise in arbitration, contract management, and litigation.
-                We transform complex legal challenges into practical, effective commercial solutions.
+              <p className="mt-6 text-lg text-white/90 max-w-2xl mx-auto">
+              Decades of expertise in arbitration, contract management, and litigation. We transform complex legal challenges into practical, effective commercial solutions.
               </p>
-
-             </motion.div>
+            </motion.div>
           </section>
         </div>
 
@@ -270,29 +164,19 @@ const AboutFirst = () => {
           <div className="absolute inset-0 h-full w-full">
             <img
               src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop"
-              alt="Strategic Planning"
+              alt="Strategic"
               className="h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-black/38 to-black/62" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(24,113,201,0.2),_transparent_58%)]" />
-            <div className="absolute inset-0 backdrop-blur-[1px]" />
+            <div className="absolute inset-0 bg-black/50" />
           </div>
-
-          <div
-            data-panel-particles
-            className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen"
-            aria-hidden
-          />
-
-          <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center border-t border-white/15 px-6 text-center shadow-[0_-40px_80px_rgba(0,0,0,0.12)]">
-            <motion.div className="z-10 max-w-4xl" {...contentMotion}>
-              <h2 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
+          <section className="relative z-20 flex h-screen items-center justify-center px-6 text-center">
+            <motion.div {...contentMotion}>
+              <h2 className="text-5xl font-black text-white md:text-8xl">
                 Strategic <span className="text-[#8bc5ff]">Prevention</span>
+                <p className="font-semibold mt-6 text-lg text-white/90 max-w-2xl mx-auto ">
+                Legal support goes beyond resolving disputes—it’s about preventing them. Through robust contract advisory and risk assessment, we minimize your exposure before conflicts arise.
+                </p>
               </h2>
-              <p className="mx-auto mt-4 md:mt-6 max-w-2xl text-base sm:text-lg font-medium leading-relaxed text-white/90 md:text-xl">
-                Legal support goes beyond resolving disputes—it’s about preventing them. Through robust
-                contract advisory and risk assessment, we minimize your exposure before conflicts arise.
-              </p>
             </motion.div>
           </section>
         </div>
@@ -300,39 +184,23 @@ const AboutFirst = () => {
         {/* --- Panel 3 --- */}
         <div className="panel-wrapper absolute inset-0 z-30 h-full w-full overflow-hidden">
           <div className="absolute inset-0 h-full w-full">
-            <img src={expertImage} className="h-full w-full object-cover" alt="Arbitration Gavel" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-black/42 to-black/68" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(24,113,201,0.22),_transparent_58%)]" />
+            <img src={expertImage} className="h-full w-full object-cover" alt="Expert" />
+            <div className="absolute inset-0 bg-black/60" />
           </div>
-          <div
-            data-panel-particles
-            className="pointer-events-none absolute inset-0 z-[5] mix-blend-screen"
-            aria-hidden
-          />
-
-          <section className="relative z-20 flex h-screen w-full flex-col items-center justify-center px-6 text-center shadow-[0_-40px_80px_rgba(0,0,0,0.2)]">
-            <motion.div className="z-10 max-w-5xl" {...contentMotion}>
-              <h2 className="text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white drop-shadow-md md:text-8xl">
+          <section className="relative z-20 flex h-screen items-center justify-center px-6 text-center">
+            <motion.div {...contentMotion}>
+              <h2 className="text-5xl font-black text-white md:text-8xl">
                 Expert <span className="text-[#8bc5ff]">Arbitration</span>
+                <p className="font-semibold mt-6 text-lg text-white/90 max-w-2xl mx-auto">
+                We guide clients through private dispute resolution with strategic clarity. From claim preparation to final enforcement, we manage the entire process with diligence and confidentiality.
+                </p>
               </h2>
-              <p className="mx-auto mt-4 md:mt-6 max-w-2xl text-base sm:text-lg font-semibold leading-relaxed text-white/90 md:text-xl">
-                We guide clients through private dispute resolution with strategic clarity. From claim
-                preparation to final enforcement, we manage the entire process with diligence and
-                confidentiality.
-              </p>
-              <motion.div
-                className="mt-7 md:mt-12 flex justify-center"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.98 }}
+              <button
+                onClick={scrollToContact}
+                className="mt-8 rounded-full bg-blue-600 px-10 py-4 text-xl font-bold text-white transition-transform hover:scale-105"
               >
-                <button
-                  type="button"
-                  onClick={scrollToContact}
-                  className="w-fit rounded-full bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] px-6 py-3 font-black tracking-wider text-xs sm:text-sm text-white shadow-xl shadow-blue-900/25 transition-all hover:from-[#145da5] hover:to-[#1871C9] md:px-12 md:py-5 md:text-xl md:tracking-widest"
-                >
-                  Consult an Expert
-                </button>
-              </motion.div>
+                Consult an Expert
+              </button>
             </motion.div>
           </section>
         </div>
@@ -340,4 +208,5 @@ const AboutFirst = () => {
     </>
   );
 };
+
 export default AboutFirst;
