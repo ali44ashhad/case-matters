@@ -2,6 +2,10 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
+import legalRiskImage from '../../assets/homeAssets/legal-risk.png'
+import clausesImage from '../../assets/homeAssets/clauses.webp'
+import constituteImage from '../../assets/homeAssets/constitute.jpg'
+import oportunityImage from '../../assets/homeAssets/oportunity.webp'
 
 // Import your local assets here
 // import employementImage from '../../assets/homeAssets/employement.jpg'
@@ -71,7 +75,7 @@ const blogs = [
     category: "PROVING CLAIMS",
     title: "How to Prove Loss of Profit, Business Opportunity & Goodwill",
     excerpt: "Establishing clear evidence and financial proof to justify claims of business losses.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+    image: oportunityImage,
     backContent: [
       "Actual breach or wrongful act",
       "Direct link between breach and financial loss",
@@ -87,7 +91,7 @@ const blogs = [
     category: "RISK & COST",
     title: "When can risk and cost be claimed ?",
     excerpt: "Identifying conditions under which additional costs due to breach can be recovered.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+    image: legalRiskImage,
     backContent: [
       "When the employer gets work completed through another contractor due to default",
       "When additional cost is incurred due to breach by the other party",
@@ -101,7 +105,7 @@ const blogs = [
     category: "Change of Scope of Work",
     title: " What constitutes change of scope?",
     excerpt: "Understanding what qualifies as a variation beyond the original contractual obligations.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+    image: constituteImage,
     backContent: [
       "Additional work beyond original contract",
       "Modification in design, quantity, or specifications",
@@ -115,7 +119,7 @@ const blogs = [
     category: "Contract Drafting",
     title: "What key clauses must be carefully drafted?",
     excerpt: "Highlighting essential contract clauses that prevent disputes and ensure clarity.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+    image: clausesImage,
     backContent: [
       "Scope of Work & Change of Scope",
       "Payment terms & milestones",
