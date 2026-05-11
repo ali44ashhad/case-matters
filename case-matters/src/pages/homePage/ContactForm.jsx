@@ -166,7 +166,7 @@ const ContactForm = () => {
             <div className="relative mt-4 rounded-xl border border-[#1871C9]/15 bg-white/65 backdrop-blur-md px-4 pt-7 pb-4 shadow-[0_14px_45px_rgba(24,113,201,0.08)]">
               <div className="absolute left-4 top-0 -translate-y-1/2">
                 <span className="relative inline-flex items-center rounded-full px-3 py-1 text-[10px] sm:text-[11px] md:text-xs font-black uppercase tracking-[0.22em] sm:tracking-[0.28em] text-[#1a4f86] bg-gradient-to-r from-[#EAF4FF] to-white border border-[#1871C9]/25 overflow-hidden shadow-sm">
-                  <span className="relative z-10">Limited-Time Offer</span>
+                  <span className="relative z-10">FOR LIMITED-TIME</span>
                   <span className="absolute inset-0 bg-[linear-gradient(90deg,_transparent_0%,_rgba(226,177,60,0.18)_35%,_transparent_70%)] animate-[cmShine_2.8s_ease-in-out_infinite]" />
                 </span>
               </div>

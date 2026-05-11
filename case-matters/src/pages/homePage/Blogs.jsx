@@ -245,7 +245,7 @@ const Blogs = () => {
             Latest <span className="text-[#1871C9]">Legal Insights</span>
           </h2>
           <p className="text-gray-600 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg font-light">
-            Stay updated with our latest thoughts on arbitration, compliance, and corporate law.
+          Stay updated with our latest thoughts on arbitration, compliance, employment, and corporate law.
           </p>
         </div>
 

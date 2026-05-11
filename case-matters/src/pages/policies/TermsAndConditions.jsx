@@ -60,7 +60,7 @@ const TermsAndConditions = () => {
               <li>Unless stated otherwise on this website, Case Matters has: (i) no relationship with the owners or operators of those linked website; and (ii) no control over or rights in those linked website.</li>
               <li>These terms of use incorporate, and should be read together with, the Case Matters Privacy Policy (available at Privacy Policy)</li>
               <li>If you express interest in products or services through your use of this website, you consent to Case Matters sending commercial electronic messages (including messages about Case Matters products and services and the products and services of third parties) to electronic addresses which you have provided to Case Matters or for which you or your employer (or your employer's related bodies corporate) are the relevant electronic account holder.</li>
-              <li>These Terms and Conditions and any dispute arising shall be governed by and construed in accordance with Indian law and the courts of Delhi shall have exclusive jurisdiction to resolve any disputes.</li>
+              <li>These terms and conditions and any dispute, controversy, proceedings or claim of whatever nature arising out of or in any way relating to these terms and conditions shall be governed by and construed in accordance with Indian law and the courts of Mumbai shall have exclusive jurisdiction to resolve any disputes between us relating to these terms and conditions.</li>
             </ol>
           </motion.div>
           {/* Governing Law & Jurisdiction */}
