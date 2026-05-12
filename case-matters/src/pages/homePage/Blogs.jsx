@@ -47,7 +47,7 @@ const blogs = [
   {
     id: 3,
     category: "EMPLOYMENT",
-    title: "Q. What should employers focus on ?",
+    title: "What should employers focus on ?",
     excerpt: "A deep dive into recent statutory changes affecting the modern workforce.",
     image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop",
     backContent: [

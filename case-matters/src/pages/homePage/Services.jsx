@@ -16,7 +16,7 @@ const Services = () => {
     { id: "arbitration", title: "Arbitration", desc: "Private dispute resolution through procedural efficiency, offering confidentiality, and enforceable outcomes without prolonged court litigation.", path: "/services/arbitration" },
     { id: "construction", title: "Construction & Infrastructure Disputes", desc: "Advisory and representation in project-related disputes, focused on protecting contractual entitlements.", path: "/services/construction" },
     { id: "contract-advisory", title: "Contract Advisory & Risk Management", desc: "Drafting, review, and interpretation of contracts, with strategic advice on rights and obligations.", path: "/services/contract-advisory" },
-    { id: "claims-management", title: "Contract and Claims Management", desc: "End-to-end claims support, including claim preparation, evidence collation, and strategy.", path: "/services/contract-claim" },
+    { id: "claims-management", title: "Contract and Claims Management", desc: "End-to-end claims support, including claim preparation, box evidence collation, and strategy.", path: "/services/contract-claim" },
     { id: "employment", title: "Employment Advisory & Compliance", desc: "Advisory services relating to employment contracts, HR policies, and statutory compliance.", path: "/services/employement" },
     { id: "startup-law", title: "MSME/Startup Law & Compliance", desc: "Legal support for startups and founders, covering business structuring and regulatory compliance.", path: "/services/startup" },
     { id: "litigation", title: "Civil, Commercial and Business Litigation", desc: "Conflicts involving shareholders, partners, vendors, customers and stakeholders.", path: "/services/civil" }
@@ -45,7 +45,6 @@ const Services = () => {
 
     mm.add("(max-width: 767px)", () => {
       cards.forEach((card, index) => {
-        // Mobile: keep the same "stacking" feel (lighter offsets)
         gsap.to(card, {
           scrollTrigger: {
             trigger: card,
@@ -65,7 +64,6 @@ const Services = () => {
     return () => mm.revert();
   }, { scope: containerRef });
 
-  // Lightweight 3D background (particles + subtle grid)
   useEffect(() => {
     if (!canvasContainer.current) return;
 
@@ -99,7 +97,6 @@ const Services = () => {
     key.position.set(2.2, 2, 3);
     scene.add(key);
 
-    // Particles
     const isSmallScreen = typeof window !== 'undefined' && window.matchMedia?.('(max-width: 639px)')?.matches;
     const particleCount = isSmallScreen ? 650 : 1200;
     const particlesGeo = new THREE.BufferGeometry();
@@ -123,7 +120,6 @@ const Services = () => {
     geometriesToDispose.push(particlesGeo);
     materialsToDispose.push(particlesMat);
 
-    // Subtle wire grid plane
     const gridGeo = new THREE.PlaneGeometry(18, 10, 22, 12);
     const gridMat = new THREE.MeshBasicMaterial({
       color: 0x5a8fc4,
@@ -199,10 +195,8 @@ const Services = () => {
       ref={containerRef}
       className="relative overflow-hidden py-8 sm:py-16 md:py-32 px-4 sm:px-6 md:px-20 min-h-0 md:min-h-screen bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]"
     >
-      {/* 3D Canvas Background */}
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
 
-      {/* Overlay depth (light — match AboutSecond) */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
@@ -210,7 +204,6 @@ const Services = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* Header Section */}
         <div className="mb-6 sm:mb-12 md:mb-24 space-y-2 sm:space-y-3 md:space-y-4">
           <h2 className="text-[#1871C9] uppercase tracking-[0.28em] text-lg md:text-xl lg:text-2xl font-bold">
             Our Services
@@ -220,7 +213,6 @@ const Services = () => {
           </p> 
         </div>
 
-        {/* The Cards Container */}
         <div ref={stackRef} className="relative space-y-3 sm:space-y-5 md:space-y-10 pb-4 sm:pb-8 md:pb-32">
           {services.map((service, index) => (
             <Link 
@@ -228,13 +220,10 @@ const Services = () => {
               key={service.id}
               className="service-card block relative w-full group"
             >
-              {/* GLOWING GRADIENT BORDER WRAPPER */}
               <div className="relative p-[1.5px] rounded-2xl overflow-hidden transition-all duration-500 bg-gradient-to-r from-[#1871C9] via-[#6BB1F5] to-transparent group-hover:shadow-[0_0_20px_rgba(24,113,201,0.28)]">
                 
-                {/* Background Inner Card */}
                 <div className="relative overflow-hidden rounded-[15px] bg-white/70 backdrop-blur-md border border-[#1871C9]/10 p-5 sm:p-6 md:p-12 transition-all duration-500 group-hover:bg-white/85 group-hover:border-[#1871C9]/20">
                   
-                  {/* Hover Accent Bar */}
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#1871C9] to-[#6BB1F5] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
                   
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
@@ -243,12 +232,12 @@ const Services = () => {
                       <h3 className="text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
                         {service.title}
                       </h3> 
-                      <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
+                      {/* JUSTIFIED TEXT APPLIED BELOW */}
+                      <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl text-justify">
                         {service.desc}
                       </p>
                     </div>
                     
-                    {/* Icon Button */}
                     <div className="h-12 w-12 md:h-16 md:w-16 rounded-xl border border-[#1871C9]/30 bg-white/80 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#1871C9] group-hover:to-[#5FA9F4] group-hover:border-transparent transition-all duration-500 group-hover:shadow-[0_0_14px_rgba(24,113,201,0.35)]">
                       <svg 
                         className="w-5 h-5 md:w-6 md:h-6 text-[#1871C9] group-hover:text-white transition-colors" 
