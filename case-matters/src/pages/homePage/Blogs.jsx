@@ -33,7 +33,7 @@ const blogs = [
     category: "STARTUP MISTAKES",
     title: "What common mistakes should startups avoid?",
     excerpt: "Common pitfalls in early-stage legal structuring and how to avoid them.",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop",
+    image: legalRiskImage,
     backContent: [
       "Not having a founder/shareholder agreement",
       "Ignoring regulatory and statutory compliance",
@@ -91,7 +91,7 @@ const blogs = [
     category: "RISK & COST",
     title: "When can risk and cost be claimed ?",
     excerpt: "Identifying conditions under which additional costs due to breach can be recovered.",
-    image: legalRiskImage,
+    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800&auto=format&fit=crop",
     backContent: [
       "When the employer gets work completed through another contractor due to default",
       "When additional cost is incurred due to breach by the other party",

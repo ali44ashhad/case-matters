@@ -197,6 +197,7 @@ const Services = () => {
     >
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
 
+      {/* Decorative Overlays */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/90 via-transparent to-white/40 pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(24,113,201,0.22),_transparent_58%)] pointer-events-none" />
       <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_bottom_right,_rgba(88,166,255,0.14),_transparent_48%)] pointer-events-none" />
@@ -204,6 +205,7 @@ const Services = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
+        {/* Header Section */}
         <div className="mb-6 sm:mb-12 md:mb-24 space-y-2 sm:space-y-3 md:space-y-4">
           <h2 className="text-[#1871C9] uppercase tracking-[0.28em] text-lg md:text-xl lg:text-2xl font-bold">
             Our Services
@@ -213,6 +215,7 @@ const Services = () => {
           </p> 
         </div>
 
+        {/* Services Stack */}
         <div ref={stackRef} className="relative space-y-3 sm:space-y-5 md:space-y-10 pb-4 sm:pb-8 md:pb-32">
           {services.map((service, index) => (
             <Link 
@@ -224,20 +227,26 @@ const Services = () => {
                 
                 <div className="relative overflow-hidden rounded-[15px] bg-white/70 backdrop-blur-md border border-[#1871C9]/10 p-5 sm:p-6 md:p-12 transition-all duration-500 group-hover:bg-white/85 group-hover:border-[#1871C9]/20">
                   
+                  {/* Decorative Left Border Reveal */}
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-[#1871C9] to-[#6BB1F5] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
                   
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
                     <div className="flex-1 space-y-3 md:space-y-4">
                       <span className="text-[#1871C9] font-mono text-xs sm:text-sm md:text-lg font-bold">0{index + 1}</span>
-                      <h3 className="text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
+                      <h3 className="text-justify text-xl md:text-3xl font-bold text-gray-900 group-hover:text-[#1871C9] transition-colors tracking-tight">
                         {service.title}
                       </h3> 
-                      {/* JUSTIFIED TEXT APPLIED BELOW */}
-                      <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl text-justify">
+                      
+                      {/* Description with Conditional Letter Spacing (Tracking) */}
+                      <p className={`
+                        text-gray-600 text-sm sm:text-base md:text-lg leading-[1.9] max-w-3xl text-justify mt-2 sm:mt-4 
+                        ${index === 0 ? 'tracking-wider' : 'tracking-normal'}
+                      `}>
                         {service.desc}
                       </p>
                     </div>
                     
+                    {/* Arrow Icon */}
                     <div className="h-12 w-12 md:h-16 md:w-16 rounded-xl border border-[#1871C9]/30 bg-white/80 flex items-center justify-center group-hover:bg-gradient-to-r group-hover:from-[#1871C9] group-hover:to-[#5FA9F4] group-hover:border-transparent transition-all duration-500 group-hover:shadow-[0_0_14px_rgba(24,113,201,0.35)]">
                       <svg 
                         className="w-5 h-5 md:w-6 md:h-6 text-[#1871C9] group-hover:text-white transition-colors" 
