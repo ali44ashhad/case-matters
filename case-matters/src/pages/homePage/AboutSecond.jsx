@@ -62,7 +62,7 @@ const AboutSecond = () => {
 
     // Count-up numbers inside the original text (1 -> end) on scroll
     const formatNumber = (n) => String(Math.max(1, Math.floor(n))); // no commas (e.g. 2000, not 2,000)
-    const targets = [200, 70, 350, 2000];
+    const targets = [200, 2000, 70, 350];
 
     statRefs.current.forEach((el, index) => {
       const end = targets[index];
@@ -196,107 +196,40 @@ const AboutSecond = () => {
                   <div className="h-full rounded-[15px] bg-white/75 backdrop-blur-md border border-white/40 p-4 sm:p-5 md:p-6 transition-all duration-500 group-hover:bg-white/90 group-hover:translate-y-[-2px]">
                     <div className="space-y-1.5">
                       {/* Top line: Big coloured number */}
-                      {index === 0 && (
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-                          <span
-                            ref={(el) => {
-                              statRefs.current[0] = el;
-                            }}
-                            className="font-extrabold"
-                          >
-                            1
-                          </span>
-                          +
-                        </p>
-                      )}
-                      {index === 1 && (
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-                          <span
-                            ref={(el) => {
-                              statRefs.current[1] = el;
-                            }}
-                            className="font-extrabold"
-                          >
-                            1
-                          </span>
-                          +{" "}
-                          <span className="align-baseline text-lg sm:text-xl md:text-2xl">
-                            Years
-                          </span>
-                        </p>
-                      )}
-                      {index === 2 && (
-                        <p className="flex items-baseline gap-1 whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-                          <span aria-hidden="true">₹</span>
-                          <span
-                            ref={(el) => {
-                              statRefs.current[2] = el;
-                            }}
-                            className="font-extrabold"
-                          >
-                            1
-                          </span>
-                          <span className="text-base sm:text-lg md:text-2xl font-extrabold">+ Crore</span>
-                        </p>
-                      )}
-                      {index === 3 && (
-                        <p className="flex items-baseline gap-1 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1871C9] leading-tight">
-                          <span aria-hidden="true">₹</span>
-                          <span
-                            ref={(el) => {
-                              statRefs.current[3] = el;
-                            }}
-                            className="font-extrabold"
-                          >
-                            1
-                          </span>
-                          <span className="text-base sm:text-lg md:text-xl font-extrabold">Crore</span>
-                        </p>
-                      )}
+                     {/* Card 0 — 200+ Legal Matters */}
+{index === 0 && (
+  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+    <span ref={(el) => { statRefs.current[0] = el; }} className="font-bold">200</span>
+    <span className="text-base sm:text-sm md:text-lg font-bold">+ Legal Matters</span>
+  </p>
+)}
+{index === 1 && (
+  <p className="flex items-baseline gap-1 whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+    <span aria-hidden="true">₹</span>
+    <span ref={(el) => { statRefs.current[1] = el; }} className="font-extrabold">2000</span>
+    <span className="text-base sm:text-sm md:text-lg font-extrabold">+ Crore</span>
+  </p>
+)}
+{index === 2 && (
+  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
+    <span ref={(el) => { statRefs.current[2] = el; }} className="font-extrabold">70</span>
+    <span className="text-base sm:text-sm md:text-lg font-extrabold"> Years</span>
+  </p>
+)}
+{index === 3 && (
+  <p className="flex items-baseline gap-1 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1871C9] leading-tight">
+    <span aria-hidden="true">₹</span>
+    <span ref={(el) => { statRefs.current[3] = el; }} className="font-extrabold">₹ 350</span>
+    <span className="text-base sm:text-sm md:text-lg font-extrabold">+ Crore</span>
+  </p>
+)}
 
-                      {/* Second line: Short label */}
-                      {index === 0 && (
-                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
-                          Matters Delivered
-                        </p>
-                      )}
-                      {index === 1 && (
-                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
-                          Combined Experience
-                        </p>
-                      )}
-                      {index === 2 && (
-                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
-                          Claims Managed
-                        </p>
-                      )}
-                      {index === 3 && (
-                        <p className="text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
-                          Project Exposure
-                        </p>
-                      )}
 
-                      {/* Third line: Supporting description */}
-                      {index === 0 && (
-                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
-                          Across arbitration, contracts & disputes.
-                        </p>
-                      )}
-                      {index === 1 && (
-                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
-                          Multi-jurisdictional legal expertise.
-                        </p>
-                      )}
-                      {index === 2 && (
-                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
-                          High-value disputes handled with precision.
-                        </p>
-                      )}
-                      {index === 3 && (
-                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">
-                          Advising on large-scale infrastructure & commercial projects.
-                        </p>
-                      )}
+{/* Descriptions */}
+{index === 0 && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">Handled, advised, and resolved</p>}
+{index === 1 && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">High-value individual projects handled</p>}
+{index === 2 && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">Combined professional experience</p>}
+{index === 3 && <p className="text-gray-600 text-xs sm:text-sm leading-relaxed group-hover:text-gray-700 transition-colors">Individual claims managed and handled</p>}
                     </div>
                   </div>
                 </div>

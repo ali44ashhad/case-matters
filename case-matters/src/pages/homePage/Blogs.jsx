@@ -3,9 +3,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 import legalRiskImage from '../../assets/homeAssets/legal-risk.png'
-import clausesImage from '../../assets/homeAssets/clauses.webp'
+import clausesImage from '../../assets/homeAssets/clauses.jpg'
 import constituteImage from '../../assets/homeAssets/constitute.jpg'
-import oportunityImage from '../../assets/homeAssets/oportunity.webp'
+import oportunityImage from '../../assets/homeAssets/goodwill.jpg'
+import contractualImage from '../../assets/homeAssets/contractual.jpg'
 
 // Import your local assets here
 // import employementImage from '../../assets/homeAssets/employement.jpg'
@@ -62,7 +63,7 @@ const blogs = [
     category: "CONTRACT LAW",
     title: "How can contractual risk be minimized?",
     excerpt: "How precise drafting can save businesses from future litigation.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+    image: contractualImage,
     backContent: [
       "Clearly define roles, responsibilities, and deliverables",
       "Include strong indemnity and liability clauses",

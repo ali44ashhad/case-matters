@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom'; // Added useLocation
 import Navbar from "./components/Navbar";
 import Home from "./pages/homePage/Home";
-import { Routes, Route } from 'react-router-dom';
 import Footer from "./components/Footer";
 import Arbitration from "./pages/servicesPages/Arbitration";
 import Construction from "./pages/servicesPages/Construction";
@@ -21,12 +21,33 @@ import AdminProtectedRoute from './components/AdminProtectedRoute';
 import ServicePage from './pages/ServicePage';
 
 const App = () => {
-  // FIX: This function runs ONLY once when the app starts.
-  // It checks localStorage immediately to see if the user already accepted.
-  const [showDisclaimer, setShowDisclaimer] = useState(() => {
-    const isAccepted = localStorage.getItem("casematters_legal_accepted");
-    return isAccepted !== "true"; // If not true, show the disclaimer.
-  });
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const location = useLocation(); // Hook to listen to path changes
+  const timerRef = useRef(null); // Ref to keep track of the active timeout
+
+  useEffect(() => {
+    // 1. Reset state whenever the user changes pages
+    setShowDisclaimer(false);
+
+    // 2. Clear any existing timer from the previous page to avoid collisions
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // 3. Determine the delay based on the current page path
+    // If it's home page ("/"), wait 10 seconds. Otherwise, wait 20 seconds.
+    const delay = location.pathname === "/" ? 5000 : 10000;
+
+    // 4. Start the timer for the current page
+    timerRef.current = setTimeout(() => {
+      setShowDisclaimer(true);
+    }, delay);
+
+    // Clean up timer on component unmount or route change
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [location.pathname]); // Re-run this effect every time the URL path changes
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -39,8 +60,7 @@ const App = () => {
   }, [showDisclaimer]);
 
   const handleAccept = () => {
-    // Save to localStorage so it persists through refreshes and browser restarts
-    localStorage.setItem("casematters_legal_accepted", "true");
+    // Close the modal. Since it's a setTimeout, it won't show again on this page instance.
     setShowDisclaimer(false);
   };
 

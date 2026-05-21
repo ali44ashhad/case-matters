@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Gavel, FileText, Users, Rocket, Building2, Landmark } from 'lucide-react';
 import service2 from '../assets/services/service2.png';
 import services4 from '../assets/services/services4.jpg';
-
+import arbitrationImage from '../assets/homeAssets/arbritation-left.jpeg';
+import contractClaimImage from '../assets/homeAssets/contract-claim.jpg';
+import employementImage from '../assets/homeAssets/advisory-image.jpg';
 const ALL_SERVICES = [
   {
     id: 'arbitration',
@@ -12,7 +14,7 @@ const ALL_SERVICES = [
     title: 'Arbitration',
     desc: 'Private dispute resolution through structured proceedings, offering confidentiality and procedural efficiency.',
     icon: <ShieldCheck size={24} />,
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800',
+    image: arbitrationImage,
   },
   {
     id: 'construction',
@@ -36,7 +38,7 @@ const ALL_SERVICES = [
     title: 'Contract and Claims Management',
     desc: 'End-to-end claims support, including claim preparation, evidence collation, and strategy.',
     icon: <FileText size={24} />,
-    image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=800',
+    image: contractClaimImage,
   },
   {
     id: 'employment',
@@ -44,7 +46,7 @@ const ALL_SERVICES = [
     title: 'Employment Advisory & Compliance',
     desc: 'Advisory services relating to employment contracts, HR policies, and statutory compliance.',
     icon: <Users size={24} />,
-    image: services4,
+    image: employementImage,
   },
   {
     id: 'startup-law',
