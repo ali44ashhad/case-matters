@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin } from 'lucide-react'; // Added icons for better UX
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const practiceAreas = [
     { name: "Arbitration", href: "/services/arbitration" },
     { name: "Construction and Infrastructure Disputes", href: "/services/construction" },
@@ -14,16 +17,38 @@ const Footer = () => {
   ];
 
   const usefulLinks = [
-    { name: "About Us", href: "/" },
-    { name: "Contact", href: "/" },
-    { name: "Services", href: "/" },
-    { name: "Our Blog", href: "/" }
+    { name: "About Us", targetId: "about" },
+    { name: "Contact", targetId: "contact" },
+    { name: "Services", targetId: "services" },
+    { name: "Our Blog", targetId: "blogs" }
   ];
 
   const legalLinks = [
     { name: "Privacy Policy", href: "/policies/privacy-policy" },
     { name: "Terms & Conditions", href: "/policies/terms-and-conditions" },
   ];
+
+  // Smooth scroll handler for Single Page Application sections
+  const handleSectionScroll = (e, targetId) => {
+    e.preventDefault();
+    
+    if (location.pathname === "/") {
+      // If already on Home page, locate target and execute smooth scrolling
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // If on an inner page, route to home first, then safely jump down to the id
+      navigate('/', { replace: false });
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150); // Small lifecycle timeout lets home mount before calculating positions
+    }
+  };
 
   return (
     <footer className="relative w-full bg-gradient-to-r from-[#1871C9] to-[#0A2E52] pt-10 sm:pt-16 md:pt-20 pb-8 sm:pb-10 px-4 sm:px-6 md:px-20 overflow-hidden text-blue-100/80">
@@ -92,9 +117,13 @@ const Footer = () => {
             <ul className="space-y-2.5 sm:space-y-3">
               {usefulLinks.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.href} className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block">
+                  <a 
+                    href={`#${link.targetId}`}
+                    onClick={(e) => handleSectionScroll(e, link.targetId)}
+                    className="text-[13px] sm:text-sm transition-all duration-300 hover:text-white hover:translate-x-1 inline-block cursor-pointer"
+                  >
                     {link.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

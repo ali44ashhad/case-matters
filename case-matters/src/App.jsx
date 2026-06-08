@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Home from "./pages/homePage/Home";
 import Footer from "./components/Footer";
@@ -21,16 +21,32 @@ import ServicePage from './pages/ServicePage';
 
 const App = () => {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const location = useLocation();
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    // Check if the user has already accepted the disclaimer in this session
-    const hasAccepted = sessionStorage.getItem('disclaimerAccepted');
-    
-    // If they haven't accepted it yet, show the pop-up immediately on load
-    if (!hasAccepted) {
-      setShowDisclaimer(true);
+    // 1. Force state down whenever route changes
+    setShowDisclaimer(false);
+
+    // 2. Kill running timeouts immediately to protect resources
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
-  }, []); // Empty dependency array runs strictly ONCE when the app mounts (site opens)
+
+    // 3. STRICT CHECK: Run the pop-up timer ONLY if the user is on the root Home route ("/")
+    if (location.pathname === "/") {
+      const delay = 5000; // 5 seconds wait time for home view
+
+      timerRef.current = setTimeout(() => {
+        setShowDisclaimer(true);
+      }, delay);
+    }
+
+    // Clean up timers on component unmount or subsequent transitions
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [location.pathname]); // Listen exclusively to path location strings
 
   // Prevent background scrolling when modal is active
   useEffect(() => {
@@ -43,8 +59,6 @@ const App = () => {
   }, [showDisclaimer]);
 
   const handleAccept = () => {
-    // Save selection to sessionStorage so it persists across page updates but resets on tab close
-    sessionStorage.setItem('disclaimerAccepted', 'true');
     setShowDisclaimer(false);
   };
 
