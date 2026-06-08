@@ -198,28 +198,28 @@ const AboutSecond = () => {
                       {/* Top line: Big coloured number */}
                      {/* Card 0 — 200+ Legal Matters */}
 {index === 0 && (
-  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-    <span ref={(el) => { statRefs.current[0] = el; }} className="font-bold">200</span>
-    <span className="text-base sm:text-sm md:text-lg font-bold">+ Legal Matters</span>
-  </p>
+  <p className="flex items-baseline gap-1 text-xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] whitespace-nowrap">
+  <span ref={(el) => { statRefs.current[0] = el; }} className="font-semibold text-lg sm:text-xl">200</span>
+  <span className="text-sm sm:text-sm md:text-lg font-bold">+ Legal Matters</span>
+</p>
 )}
 {index === 1 && (
   <p className="flex items-baseline gap-1 whitespace-nowrap text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
     <span aria-hidden="true">₹</span>
-    <span ref={(el) => { statRefs.current[1] = el; }} className="font-extrabold">2000</span>
+    <span ref={(el) => { statRefs.current[1] = el; }} className="font-semibold text-lg sm:text-xl">2000</span>
     <span className="text-base sm:text-sm md:text-lg font-extrabold">+ Crore</span>
   </p>
 )}
 {index === 2 && (
   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1871C9] leading-tight">
-    <span ref={(el) => { statRefs.current[2] = el; }} className="font-extrabold">70</span>
+    <span ref={(el) => { statRefs.current[2] = el; }} className="font-semibold text-lg sm:text-xl">70</span>
     <span className="text-base sm:text-sm md:text-lg font-extrabold"> Years</span>
   </p>
 )}
 {index === 3 && (
   <p className="flex items-baseline gap-1 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1871C9] leading-tight">
     <span aria-hidden="true">₹</span>
-    <span ref={(el) => { statRefs.current[3] = el; }} className="font-extrabold">₹ 350</span>
+    <span ref={(el) => { statRefs.current[3] = el; }} className="font-semibold text-lg sm:text-xl">₹ 350</span>
     <span className="text-base sm:text-sm md:text-lg font-extrabold">+ Crore</span>
   </p>
 )}

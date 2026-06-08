@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
-
+import { useNavigate } from "react-router-dom"; 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,7 +54,7 @@ const Faq = () => {
   const [active, setActive] = useState(null);
   const containerRef = useRef(null);
   const canvasContainer = useRef(null);
-
+  const navigate = useNavigate();
   const toggle = (index) => {
     setActive(active === index ? null : index);
   };
@@ -247,7 +247,7 @@ const Faq = () => {
         </div>  
 
         {/* Help Link */}
-        <div className="mt-6 sm:mt-10 md:mt-16 text-center">
+        <div className="mt-6 sm:mt-10 md:mt-16 text-center" onClick={() => navigate("#contact")}>
           <p className="text-gray-500 text-xs sm:text-sm">
             Have more questions? <span className="text-[#1871C9] font-bold cursor-pointer hover:underline">Contact our legal team.</span>
           </p>

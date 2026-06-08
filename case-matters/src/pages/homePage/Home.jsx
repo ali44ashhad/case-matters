@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Scale, ShieldCheck, Gavel } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,6 +17,7 @@ const SECTION_SCROLL_OFFSET = 80;
 
 const Home = () => {
   const location = useLocation();
+  const videoRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const contents = [
@@ -46,6 +47,22 @@ const Home = () => {
       desc: "Advisory services relating to employment contracts, HR policies, workplace regulations, and ongoing statutory compliance requirements.",
     }
   ];
+
+  // Mobile Autoplay Force-Trigger Logic
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      // Direct promise trigger to bypass mobile sleep/low-power mode restrictions
+      const playPromise = videoElement.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback if the browser initially blocks it: force try again on alternative thread
+          videoElement.muted = true;
+          videoElement.play();
+        });
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (location.pathname !== '/') return;
@@ -77,9 +94,19 @@ const Home = () => {
 
   return (
     <>
-      <section id="home" className="relative w-full h-screen bg-white overflow-hidden">
+      <section id="home" className="relative w-full h-screen bg-black overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+          <video 
+            ref={videoRef}
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="auto"
+            clear="all"
+            className="w-full h-full object-cover"
+            style={{ contentVisibility: 'auto' }}
+          >
             <source src={bgVideo} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-black/50 md:bg-black/60" />
@@ -103,7 +130,6 @@ const Home = () => {
                 />
               )}
               
-              {/* SLIGHTLY INCREASED HEADING SIZES */}
               <h1 className={`
                 w-full font-serif font-bold tracking-tight px-2 transition-all duration-500 leading-[1.1]
                 ${currentIndex === 3 
@@ -113,7 +139,6 @@ const Home = () => {
                 {contents[currentIndex].title}
               </h1>
               
-              {/* SLIGHTLY INCREASED DESCRIPTION SIZES */}
               <p className={`
                 leading-relaxed max-w-2xl mx-auto px-4 transition-all duration-500
                 ${currentIndex === 3 

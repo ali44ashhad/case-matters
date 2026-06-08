@@ -27,7 +27,7 @@ const ContractClaim = () => {
 
   return (
     <>
-      <section ref={container} className="pt-30 relative min-h-screen w-full overflow-hidden bg-white font-sans flex items-center">
+      <section ref={container} className="pt-24 pb-12 lg:pt-20 lg:pb-0 relative min-h-screen w-full overflow-hidden bg-white font-sans flex items-center">
 
         {/* Background Image */}
         <img
@@ -37,16 +37,16 @@ const ContractClaim = () => {
         />
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/65 md:bg-black/50" />
 
         {/* Content Grid */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
           {/* LEFT CONTENT */}
-          <div className="space-y-6">
+          <div className="space-y-6 order-1 lg:order-1">
 
             <div ref={carpetRef} className="overflow-hidden">
-              <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+              <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
                 Contract & Claims <br />
                 <span className="text-[#1871C9]">Management</span>
               </h1>
@@ -58,49 +58,43 @@ const ContractClaim = () => {
               transition={{ duration: 1, delay: 1 }}
               className="space-y-5"
             >
-              <p className="text-white text-base md:text-lg text-gray-700 max-w-xl leading-relaxed">
+              <p className="text-gray-200 text-base md:text-lg max-w-xl leading-relaxed">
                 Effective claims management requires meticulous preparation, documentation, and legal strategy. We provide comprehensive support in the preparation and prosecution of contractual and commercial claims.
               </p>
 
-              <p className="text-white text-sm md:text-base text-gray-600 max-w-xl border-l-2 border-[#1871C9]/50 pl-5 italic">
+              <p className="text-gray-300 text-sm md:text-base max-w-xl border-l-2 border-[#1871C9]/50 pl-5 italic">
                 Our services include identifying entitlement, structuring claims, analysing evidence, managing correspondence, and maintaining detailed records to support claims or defences in negotiations, arbitration, or litigation.
               </p>
-
-              
             </motion.div>
           </div>
 
-          {/* RIGHT IMAGE CARD */}
+          {/* RIGHT IMAGE CARD - Visible on Mobile & Desktop */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: window?.innerWidth < 1024 ? 0 : 50, y: window?.innerWidth < 1024 ? 30 : 0 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="relative group hidden lg:block"
+            className="relative group block order-2 lg:order-2 mt-4 lg:mt-0"
           >
-          <div className="relative overflow-hidden rounded-[2rem] border border-gray-200/60 shadow-2xl">
-
+            <div className="relative overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/5] shadow-2xl">
               <motion.img
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.8 }}
                 src={contractClaimImage}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-cover"
                 alt="Claims Management"
               />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-100/80 via-transparent to-transparent" />
-
-
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
 
             {/* Glow */}
-            <div className="absolute -z-10 -top-20 -right-20 w-64 h-64 bg-[#1871C9]/20 blur-[100px] rounded-full" />
+            <div className="absolute -z-10 -top-10 -right-10 md:-top-20 md:-right-20 w-44 h-44 md:w-64 md:h-64 bg-[#1871C9]/20 blur-[80px] md:blur-[100px] rounded-full" />
           </motion.div>
 
         </div>
 
         {/* Background Quote */}
         <div className="absolute bottom-10 right-10 opacity-5 pointer-events-none hidden md:block">
-        <span className="text-7xl font-serif italic text-gray-300 select-none">
+          <span className="text-7xl font-serif italic text-gray-300 select-none">
             "Lex Est Dictamen Rationis"
           </span>
         </div>

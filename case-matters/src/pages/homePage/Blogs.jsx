@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
@@ -7,9 +7,6 @@ import clausesImage from '../../assets/homeAssets/clauses.jpg'
 import constituteImage from '../../assets/homeAssets/constitute.jpg'
 import oportunityImage from '../../assets/homeAssets/goodwill.jpg'
 import contractualImage from '../../assets/homeAssets/contractual.jpg'
-
-// Import your local assets here
-// import employementImage from '../../assets/homeAssets/employement.jpg'
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,9 +38,7 @@ const blogs = [
       "Poorly drafted contracts with vendors/employees",
       "Lack of IP protection (trademark, ownership rights)",
       "Mixing personal and business finances"
-
     ]
-
   },
   {
     id: 3,
@@ -128,14 +123,20 @@ const blogs = [
       "Dispute resolution",
       "Termination rights"
     ]
-  },
-
+  }
 ];
 
 const Blogs = () => {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
   const canvasContainer = useRef(null);
+  
+  // Track dynamic flip state for all form factors
+  const [flippedCardId, setFlippedCardId] = useState(null);
+
+  const handleCardToggle = (id) => {
+    setFlippedCardId(prevId => (prevId === id ? null : id));
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -232,7 +233,7 @@ const Blogs = () => {
   }, []);
 
   return (
-    <section id="blogs" ref={sectionRef} className="relative w-full py-8 sm:py-16 md:py-24 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
+    <section id="blogs" ref={sectionRef} className="relative w-full py-12 sm:py-16 md:py-24 overflow-hidden font-sans bg-gradient-to-br from-[#ffffff] via-[#eef6ff] to-[#dcecff]">
       <div ref={canvasContainer} className="absolute inset-0 z-0 pointer-events-none" />
 
       {/* Background Overlays */}
@@ -241,92 +242,109 @@ const Blogs = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="mb-5 sm:mb-10 md:mb-16">
-          <h2 className="text-gray-900 text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight">
+        <div className="mb-8 sm:mb-10 md:mb-16">
+          <h2 className="text-gray-900 text-3xl md:text-5xl font-extrabold tracking-tight">
             Latest <span className="text-[#1871C9]">Legal Insights</span>
           </h2>
-          <p className="text-gray-600 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg font-light">
-          Stay updated with our latest thoughts on arbitration, compliance, employment, and corporate law.
+          <p className="text-gray-600 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-base md:text-lg font-light">
+            Stay updated with our latest thoughts on arbitration, compliance, employment, and corporate law.
           </p>
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 [perspective:1000px]">
-          {blogs.map((blog, index) => (
-            <div
-              key={blog.id}
-              ref={(el) => (cardRefs.current[index] = el)}
-              className="group relative h-[320px] sm:h-[360px] lg:h-[400px] w-full cursor-pointer"
-            >
-              {/* Corner highlights (Only visible on hover) */}
-              <div className="pointer-events-none absolute inset-0 z-20">
-                <span className="absolute left-3 top-3 h-7 w-7 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="absolute left-0 top-0 h-[2px] w-full bg-[#1871C9]" />
-                  <span className="absolute left-0 top-0 h-full w-[2px] bg-[#1871C9]" />
-                </span>
-                <span className="absolute right-3 bottom-3 h-7 w-7 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="absolute right-0 bottom-0 h-[2px] w-full bg-[#1871C9]" />
-                  <span className="absolute right-0 bottom-0 h-full w-[2px] bg-[#1871C9]" />
-                </span>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 [perspective:1200px]">
+          {blogs.map((blog, index) => {
+            const isFlipped = flippedCardId === blog.id;
+            return (
+              <div
+                key={blog.id}
+                ref={(el) => (cardRefs.current[index] = el)}
+                onClick={() => handleCardToggle(blog.id)}
+                className="group relative h-[400px] sm:h-[390px] lg:h-[430px] w-full cursor-pointer select-none"
+              >
+                {/* Micro-Corner Accents */}
+                <div className="pointer-events-none absolute inset-0 z-20">
+                  <span className={`absolute left-3 top-3 h-7 w-7 transition-opacity duration-300 ${isFlipped ? 'opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`}>
+                    <span className="absolute left-0 top-0 h-[2px] w-full bg-[#1871C9]" />
+                    <span className="absolute left-0 top-0 h-full w-[2px] bg-[#1871C9]" />
+                  </span>
+                  <span className={`absolute right-3 bottom-3 h-7 w-7 transition-opacity duration-300 ${isFlipped ? 'opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`}>
+                    <span className="absolute right-0 bottom-0 h-[2px] w-full bg-[#1871C9]" />
+                    <span className="absolute right-0 bottom-0 h-full w-[2px] bg-[#1871C9]" />
+                  </span>
+                </div>
 
-              {/* Inner container for 3D effect */}
-              <div className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                {/* THE FLIP MASTER CONTAINER - Unifies desktop hover state and mobile touch states with identical CSS variables */}
+                <div 
+                  className={`relative h-full w-full rounded-2xl transition-transform duration-700 ease-out [transform-style:preserve-3d] ${
+                    isFlipped ? '[transform:rotateY(180deg)]' : 'lg:group-hover:[transform:rotateY(180deg)]'
+                  }`}
+                >
+                  
+                  {/* CARD FACE: FRONT */}
+                  <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] -webkit-backface-visibility-hidden bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-md lg:group-hover:shadow-xl transition-shadow flex flex-col">
+                    <div className="relative h-44 sm:h-48 overflow-hidden shrink-0">
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-full h-full object-cover transition-transform duration-700 lg:group-hover:scale-105"
+                      />
+                      <div className="absolute top-3 left-3 bg-[#1871C9] text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                        {blog.category}
+                      </div>
+                    </div>
 
-                {/* FRONT SIDE */}
-                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-xl">
-                  <div className="relative h-40 sm:h-44 lg:h-48 overflow-hidden">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute top-3 left-3 bg-[#1871C9] text-white text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-                      {blog.category}
+                    <div className="p-5 flex flex-col flex-grow justify-between">
+                      <div>
+                        <h3 className="text-gray-900 text-base sm:text-lg font-bold leading-snug mb-2">
+                          {blog.title}
+                        </h3>
+                        <p className="text-gray-500 text-xs sm:text-sm line-clamp-3 leading-relaxed">
+                          {blog.excerpt}
+                        </p>
+                      </div>
+                      
+                      {/* Responsive Micro-Interaction Label */}
+                      <div className="text-[#1871C9] text-xs font-semibold mt-2 pt-2 border-t border-gray-50 flex items-center gap-1 lg:hidden">
+                        Tap card to open <span>&rarr;</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-5">
-                    <h3 className="text-gray-900 text-base sm:text-lg font-bold leading-tight mb-2">
-                      {blog.title}
+                  {/* CARD FACE: BACK */}
+                  <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] -webkit-backface-visibility-hidden [transform:rotateY(180deg)] bg-[#1871C9] rounded-2xl flex flex-col items-center p-6 shadow-2xl overflow-y-auto">
+                    <h3 className="text-white text-base font-black uppercase tracking-widest mb-3 mt-1 shrink-0">
+                      {blog.category}
                     </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm line-clamp-3 leading-relaxed">
-                      {blog.excerpt}
-                    </p>
-                  </div>
-                </div>
+                    <div className="w-8 h-[1px] bg-white/40 mb-4 shrink-0" />
 
-                {/* BACK SIDE (Updated Content) */}
-                {/* BACK SIDE (Updated Content) */}
-                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#1871C9] rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-2xl">
-                  <h3 className="text-white text-lg font-black uppercase tracking-widest mb-4">
-                    {blog.category}
-                  </h3>
-                  <div className="w-8 h-[1px] bg-white/40 mb-4" />
+                    <div className="w-full my-auto">
+                      {Array.isArray(blog.backContent) ? (
+                        <ul className="space-y-2.5">
+                          {blog.backContent.map((item, idx) => (
+                            <li key={idx} className="flex items-start text-left text-white text-xs sm:text-[13px] leading-snug">
+                              <span className="mr-2.5 mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+                              <span className="font-light text-white/95">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-white text-xs sm:text-sm leading-relaxed font-light">
+                          {blog.backContent}
+                        </p>
+                      )}
+                    </div>
 
-                  <div className="flex-grow flex flex-col justify-center w-full">
-                    {Array.isArray(blog.backContent) ? (
-                      <ul className="space-y-2">
-                        {blog.backContent.map((item, idx) => (
-                          <li key={idx} className="flex items-start text-left text-white text-[11px] sm:text-xs leading-tight">
-                            <span className="mr-2 mt-1 h-1 w-1 shrink-0 rounded-full bg-white/60" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-white text-[11px] sm:text-sm leading-relaxed">
-                        {blog.backContent}
-                      </p>
-                    )}
+                    {/* Responsive Return Label */}
+                    <div className="text-white/70 text-[11px] mt-4 pt-2 border-t border-white/20 w-full text-center lg:hidden shrink-0">
+                      Tap card to flip back
+                    </div>
                   </div>
 
-
                 </div>
-
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -69,7 +69,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" onClick={handleLogoClick}>
           <div className="text-2xl font-black tracking-tighter cursor-pointer uppercase text-[#1871C9]">
-            <img src={logo} alt=""  className='h-12 w-12'/>
+            <img src={logo} alt="Logo" className='h-12 w-12 object-contain' />
           </div>
         </Link>
 
@@ -108,7 +108,7 @@ const Navbar = () => {
             href="https://wa.me/yournumber" 
             target="_blank" 
             rel="noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-sm font-bold uppercase tracking-widest rounded-full shadow-md shadow-blue-900/20 hover:from-[#145da5] hover:to-[#1871C9] transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#1871C9] to-[#5FA9F4] text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-md shadow-blue-900/20 hover:from-[#145da5] hover:to-[#1871C9] transition-all"
           >
             <MessageCircle size={14} className="text-green-400 fill-green-400" />
             Contact
@@ -122,7 +122,7 @@ const Navbar = () => {
 
       {/* Mobile Sidebar Overlay */}
       <div 
-        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-[110] transition-opacity duration-500 ${
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-[110] transition-opacity duration-500 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsOpen(false)}
@@ -130,46 +130,49 @@ const Navbar = () => {
 
       {/* Mobile Sidebar Content */}
       <div 
-        className={`fixed top-0 right-0 h-full w-[85%] sm:w-[350px] bg-white z-[120] p-10 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] shadow-2xl ${
+        className={`fixed top-0 right-0 h-full w-[80%] sm:w-[320px] bg-white z-[120] p-8 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] shadow-2xl ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center mb-12">
-          <div className="text-xl font-black text-[#1871C9]">Logo.</div>
-          <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#1871C9] transition-colors">
-            <X size={32} />
+        <div className="flex justify-between items-center mb-8">
+          <div className="h-10 w-10">
+            <img src={logo} alt="Logo" className="h-full w-full object-contain" />
+          </div>
+          <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#1871C9] transition-colors p-1">
+            <X size={26} />
           </button>
         </div>
 
-        <ul className="flex flex-col gap-8">
+        {/* Updated Links Style */}
+        <ul className="flex flex-col gap-5">
           {navLinks.map((link) => (
             <li key={link.name}>
               <a 
                 href={`/#${link.href}`} 
                 onClick={(e) => handleSectionNav(e, link.href)}
-                className="text-3xl font-bold text-gray-900 hover:text-[#1871C9] tracking-tight transition-colors"
+                className="block text-lg font-medium text-gray-800 hover:text-[#1871C9] transition-colors py-1.5 border-b border-gray-50"
               >
                 {link.name}
               </a>
             </li>
           ))}
-          <li className="pt-4">
+          <li className="pt-2">
             <a 
               href="https://wa.me/yournumber" 
-              className="flex items-center gap-3 text-xl font-bold text-[#1871C9] tracking-tight"
+              className="flex items-center gap-3 text-base font-semibold text-[#1871C9] tracking-tight mt-2"
             >
-              <div className="p-3 bg-green-50 rounded-full">
-                <MessageCircle size={24} className="text-green-500 fill-green-500" />
+              <div className="p-2.5 bg-green-50 rounded-full">
+                <MessageCircle size={20} className="text-green-500 fill-green-500" />
               </div>
               Chat with an Expert
             </a>
           </li>
         </ul>
 
-        <div className="mt-auto border-t border-gray-100 pt-10">
-          <div className="p-6 bg-gradient-to-br from-[#1871C9] to-[#0F4A81] rounded-2xl text-white">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] mb-2 opacity-80">Legal Excellence</p>
-            <p className="text-sm font-medium leading-relaxed">Trusted Advisors for Complex Disputes.</p>
+        <div className="mt-auto pt-6">
+          <div className="p-5 bg-gradient-to-br from-[#1871C9] to-[#0F4A81] rounded-xl text-white">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1 opacity-70">Legal Excellence</p>
+            <p className="text-xs font-light leading-relaxed opacity-90">Trusted Advisors for Complex Disputes.</p>
           </div>
         </div>
       </div>
